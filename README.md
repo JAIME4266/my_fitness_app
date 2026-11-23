@@ -37,5 +37,5 @@
 
 1. **Clone the repository**
    ```bash
-   git clone [https://github.com/YOUR_USERNAME/my_fitness_app.git](https://github.com/YOUR_USERNAME/my_fitness_app.git)
+   git clone [https://github.com/JAIME4266/my_fitness_app.git](https://github.com/JAIME4266/my_fitness_app.git)
    cd my_fitness_app
