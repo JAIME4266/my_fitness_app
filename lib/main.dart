@@ -51,32 +51,43 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final double targetFats = 60.0;
   final double currentFats = 40.0;
 
+  String? lastSyncTime;
+
   Future<void> _syncHealthData() async {
     setState(() => isSyncing = true);
 
     bool authorized = await HealthService.requestPermissions();
     if (authorized) {
-      // HealthService does not currently expose a step-fetching method.
-      const int steps = 0;
-      // Keep calories at zero until health-data methods are added to the service.
-      const int calories = 0;
+      final healthData = await HealthService.syncToday();
+      final steps = healthData['steps'] ?? 0;
+      final calories = healthData['caloriesBurned'] ?? 0;
+
+      final now = DateTime.now();
+      final formattedTime = '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
 
       setState(() {
         currentSteps = steps;
         burnedCalories = calories;
+        lastSyncTime = formattedTime;
         isSyncing = false;
       });
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Watch data synced successfully!')),
+          SnackBar(
+            backgroundColor: const Color(0xFF0F766E),
+            content: Text('Watch data synced: $steps steps, $calories kcal burned!'),
+          ),
         );
       }
     } else {
       setState(() => isSyncing = false);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Health permissions not granted.')),
+          const SnackBar(
+            backgroundColor: Colors.redAccent,
+            content: Text('Health Connect permissions not granted.'),
+          ),
         );
       }
     }

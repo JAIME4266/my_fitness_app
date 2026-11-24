@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:health/health.dart';
 
 class HealthService {
@@ -15,49 +16,68 @@ class HealthService {
       if (has == true) return true;
       return await _health.requestAuthorization(types);
     } catch (e) {
-      print('Health permission error: $e');
+      debugPrint('[HealthService] Permission request failed: $e');
       return false;
     }
   }
 
-
-  static Future<Map<String, dynamic>> fetchDailyData() async {
+  static Future<Map<String, int>> syncToday() async {
     final now = DateTime.now();
-    final startOfDay = DateTime(now.year, now.month, now.day, 0, 0, 0).toUtc();
-    final endOfDay = now.toUtc();
+    final startOfDay = DateTime(now.year, now.month, now.day, 0, 0, 0);
+    final endOfDay = now;
 
     int steps = 0;
     int caloriesBurned = 0;
 
     try {
-      print('[HEALTH] Querying between $startOfDay and $endOfDay');
+      await _health.configure();
 
-      int? aggregated = await _health.getTotalStepsInInterval(startOfDay, endOfDay);
-      print('GHEALTH] getTotalStepsInInterval returned: $aggregated');
+      // 1. First attempt interval aggregation for steps
+      int? aggregatedSteps = await _health.getTotalStepsInInterval(startOfDay, endOfDay);
+      debugPrint('[HealthService] getTotalStepsInInterval: $aggregatedSteps');
 
-      if (aggregated != null && aggregated > 0) {
-        steps = aggregated;
+      if (aggregatedSteps != null && aggregatedSteps > 0) {
+        steps = aggregatedSteps;
       } else {
+        // Fallback: Query raw step data points and sum
         List<HealthDataPoint> stepPoints = await _health.getHealthDataFromTypes(
           startTime: startOfDay,
           endTime: endOfDay,
           types: [HealthDataType.STEPS],
         );
-        print('[HEALTH] Raw step data points found: ${stepPoints.length}');
+        debugPrint('[HealthService] Raw step data points found: ${stepPoints.length}');
 
+        // Track seen time intervals to prevent double-counting between phone & watch
+        final Map<String, int> intervalMax = {};
         for (var point in stepPoints) {
           final v = point.value;
           if (v is NumericHealthValue) {
-            steps += v.numericValue.round();
+            final key = '${point.dateFrom.millisecondsSinceEpoch}_${point.dateTo.millisecondsSinceEpoch}';
+            final val = v.numericValue.round();
+            if (!intervalMax.containsKey(key) || intervalMax[key]! < val) {
+              intervalMax[key] = val;
+            }
+          }
+        }
+        if (intervalMax.isNotEmpty) {
+          steps = intervalMax.values.fold(0, (sum, item) => sum + item);
+        } else {
+          for (var point in stepPoints) {
+            final v = point.value;
+            if (v is NumericHealthValue) {
+              steps += v.numericValue.round();
+            }
           }
         }
       }
 
+      // 2. Fetch Active Calories Burned
       List<HealthDataPoint> caloriePoints = await _health.getHealthDataFromTypes(
         startTime: startOfDay,
         endTime: endOfDay,
         types: [HealthDataType.ACTIVE_ENERGY_BURNED],
       );
+      debugPrint('[HealthService] Active calorie points found: ${caloriePoints.length}');
 
       for (var point in caloriePoints) {
         final v = point.value;
@@ -66,13 +86,15 @@ class HealthService {
         }
       }
 
+      // 3. Fallback calculation if wearable reports steps but no calorie record
       if (caloriesBurned == 0 && steps > 0) {
+        // Typical walking active burn: ~0.04 kcal per step
         caloriesBurned = (steps * 0.04).round();
       }
 
-      print('[HEALTH] Final Calculated: Steps=$steps, Calories=$caloriesBurned');
+      debugPrint('[HealthService] Final Synced: Steps=$steps, Calories=$caloriesBurned');
     } catch (e) {
-      print('Error fetching health data: $e');
+      debugPrint('[HealthService] Error during syncToday: $e');
     }
 
     return {
