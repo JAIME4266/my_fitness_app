@@ -29,6 +29,17 @@ class Workouts extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+class RoutePoints extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get workoutId => text()();
+  RealColumn get lat => real()();
+  RealColumn get lng => real()();
+  RealColumn get altitudeM => real().withDefault(const Constant(0.0))();
+  RealColumn get accuracyM => real().withDefault(const Constant(0.0))();
+  RealColumn get speedMps => real().withDefault(const Constant(0.0))();
+  IntColumn get timestampEpochMs => integer()();
+}
+
 class FoodCatalog extends Table {
   TextColumn get id => text()();
   TextColumn get name => text()();
@@ -104,6 +115,7 @@ class UserMetabolicProfiles extends Table {
   tables: [
     DailySummaries,
     Workouts,
+    RoutePoints,
     FoodCatalog,
     MealLogs,
     UserMetabolicProfiles,
@@ -114,7 +126,7 @@ class AppDatabase extends _$AppDatabase {
       : super(e ?? driftDatabase(name: 'fitness_app'));
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -134,6 +146,9 @@ class AppDatabase extends _$AppDatabase {
             await m.addColumn(mealLogs, mealLogs.sugarG);
             await m.addColumn(mealLogs, mealLogs.sodiumMg);
             await m.addColumn(mealLogs, mealLogs.isEstimate);
+          }
+          if (from < 3) {
+            await m.createTable(routePoints);
           }
         },
       );
@@ -164,6 +179,27 @@ class AppDatabase extends _$AppDatabase {
 
   Future<int> insertWorkout(WorkoutsCompanion workout) {
     return into(workouts).insertOnConflictUpdate(workout);
+  }
+
+  Stream<List<Workout>> watchRecentWorkouts({int limit = 20}) {
+    return (select(workouts)
+          ..orderBy([(t) => OrderingTerm.desc(t.startEpochMs)])
+          ..limit(limit))
+        .watch();
+  }
+
+  Future<void> insertRoutePoints(List<RoutePointsCompanion> points) async {
+    if (points.isEmpty) return;
+    await batch((batch) {
+      batch.insertAll(routePoints, points);
+    });
+  }
+
+  Future<List<RoutePoint>> getRoutePointsForWorkout(String workoutId) {
+    return (select(routePoints)
+          ..where((t) => t.workoutId.equals(workoutId))
+          ..orderBy([(t) => OrderingTerm.asc(t.timestampEpochMs)]))
+        .get();
   }
 
   // --- Phase 3 Food Catalog Queries ---

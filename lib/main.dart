@@ -6,6 +6,7 @@ import 'database/fitness_repository.dart';
 import 'features/nutrition/data/nutrition_repository.dart';
 import 'features/nutrition/presentation/log_meal_bottom_sheet.dart';
 import 'features/nutrition/presentation/nutrition_screen.dart';
+import 'features/run_tracking/presentation/run_tracker_screen.dart';
 import 'health_service.dart';
 
 void main() {
@@ -53,6 +54,7 @@ class _AppShellState extends State<AppShell> {
             onNavigateToNutrition: () => setState(() => _selectedIndex = 1),
           ),
           const NutritionScreen(),
+          const RunTrackerScreen(),
         ],
       ),
       bottomNavigationBar: NavigationBar(
@@ -71,6 +73,12 @@ class _AppShellState extends State<AppShell> {
             selectedIcon:
                 Icon(Icons.restaurant_menu, color: Color(0xFF0F766E)),
             label: 'Nutrition',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.directions_run_outlined),
+            selectedIcon:
+                Icon(Icons.directions_run, color: Color(0xFF0F766E)),
+            label: 'Run',
           ),
         ],
       ),

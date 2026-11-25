@@ -950,6 +950,503 @@ class WorkoutsCompanion extends UpdateCompanion<Workout> {
   }
 }
 
+class $RoutePointsTable extends RoutePoints
+    with TableInfo<$RoutePointsTable, RoutePoint> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RoutePointsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _workoutIdMeta = const VerificationMeta(
+    'workoutId',
+  );
+  @override
+  late final GeneratedColumn<String> workoutId = GeneratedColumn<String>(
+    'workout_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _latMeta = const VerificationMeta('lat');
+  @override
+  late final GeneratedColumn<double> lat = GeneratedColumn<double>(
+    'lat',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lngMeta = const VerificationMeta('lng');
+  @override
+  late final GeneratedColumn<double> lng = GeneratedColumn<double>(
+    'lng',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _altitudeMMeta = const VerificationMeta(
+    'altitudeM',
+  );
+  @override
+  late final GeneratedColumn<double> altitudeM = GeneratedColumn<double>(
+    'altitude_m',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0.0),
+  );
+  static const VerificationMeta _accuracyMMeta = const VerificationMeta(
+    'accuracyM',
+  );
+  @override
+  late final GeneratedColumn<double> accuracyM = GeneratedColumn<double>(
+    'accuracy_m',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0.0),
+  );
+  static const VerificationMeta _speedMpsMeta = const VerificationMeta(
+    'speedMps',
+  );
+  @override
+  late final GeneratedColumn<double> speedMps = GeneratedColumn<double>(
+    'speed_mps',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0.0),
+  );
+  static const VerificationMeta _timestampEpochMsMeta = const VerificationMeta(
+    'timestampEpochMs',
+  );
+  @override
+  late final GeneratedColumn<int> timestampEpochMs = GeneratedColumn<int>(
+    'timestamp_epoch_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    workoutId,
+    lat,
+    lng,
+    altitudeM,
+    accuracyM,
+    speedMps,
+    timestampEpochMs,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'route_points';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RoutePoint> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('workout_id')) {
+      context.handle(
+        _workoutIdMeta,
+        workoutId.isAcceptableOrUnknown(data['workout_id']!, _workoutIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_workoutIdMeta);
+    }
+    if (data.containsKey('lat')) {
+      context.handle(
+        _latMeta,
+        lat.isAcceptableOrUnknown(data['lat']!, _latMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_latMeta);
+    }
+    if (data.containsKey('lng')) {
+      context.handle(
+        _lngMeta,
+        lng.isAcceptableOrUnknown(data['lng']!, _lngMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_lngMeta);
+    }
+    if (data.containsKey('altitude_m')) {
+      context.handle(
+        _altitudeMMeta,
+        altitudeM.isAcceptableOrUnknown(data['altitude_m']!, _altitudeMMeta),
+      );
+    }
+    if (data.containsKey('accuracy_m')) {
+      context.handle(
+        _accuracyMMeta,
+        accuracyM.isAcceptableOrUnknown(data['accuracy_m']!, _accuracyMMeta),
+      );
+    }
+    if (data.containsKey('speed_mps')) {
+      context.handle(
+        _speedMpsMeta,
+        speedMps.isAcceptableOrUnknown(data['speed_mps']!, _speedMpsMeta),
+      );
+    }
+    if (data.containsKey('timestamp_epoch_ms')) {
+      context.handle(
+        _timestampEpochMsMeta,
+        timestampEpochMs.isAcceptableOrUnknown(
+          data['timestamp_epoch_ms']!,
+          _timestampEpochMsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_timestampEpochMsMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  RoutePoint map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RoutePoint(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      workoutId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}workout_id'],
+      )!,
+      lat: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}lat'],
+      )!,
+      lng: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}lng'],
+      )!,
+      altitudeM: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}altitude_m'],
+      )!,
+      accuracyM: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}accuracy_m'],
+      )!,
+      speedMps: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}speed_mps'],
+      )!,
+      timestampEpochMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}timestamp_epoch_ms'],
+      )!,
+    );
+  }
+
+  @override
+  $RoutePointsTable createAlias(String alias) {
+    return $RoutePointsTable(attachedDatabase, alias);
+  }
+}
+
+class RoutePoint extends DataClass implements Insertable<RoutePoint> {
+  final int id;
+  final String workoutId;
+  final double lat;
+  final double lng;
+  final double altitudeM;
+  final double accuracyM;
+  final double speedMps;
+  final int timestampEpochMs;
+  const RoutePoint({
+    required this.id,
+    required this.workoutId,
+    required this.lat,
+    required this.lng,
+    required this.altitudeM,
+    required this.accuracyM,
+    required this.speedMps,
+    required this.timestampEpochMs,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['workout_id'] = Variable<String>(workoutId);
+    map['lat'] = Variable<double>(lat);
+    map['lng'] = Variable<double>(lng);
+    map['altitude_m'] = Variable<double>(altitudeM);
+    map['accuracy_m'] = Variable<double>(accuracyM);
+    map['speed_mps'] = Variable<double>(speedMps);
+    map['timestamp_epoch_ms'] = Variable<int>(timestampEpochMs);
+    return map;
+  }
+
+  RoutePointsCompanion toCompanion(bool nullToAbsent) {
+    return RoutePointsCompanion(
+      id: Value(id),
+      workoutId: Value(workoutId),
+      lat: Value(lat),
+      lng: Value(lng),
+      altitudeM: Value(altitudeM),
+      accuracyM: Value(accuracyM),
+      speedMps: Value(speedMps),
+      timestampEpochMs: Value(timestampEpochMs),
+    );
+  }
+
+  factory RoutePoint.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RoutePoint(
+      id: serializer.fromJson<int>(json['id']),
+      workoutId: serializer.fromJson<String>(json['workoutId']),
+      lat: serializer.fromJson<double>(json['lat']),
+      lng: serializer.fromJson<double>(json['lng']),
+      altitudeM: serializer.fromJson<double>(json['altitudeM']),
+      accuracyM: serializer.fromJson<double>(json['accuracyM']),
+      speedMps: serializer.fromJson<double>(json['speedMps']),
+      timestampEpochMs: serializer.fromJson<int>(json['timestampEpochMs']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'workoutId': serializer.toJson<String>(workoutId),
+      'lat': serializer.toJson<double>(lat),
+      'lng': serializer.toJson<double>(lng),
+      'altitudeM': serializer.toJson<double>(altitudeM),
+      'accuracyM': serializer.toJson<double>(accuracyM),
+      'speedMps': serializer.toJson<double>(speedMps),
+      'timestampEpochMs': serializer.toJson<int>(timestampEpochMs),
+    };
+  }
+
+  RoutePoint copyWith({
+    int? id,
+    String? workoutId,
+    double? lat,
+    double? lng,
+    double? altitudeM,
+    double? accuracyM,
+    double? speedMps,
+    int? timestampEpochMs,
+  }) => RoutePoint(
+    id: id ?? this.id,
+    workoutId: workoutId ?? this.workoutId,
+    lat: lat ?? this.lat,
+    lng: lng ?? this.lng,
+    altitudeM: altitudeM ?? this.altitudeM,
+    accuracyM: accuracyM ?? this.accuracyM,
+    speedMps: speedMps ?? this.speedMps,
+    timestampEpochMs: timestampEpochMs ?? this.timestampEpochMs,
+  );
+  RoutePoint copyWithCompanion(RoutePointsCompanion data) {
+    return RoutePoint(
+      id: data.id.present ? data.id.value : this.id,
+      workoutId: data.workoutId.present ? data.workoutId.value : this.workoutId,
+      lat: data.lat.present ? data.lat.value : this.lat,
+      lng: data.lng.present ? data.lng.value : this.lng,
+      altitudeM: data.altitudeM.present ? data.altitudeM.value : this.altitudeM,
+      accuracyM: data.accuracyM.present ? data.accuracyM.value : this.accuracyM,
+      speedMps: data.speedMps.present ? data.speedMps.value : this.speedMps,
+      timestampEpochMs: data.timestampEpochMs.present
+          ? data.timestampEpochMs.value
+          : this.timestampEpochMs,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RoutePoint(')
+          ..write('id: $id, ')
+          ..write('workoutId: $workoutId, ')
+          ..write('lat: $lat, ')
+          ..write('lng: $lng, ')
+          ..write('altitudeM: $altitudeM, ')
+          ..write('accuracyM: $accuracyM, ')
+          ..write('speedMps: $speedMps, ')
+          ..write('timestampEpochMs: $timestampEpochMs')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    workoutId,
+    lat,
+    lng,
+    altitudeM,
+    accuracyM,
+    speedMps,
+    timestampEpochMs,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RoutePoint &&
+          other.id == this.id &&
+          other.workoutId == this.workoutId &&
+          other.lat == this.lat &&
+          other.lng == this.lng &&
+          other.altitudeM == this.altitudeM &&
+          other.accuracyM == this.accuracyM &&
+          other.speedMps == this.speedMps &&
+          other.timestampEpochMs == this.timestampEpochMs);
+}
+
+class RoutePointsCompanion extends UpdateCompanion<RoutePoint> {
+  final Value<int> id;
+  final Value<String> workoutId;
+  final Value<double> lat;
+  final Value<double> lng;
+  final Value<double> altitudeM;
+  final Value<double> accuracyM;
+  final Value<double> speedMps;
+  final Value<int> timestampEpochMs;
+  const RoutePointsCompanion({
+    this.id = const Value.absent(),
+    this.workoutId = const Value.absent(),
+    this.lat = const Value.absent(),
+    this.lng = const Value.absent(),
+    this.altitudeM = const Value.absent(),
+    this.accuracyM = const Value.absent(),
+    this.speedMps = const Value.absent(),
+    this.timestampEpochMs = const Value.absent(),
+  });
+  RoutePointsCompanion.insert({
+    this.id = const Value.absent(),
+    required String workoutId,
+    required double lat,
+    required double lng,
+    this.altitudeM = const Value.absent(),
+    this.accuracyM = const Value.absent(),
+    this.speedMps = const Value.absent(),
+    required int timestampEpochMs,
+  }) : workoutId = Value(workoutId),
+       lat = Value(lat),
+       lng = Value(lng),
+       timestampEpochMs = Value(timestampEpochMs);
+  static Insertable<RoutePoint> custom({
+    Expression<int>? id,
+    Expression<String>? workoutId,
+    Expression<double>? lat,
+    Expression<double>? lng,
+    Expression<double>? altitudeM,
+    Expression<double>? accuracyM,
+    Expression<double>? speedMps,
+    Expression<int>? timestampEpochMs,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (workoutId != null) 'workout_id': workoutId,
+      if (lat != null) 'lat': lat,
+      if (lng != null) 'lng': lng,
+      if (altitudeM != null) 'altitude_m': altitudeM,
+      if (accuracyM != null) 'accuracy_m': accuracyM,
+      if (speedMps != null) 'speed_mps': speedMps,
+      if (timestampEpochMs != null) 'timestamp_epoch_ms': timestampEpochMs,
+    });
+  }
+
+  RoutePointsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? workoutId,
+    Value<double>? lat,
+    Value<double>? lng,
+    Value<double>? altitudeM,
+    Value<double>? accuracyM,
+    Value<double>? speedMps,
+    Value<int>? timestampEpochMs,
+  }) {
+    return RoutePointsCompanion(
+      id: id ?? this.id,
+      workoutId: workoutId ?? this.workoutId,
+      lat: lat ?? this.lat,
+      lng: lng ?? this.lng,
+      altitudeM: altitudeM ?? this.altitudeM,
+      accuracyM: accuracyM ?? this.accuracyM,
+      speedMps: speedMps ?? this.speedMps,
+      timestampEpochMs: timestampEpochMs ?? this.timestampEpochMs,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (workoutId.present) {
+      map['workout_id'] = Variable<String>(workoutId.value);
+    }
+    if (lat.present) {
+      map['lat'] = Variable<double>(lat.value);
+    }
+    if (lng.present) {
+      map['lng'] = Variable<double>(lng.value);
+    }
+    if (altitudeM.present) {
+      map['altitude_m'] = Variable<double>(altitudeM.value);
+    }
+    if (accuracyM.present) {
+      map['accuracy_m'] = Variable<double>(accuracyM.value);
+    }
+    if (speedMps.present) {
+      map['speed_mps'] = Variable<double>(speedMps.value);
+    }
+    if (timestampEpochMs.present) {
+      map['timestamp_epoch_ms'] = Variable<int>(timestampEpochMs.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RoutePointsCompanion(')
+          ..write('id: $id, ')
+          ..write('workoutId: $workoutId, ')
+          ..write('lat: $lat, ')
+          ..write('lng: $lng, ')
+          ..write('altitudeM: $altitudeM, ')
+          ..write('accuracyM: $accuracyM, ')
+          ..write('speedMps: $speedMps, ')
+          ..write('timestampEpochMs: $timestampEpochMs')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $FoodCatalogTable extends FoodCatalog
     with TableInfo<$FoodCatalogTable, FoodCatalogData> {
   @override
@@ -3842,6 +4339,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $DailySummariesTable dailySummaries = $DailySummariesTable(this);
   late final $WorkoutsTable workouts = $WorkoutsTable(this);
+  late final $RoutePointsTable routePoints = $RoutePointsTable(this);
   late final $FoodCatalogTable foodCatalog = $FoodCatalogTable(this);
   late final $MealLogsTable mealLogs = $MealLogsTable(this);
   late final $UserMetabolicProfilesTable userMetabolicProfiles =
@@ -3853,6 +4351,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [
     dailySummaries,
     workouts,
+    routePoints,
     foodCatalog,
     mealLogs,
     userMetabolicProfiles,
@@ -4343,6 +4842,259 @@ typedef $$WorkoutsTableProcessedTableManager =
       $$WorkoutsTableUpdateCompanionBuilder,
       (Workout, BaseReferences<_$AppDatabase, $WorkoutsTable, Workout>),
       Workout,
+      PrefetchHooks Function()
+    >;
+typedef $$RoutePointsTableCreateCompanionBuilder =
+    RoutePointsCompanion Function({
+      Value<int> id,
+      required String workoutId,
+      required double lat,
+      required double lng,
+      Value<double> altitudeM,
+      Value<double> accuracyM,
+      Value<double> speedMps,
+      required int timestampEpochMs,
+    });
+typedef $$RoutePointsTableUpdateCompanionBuilder =
+    RoutePointsCompanion Function({
+      Value<int> id,
+      Value<String> workoutId,
+      Value<double> lat,
+      Value<double> lng,
+      Value<double> altitudeM,
+      Value<double> accuracyM,
+      Value<double> speedMps,
+      Value<int> timestampEpochMs,
+    });
+
+class $$RoutePointsTableFilterComposer
+    extends Composer<_$AppDatabase, $RoutePointsTable> {
+  $$RoutePointsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get workoutId => $composableBuilder(
+    column: $table.workoutId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get lat => $composableBuilder(
+    column: $table.lat,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get lng => $composableBuilder(
+    column: $table.lng,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get altitudeM => $composableBuilder(
+    column: $table.altitudeM,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get accuracyM => $composableBuilder(
+    column: $table.accuracyM,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get speedMps => $composableBuilder(
+    column: $table.speedMps,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get timestampEpochMs => $composableBuilder(
+    column: $table.timestampEpochMs,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$RoutePointsTableOrderingComposer
+    extends Composer<_$AppDatabase, $RoutePointsTable> {
+  $$RoutePointsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get workoutId => $composableBuilder(
+    column: $table.workoutId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get lat => $composableBuilder(
+    column: $table.lat,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get lng => $composableBuilder(
+    column: $table.lng,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get altitudeM => $composableBuilder(
+    column: $table.altitudeM,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get accuracyM => $composableBuilder(
+    column: $table.accuracyM,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get speedMps => $composableBuilder(
+    column: $table.speedMps,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get timestampEpochMs => $composableBuilder(
+    column: $table.timestampEpochMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$RoutePointsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $RoutePointsTable> {
+  $$RoutePointsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get workoutId =>
+      $composableBuilder(column: $table.workoutId, builder: (column) => column);
+
+  GeneratedColumn<double> get lat =>
+      $composableBuilder(column: $table.lat, builder: (column) => column);
+
+  GeneratedColumn<double> get lng =>
+      $composableBuilder(column: $table.lng, builder: (column) => column);
+
+  GeneratedColumn<double> get altitudeM =>
+      $composableBuilder(column: $table.altitudeM, builder: (column) => column);
+
+  GeneratedColumn<double> get accuracyM =>
+      $composableBuilder(column: $table.accuracyM, builder: (column) => column);
+
+  GeneratedColumn<double> get speedMps =>
+      $composableBuilder(column: $table.speedMps, builder: (column) => column);
+
+  GeneratedColumn<int> get timestampEpochMs => $composableBuilder(
+    column: $table.timestampEpochMs,
+    builder: (column) => column,
+  );
+}
+
+class $$RoutePointsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $RoutePointsTable,
+          RoutePoint,
+          $$RoutePointsTableFilterComposer,
+          $$RoutePointsTableOrderingComposer,
+          $$RoutePointsTableAnnotationComposer,
+          $$RoutePointsTableCreateCompanionBuilder,
+          $$RoutePointsTableUpdateCompanionBuilder,
+          (
+            RoutePoint,
+            BaseReferences<_$AppDatabase, $RoutePointsTable, RoutePoint>,
+          ),
+          RoutePoint,
+          PrefetchHooks Function()
+        > {
+  $$RoutePointsTableTableManager(_$AppDatabase db, $RoutePointsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RoutePointsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RoutePointsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$RoutePointsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> workoutId = const Value.absent(),
+                Value<double> lat = const Value.absent(),
+                Value<double> lng = const Value.absent(),
+                Value<double> altitudeM = const Value.absent(),
+                Value<double> accuracyM = const Value.absent(),
+                Value<double> speedMps = const Value.absent(),
+                Value<int> timestampEpochMs = const Value.absent(),
+              }) => RoutePointsCompanion(
+                id: id,
+                workoutId: workoutId,
+                lat: lat,
+                lng: lng,
+                altitudeM: altitudeM,
+                accuracyM: accuracyM,
+                speedMps: speedMps,
+                timestampEpochMs: timestampEpochMs,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String workoutId,
+                required double lat,
+                required double lng,
+                Value<double> altitudeM = const Value.absent(),
+                Value<double> accuracyM = const Value.absent(),
+                Value<double> speedMps = const Value.absent(),
+                required int timestampEpochMs,
+              }) => RoutePointsCompanion.insert(
+                id: id,
+                workoutId: workoutId,
+                lat: lat,
+                lng: lng,
+                altitudeM: altitudeM,
+                accuracyM: accuracyM,
+                speedMps: speedMps,
+                timestampEpochMs: timestampEpochMs,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$RoutePointsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $RoutePointsTable,
+      RoutePoint,
+      $$RoutePointsTableFilterComposer,
+      $$RoutePointsTableOrderingComposer,
+      $$RoutePointsTableAnnotationComposer,
+      $$RoutePointsTableCreateCompanionBuilder,
+      $$RoutePointsTableUpdateCompanionBuilder,
+      (
+        RoutePoint,
+        BaseReferences<_$AppDatabase, $RoutePointsTable, RoutePoint>,
+      ),
+      RoutePoint,
       PrefetchHooks Function()
     >;
 typedef $$FoodCatalogTableCreateCompanionBuilder =
@@ -5698,6 +6450,8 @@ class $AppDatabaseManager {
       $$DailySummariesTableTableManager(_db, _db.dailySummaries);
   $$WorkoutsTableTableManager get workouts =>
       $$WorkoutsTableTableManager(_db, _db.workouts);
+  $$RoutePointsTableTableManager get routePoints =>
+      $$RoutePointsTableTableManager(_db, _db.routePoints);
   $$FoodCatalogTableTableManager get foodCatalog =>
       $$FoodCatalogTableTableManager(_db, _db.foodCatalog);
   $$MealLogsTableTableManager get mealLogs =>
