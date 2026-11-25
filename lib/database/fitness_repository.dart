@@ -41,7 +41,7 @@ class FitnessRepository {
         date: Value(key),
         steps: Value(steps),
         activeCalories: Value(activeCalories),
-        consumedCalories: Value(consumedCalories ?? existing?.consumedCalories ?? 1450),
+        consumedCalories: Value(consumedCalories ?? existing?.consumedCalories ?? 0),
         targetCalories: Value(targetCalories ?? existing?.targetCalories ?? 2200),
         waterMl: Value(existing?.waterMl ?? 0),
         lastSync: Value(DateTime.now()),
