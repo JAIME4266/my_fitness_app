@@ -263,6 +263,48 @@ class NutritionRepository {
     });
   }
 
+  Future<void> logCustomOrEstimatedMeal({
+    required String foodName,
+    required String mealType,
+    required double portionGrams,
+    required double calories,
+    required double proteinG,
+    required double carbsG,
+    required double fatG,
+    double fibreG = 0.0,
+    double? saturatedFatG,
+    double? sugarG,
+    double? sodiumMg,
+    bool isEstimate = true,
+  }) async {
+    await ensureSeeded();
+    final ts = DateTime.now();
+    await db.transaction(() async {
+      await db.upsertMealLog(
+        MealLogsCompanion(
+          id: Value(_nextId('meal')),
+          foodName: Value(foodName.trim()),
+          mealType: Value(mealType),
+          basis: const Value('cooked'),
+          cookedWeightG: Value(_round1(portionGrams)),
+          rawEquivalentG: Value(_round1(portionGrams)),
+          extraOilTsp: const Value(0.0),
+          calculatedKcal: Value(_round1(calories)),
+          proteinG: Value(_round1(proteinG)),
+          carbsG: Value(_round1(carbsG)),
+          fatG: Value(_round1(fatG)),
+          fibreG: Value(_round1(fibreG)),
+          saturatedFatG: Value(saturatedFatG != null ? _round1(saturatedFatG) : null),
+          sugarG: Value(sugarG != null ? _round1(sugarG) : null),
+          sodiumMg: Value(sodiumMg != null ? _round1(sodiumMg) : null),
+          isEstimate: Value(isEstimate),
+          timestamp: Value(ts),
+        ),
+      );
+      await _recomputeDailySummaryConsumedCalories(ts);
+    });
+  }
+
   Future<void> updateMealPortion({
     required MealLog existing,
     FoodCatalogData? catalogFood,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../database/database.dart';
 import '../data/nutrition_repository.dart';
+import 'ai_food_scanner_screen.dart';
 import 'log_meal_bottom_sheet.dart';
 import 'metabolic_calculator_sheet.dart';
 
@@ -48,6 +49,16 @@ class _NutritionScreenState extends ConsumerState<NutritionScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
+          IconButton(
+            tooltip: 'AI Food Scanner',
+            icon: const Icon(Icons.document_scanner_outlined,
+                color: Color(0xFF0F766E)),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const AiFoodScannerScreen()),
+              );
+            },
+          ),
           TextButton.icon(
             onPressed: () => showMetabolicCalculatorSheet(context),
             icon: const Icon(Icons.calculate_outlined, size: 18),

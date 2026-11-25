@@ -56,6 +56,10 @@ dependencies:
 
   # -- Phase 5: Community & Backend (Free Tier) --
   supabase_flutter: ^2.8.0
+
+  # -- Phase 7: AI Food Recognition & HTTP --
+  image_picker: ^1.1.2
+  http: ^1.2.2
   
 dev_dependencies:
   flutter_test:
