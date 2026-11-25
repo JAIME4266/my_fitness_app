@@ -7646,6 +7646,644 @@ class BlockedUsersCompanion extends UpdateCompanion<BlockedUser> {
   }
 }
 
+class $SleepRecordsTable extends SleepRecords
+    with TableInfo<$SleepRecordsTable, SleepRecord> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SleepRecordsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _startTimeMeta = const VerificationMeta(
+    'startTime',
+  );
+  @override
+  late final GeneratedColumn<DateTime> startTime = GeneratedColumn<DateTime>(
+    'start_time',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _endTimeMeta = const VerificationMeta(
+    'endTime',
+  );
+  @override
+  late final GeneratedColumn<DateTime> endTime = GeneratedColumn<DateTime>(
+    'end_time',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _durationMinutesMeta = const VerificationMeta(
+    'durationMinutes',
+  );
+  @override
+  late final GeneratedColumn<int> durationMinutes = GeneratedColumn<int>(
+    'duration_minutes',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deepMinutesMeta = const VerificationMeta(
+    'deepMinutes',
+  );
+  @override
+  late final GeneratedColumn<int> deepMinutes = GeneratedColumn<int>(
+    'deep_minutes',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _lightMinutesMeta = const VerificationMeta(
+    'lightMinutes',
+  );
+  @override
+  late final GeneratedColumn<int> lightMinutes = GeneratedColumn<int>(
+    'light_minutes',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _remMinutesMeta = const VerificationMeta(
+    'remMinutes',
+  );
+  @override
+  late final GeneratedColumn<int> remMinutes = GeneratedColumn<int>(
+    'rem_minutes',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _awakeMinutesMeta = const VerificationMeta(
+    'awakeMinutes',
+  );
+  @override
+  late final GeneratedColumn<int> awakeMinutes = GeneratedColumn<int>(
+    'awake_minutes',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sourceMeta = const VerificationMeta('source');
+  @override
+  late final GeneratedColumn<String> source = GeneratedColumn<String>(
+    'source',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('manual'),
+  );
+  static const VerificationMeta _qualityRatingMeta = const VerificationMeta(
+    'qualityRating',
+  );
+  @override
+  late final GeneratedColumn<int> qualityRating = GeneratedColumn<int>(
+    'quality_rating',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    startTime,
+    endTime,
+    durationMinutes,
+    deepMinutes,
+    lightMinutes,
+    remMinutes,
+    awakeMinutes,
+    source,
+    qualityRating,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'sleep_records';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SleepRecord> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('start_time')) {
+      context.handle(
+        _startTimeMeta,
+        startTime.isAcceptableOrUnknown(data['start_time']!, _startTimeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_startTimeMeta);
+    }
+    if (data.containsKey('end_time')) {
+      context.handle(
+        _endTimeMeta,
+        endTime.isAcceptableOrUnknown(data['end_time']!, _endTimeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_endTimeMeta);
+    }
+    if (data.containsKey('duration_minutes')) {
+      context.handle(
+        _durationMinutesMeta,
+        durationMinutes.isAcceptableOrUnknown(
+          data['duration_minutes']!,
+          _durationMinutesMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_durationMinutesMeta);
+    }
+    if (data.containsKey('deep_minutes')) {
+      context.handle(
+        _deepMinutesMeta,
+        deepMinutes.isAcceptableOrUnknown(
+          data['deep_minutes']!,
+          _deepMinutesMeta,
+        ),
+      );
+    }
+    if (data.containsKey('light_minutes')) {
+      context.handle(
+        _lightMinutesMeta,
+        lightMinutes.isAcceptableOrUnknown(
+          data['light_minutes']!,
+          _lightMinutesMeta,
+        ),
+      );
+    }
+    if (data.containsKey('rem_minutes')) {
+      context.handle(
+        _remMinutesMeta,
+        remMinutes.isAcceptableOrUnknown(data['rem_minutes']!, _remMinutesMeta),
+      );
+    }
+    if (data.containsKey('awake_minutes')) {
+      context.handle(
+        _awakeMinutesMeta,
+        awakeMinutes.isAcceptableOrUnknown(
+          data['awake_minutes']!,
+          _awakeMinutesMeta,
+        ),
+      );
+    }
+    if (data.containsKey('source')) {
+      context.handle(
+        _sourceMeta,
+        source.isAcceptableOrUnknown(data['source']!, _sourceMeta),
+      );
+    }
+    if (data.containsKey('quality_rating')) {
+      context.handle(
+        _qualityRatingMeta,
+        qualityRating.isAcceptableOrUnknown(
+          data['quality_rating']!,
+          _qualityRatingMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SleepRecord map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SleepRecord(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      startTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}start_time'],
+      )!,
+      endTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}end_time'],
+      )!,
+      durationMinutes: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}duration_minutes'],
+      )!,
+      deepMinutes: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}deep_minutes'],
+      ),
+      lightMinutes: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}light_minutes'],
+      ),
+      remMinutes: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rem_minutes'],
+      ),
+      awakeMinutes: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}awake_minutes'],
+      ),
+      source: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source'],
+      )!,
+      qualityRating: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}quality_rating'],
+      ),
+    );
+  }
+
+  @override
+  $SleepRecordsTable createAlias(String alias) {
+    return $SleepRecordsTable(attachedDatabase, alias);
+  }
+}
+
+class SleepRecord extends DataClass implements Insertable<SleepRecord> {
+  final String id;
+  final DateTime startTime;
+  final DateTime endTime;
+  final int durationMinutes;
+  final int? deepMinutes;
+  final int? lightMinutes;
+  final int? remMinutes;
+  final int? awakeMinutes;
+  final String source;
+  final int? qualityRating;
+  const SleepRecord({
+    required this.id,
+    required this.startTime,
+    required this.endTime,
+    required this.durationMinutes,
+    this.deepMinutes,
+    this.lightMinutes,
+    this.remMinutes,
+    this.awakeMinutes,
+    required this.source,
+    this.qualityRating,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['start_time'] = Variable<DateTime>(startTime);
+    map['end_time'] = Variable<DateTime>(endTime);
+    map['duration_minutes'] = Variable<int>(durationMinutes);
+    if (!nullToAbsent || deepMinutes != null) {
+      map['deep_minutes'] = Variable<int>(deepMinutes);
+    }
+    if (!nullToAbsent || lightMinutes != null) {
+      map['light_minutes'] = Variable<int>(lightMinutes);
+    }
+    if (!nullToAbsent || remMinutes != null) {
+      map['rem_minutes'] = Variable<int>(remMinutes);
+    }
+    if (!nullToAbsent || awakeMinutes != null) {
+      map['awake_minutes'] = Variable<int>(awakeMinutes);
+    }
+    map['source'] = Variable<String>(source);
+    if (!nullToAbsent || qualityRating != null) {
+      map['quality_rating'] = Variable<int>(qualityRating);
+    }
+    return map;
+  }
+
+  SleepRecordsCompanion toCompanion(bool nullToAbsent) {
+    return SleepRecordsCompanion(
+      id: Value(id),
+      startTime: Value(startTime),
+      endTime: Value(endTime),
+      durationMinutes: Value(durationMinutes),
+      deepMinutes: deepMinutes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deepMinutes),
+      lightMinutes: lightMinutes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lightMinutes),
+      remMinutes: remMinutes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remMinutes),
+      awakeMinutes: awakeMinutes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(awakeMinutes),
+      source: Value(source),
+      qualityRating: qualityRating == null && nullToAbsent
+          ? const Value.absent()
+          : Value(qualityRating),
+    );
+  }
+
+  factory SleepRecord.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SleepRecord(
+      id: serializer.fromJson<String>(json['id']),
+      startTime: serializer.fromJson<DateTime>(json['startTime']),
+      endTime: serializer.fromJson<DateTime>(json['endTime']),
+      durationMinutes: serializer.fromJson<int>(json['durationMinutes']),
+      deepMinutes: serializer.fromJson<int?>(json['deepMinutes']),
+      lightMinutes: serializer.fromJson<int?>(json['lightMinutes']),
+      remMinutes: serializer.fromJson<int?>(json['remMinutes']),
+      awakeMinutes: serializer.fromJson<int?>(json['awakeMinutes']),
+      source: serializer.fromJson<String>(json['source']),
+      qualityRating: serializer.fromJson<int?>(json['qualityRating']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'startTime': serializer.toJson<DateTime>(startTime),
+      'endTime': serializer.toJson<DateTime>(endTime),
+      'durationMinutes': serializer.toJson<int>(durationMinutes),
+      'deepMinutes': serializer.toJson<int?>(deepMinutes),
+      'lightMinutes': serializer.toJson<int?>(lightMinutes),
+      'remMinutes': serializer.toJson<int?>(remMinutes),
+      'awakeMinutes': serializer.toJson<int?>(awakeMinutes),
+      'source': serializer.toJson<String>(source),
+      'qualityRating': serializer.toJson<int?>(qualityRating),
+    };
+  }
+
+  SleepRecord copyWith({
+    String? id,
+    DateTime? startTime,
+    DateTime? endTime,
+    int? durationMinutes,
+    Value<int?> deepMinutes = const Value.absent(),
+    Value<int?> lightMinutes = const Value.absent(),
+    Value<int?> remMinutes = const Value.absent(),
+    Value<int?> awakeMinutes = const Value.absent(),
+    String? source,
+    Value<int?> qualityRating = const Value.absent(),
+  }) => SleepRecord(
+    id: id ?? this.id,
+    startTime: startTime ?? this.startTime,
+    endTime: endTime ?? this.endTime,
+    durationMinutes: durationMinutes ?? this.durationMinutes,
+    deepMinutes: deepMinutes.present ? deepMinutes.value : this.deepMinutes,
+    lightMinutes: lightMinutes.present ? lightMinutes.value : this.lightMinutes,
+    remMinutes: remMinutes.present ? remMinutes.value : this.remMinutes,
+    awakeMinutes: awakeMinutes.present ? awakeMinutes.value : this.awakeMinutes,
+    source: source ?? this.source,
+    qualityRating: qualityRating.present
+        ? qualityRating.value
+        : this.qualityRating,
+  );
+  SleepRecord copyWithCompanion(SleepRecordsCompanion data) {
+    return SleepRecord(
+      id: data.id.present ? data.id.value : this.id,
+      startTime: data.startTime.present ? data.startTime.value : this.startTime,
+      endTime: data.endTime.present ? data.endTime.value : this.endTime,
+      durationMinutes: data.durationMinutes.present
+          ? data.durationMinutes.value
+          : this.durationMinutes,
+      deepMinutes: data.deepMinutes.present
+          ? data.deepMinutes.value
+          : this.deepMinutes,
+      lightMinutes: data.lightMinutes.present
+          ? data.lightMinutes.value
+          : this.lightMinutes,
+      remMinutes: data.remMinutes.present
+          ? data.remMinutes.value
+          : this.remMinutes,
+      awakeMinutes: data.awakeMinutes.present
+          ? data.awakeMinutes.value
+          : this.awakeMinutes,
+      source: data.source.present ? data.source.value : this.source,
+      qualityRating: data.qualityRating.present
+          ? data.qualityRating.value
+          : this.qualityRating,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SleepRecord(')
+          ..write('id: $id, ')
+          ..write('startTime: $startTime, ')
+          ..write('endTime: $endTime, ')
+          ..write('durationMinutes: $durationMinutes, ')
+          ..write('deepMinutes: $deepMinutes, ')
+          ..write('lightMinutes: $lightMinutes, ')
+          ..write('remMinutes: $remMinutes, ')
+          ..write('awakeMinutes: $awakeMinutes, ')
+          ..write('source: $source, ')
+          ..write('qualityRating: $qualityRating')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    startTime,
+    endTime,
+    durationMinutes,
+    deepMinutes,
+    lightMinutes,
+    remMinutes,
+    awakeMinutes,
+    source,
+    qualityRating,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SleepRecord &&
+          other.id == this.id &&
+          other.startTime == this.startTime &&
+          other.endTime == this.endTime &&
+          other.durationMinutes == this.durationMinutes &&
+          other.deepMinutes == this.deepMinutes &&
+          other.lightMinutes == this.lightMinutes &&
+          other.remMinutes == this.remMinutes &&
+          other.awakeMinutes == this.awakeMinutes &&
+          other.source == this.source &&
+          other.qualityRating == this.qualityRating);
+}
+
+class SleepRecordsCompanion extends UpdateCompanion<SleepRecord> {
+  final Value<String> id;
+  final Value<DateTime> startTime;
+  final Value<DateTime> endTime;
+  final Value<int> durationMinutes;
+  final Value<int?> deepMinutes;
+  final Value<int?> lightMinutes;
+  final Value<int?> remMinutes;
+  final Value<int?> awakeMinutes;
+  final Value<String> source;
+  final Value<int?> qualityRating;
+  final Value<int> rowid;
+  const SleepRecordsCompanion({
+    this.id = const Value.absent(),
+    this.startTime = const Value.absent(),
+    this.endTime = const Value.absent(),
+    this.durationMinutes = const Value.absent(),
+    this.deepMinutes = const Value.absent(),
+    this.lightMinutes = const Value.absent(),
+    this.remMinutes = const Value.absent(),
+    this.awakeMinutes = const Value.absent(),
+    this.source = const Value.absent(),
+    this.qualityRating = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SleepRecordsCompanion.insert({
+    required String id,
+    required DateTime startTime,
+    required DateTime endTime,
+    required int durationMinutes,
+    this.deepMinutes = const Value.absent(),
+    this.lightMinutes = const Value.absent(),
+    this.remMinutes = const Value.absent(),
+    this.awakeMinutes = const Value.absent(),
+    this.source = const Value.absent(),
+    this.qualityRating = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       startTime = Value(startTime),
+       endTime = Value(endTime),
+       durationMinutes = Value(durationMinutes);
+  static Insertable<SleepRecord> custom({
+    Expression<String>? id,
+    Expression<DateTime>? startTime,
+    Expression<DateTime>? endTime,
+    Expression<int>? durationMinutes,
+    Expression<int>? deepMinutes,
+    Expression<int>? lightMinutes,
+    Expression<int>? remMinutes,
+    Expression<int>? awakeMinutes,
+    Expression<String>? source,
+    Expression<int>? qualityRating,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (startTime != null) 'start_time': startTime,
+      if (endTime != null) 'end_time': endTime,
+      if (durationMinutes != null) 'duration_minutes': durationMinutes,
+      if (deepMinutes != null) 'deep_minutes': deepMinutes,
+      if (lightMinutes != null) 'light_minutes': lightMinutes,
+      if (remMinutes != null) 'rem_minutes': remMinutes,
+      if (awakeMinutes != null) 'awake_minutes': awakeMinutes,
+      if (source != null) 'source': source,
+      if (qualityRating != null) 'quality_rating': qualityRating,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SleepRecordsCompanion copyWith({
+    Value<String>? id,
+    Value<DateTime>? startTime,
+    Value<DateTime>? endTime,
+    Value<int>? durationMinutes,
+    Value<int?>? deepMinutes,
+    Value<int?>? lightMinutes,
+    Value<int?>? remMinutes,
+    Value<int?>? awakeMinutes,
+    Value<String>? source,
+    Value<int?>? qualityRating,
+    Value<int>? rowid,
+  }) {
+    return SleepRecordsCompanion(
+      id: id ?? this.id,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      durationMinutes: durationMinutes ?? this.durationMinutes,
+      deepMinutes: deepMinutes ?? this.deepMinutes,
+      lightMinutes: lightMinutes ?? this.lightMinutes,
+      remMinutes: remMinutes ?? this.remMinutes,
+      awakeMinutes: awakeMinutes ?? this.awakeMinutes,
+      source: source ?? this.source,
+      qualityRating: qualityRating ?? this.qualityRating,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (startTime.present) {
+      map['start_time'] = Variable<DateTime>(startTime.value);
+    }
+    if (endTime.present) {
+      map['end_time'] = Variable<DateTime>(endTime.value);
+    }
+    if (durationMinutes.present) {
+      map['duration_minutes'] = Variable<int>(durationMinutes.value);
+    }
+    if (deepMinutes.present) {
+      map['deep_minutes'] = Variable<int>(deepMinutes.value);
+    }
+    if (lightMinutes.present) {
+      map['light_minutes'] = Variable<int>(lightMinutes.value);
+    }
+    if (remMinutes.present) {
+      map['rem_minutes'] = Variable<int>(remMinutes.value);
+    }
+    if (awakeMinutes.present) {
+      map['awake_minutes'] = Variable<int>(awakeMinutes.value);
+    }
+    if (source.present) {
+      map['source'] = Variable<String>(source.value);
+    }
+    if (qualityRating.present) {
+      map['quality_rating'] = Variable<int>(qualityRating.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SleepRecordsCompanion(')
+          ..write('id: $id, ')
+          ..write('startTime: $startTime, ')
+          ..write('endTime: $endTime, ')
+          ..write('durationMinutes: $durationMinutes, ')
+          ..write('deepMinutes: $deepMinutes, ')
+          ..write('lightMinutes: $lightMinutes, ')
+          ..write('remMinutes: $remMinutes, ')
+          ..write('awakeMinutes: $awakeMinutes, ')
+          ..write('source: $source, ')
+          ..write('qualityRating: $qualityRating, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -7671,6 +8309,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $CommunityNotificationsTable communityNotifications =
       $CommunityNotificationsTable(this);
   late final $BlockedUsersTable blockedUsers = $BlockedUsersTable(this);
+  late final $SleepRecordsTable sleepRecords = $SleepRecordsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -7690,6 +8329,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     communityChallenges,
     communityNotifications,
     blockedUsers,
+    sleepRecords,
   ];
 }
 
@@ -11630,6 +12270,313 @@ typedef $$BlockedUsersTableProcessedTableManager =
       BlockedUser,
       PrefetchHooks Function()
     >;
+typedef $$SleepRecordsTableCreateCompanionBuilder =
+    SleepRecordsCompanion Function({
+      required String id,
+      required DateTime startTime,
+      required DateTime endTime,
+      required int durationMinutes,
+      Value<int?> deepMinutes,
+      Value<int?> lightMinutes,
+      Value<int?> remMinutes,
+      Value<int?> awakeMinutes,
+      Value<String> source,
+      Value<int?> qualityRating,
+      Value<int> rowid,
+    });
+typedef $$SleepRecordsTableUpdateCompanionBuilder =
+    SleepRecordsCompanion Function({
+      Value<String> id,
+      Value<DateTime> startTime,
+      Value<DateTime> endTime,
+      Value<int> durationMinutes,
+      Value<int?> deepMinutes,
+      Value<int?> lightMinutes,
+      Value<int?> remMinutes,
+      Value<int?> awakeMinutes,
+      Value<String> source,
+      Value<int?> qualityRating,
+      Value<int> rowid,
+    });
+
+class $$SleepRecordsTableFilterComposer
+    extends Composer<_$AppDatabase, $SleepRecordsTable> {
+  $$SleepRecordsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get startTime => $composableBuilder(
+    column: $table.startTime,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get endTime => $composableBuilder(
+    column: $table.endTime,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get durationMinutes => $composableBuilder(
+    column: $table.durationMinutes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get deepMinutes => $composableBuilder(
+    column: $table.deepMinutes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get lightMinutes => $composableBuilder(
+    column: $table.lightMinutes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get remMinutes => $composableBuilder(
+    column: $table.remMinutes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get awakeMinutes => $composableBuilder(
+    column: $table.awakeMinutes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get source => $composableBuilder(
+    column: $table.source,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get qualityRating => $composableBuilder(
+    column: $table.qualityRating,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SleepRecordsTableOrderingComposer
+    extends Composer<_$AppDatabase, $SleepRecordsTable> {
+  $$SleepRecordsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get startTime => $composableBuilder(
+    column: $table.startTime,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get endTime => $composableBuilder(
+    column: $table.endTime,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get durationMinutes => $composableBuilder(
+    column: $table.durationMinutes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get deepMinutes => $composableBuilder(
+    column: $table.deepMinutes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get lightMinutes => $composableBuilder(
+    column: $table.lightMinutes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get remMinutes => $composableBuilder(
+    column: $table.remMinutes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get awakeMinutes => $composableBuilder(
+    column: $table.awakeMinutes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get source => $composableBuilder(
+    column: $table.source,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get qualityRating => $composableBuilder(
+    column: $table.qualityRating,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SleepRecordsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SleepRecordsTable> {
+  $$SleepRecordsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get startTime =>
+      $composableBuilder(column: $table.startTime, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get endTime =>
+      $composableBuilder(column: $table.endTime, builder: (column) => column);
+
+  GeneratedColumn<int> get durationMinutes => $composableBuilder(
+    column: $table.durationMinutes,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get deepMinutes => $composableBuilder(
+    column: $table.deepMinutes,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get lightMinutes => $composableBuilder(
+    column: $table.lightMinutes,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get remMinutes => $composableBuilder(
+    column: $table.remMinutes,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get awakeMinutes => $composableBuilder(
+    column: $table.awakeMinutes,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get source =>
+      $composableBuilder(column: $table.source, builder: (column) => column);
+
+  GeneratedColumn<int> get qualityRating => $composableBuilder(
+    column: $table.qualityRating,
+    builder: (column) => column,
+  );
+}
+
+class $$SleepRecordsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SleepRecordsTable,
+          SleepRecord,
+          $$SleepRecordsTableFilterComposer,
+          $$SleepRecordsTableOrderingComposer,
+          $$SleepRecordsTableAnnotationComposer,
+          $$SleepRecordsTableCreateCompanionBuilder,
+          $$SleepRecordsTableUpdateCompanionBuilder,
+          (
+            SleepRecord,
+            BaseReferences<_$AppDatabase, $SleepRecordsTable, SleepRecord>,
+          ),
+          SleepRecord,
+          PrefetchHooks Function()
+        > {
+  $$SleepRecordsTableTableManager(_$AppDatabase db, $SleepRecordsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SleepRecordsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SleepRecordsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SleepRecordsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<DateTime> startTime = const Value.absent(),
+                Value<DateTime> endTime = const Value.absent(),
+                Value<int> durationMinutes = const Value.absent(),
+                Value<int?> deepMinutes = const Value.absent(),
+                Value<int?> lightMinutes = const Value.absent(),
+                Value<int?> remMinutes = const Value.absent(),
+                Value<int?> awakeMinutes = const Value.absent(),
+                Value<String> source = const Value.absent(),
+                Value<int?> qualityRating = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SleepRecordsCompanion(
+                id: id,
+                startTime: startTime,
+                endTime: endTime,
+                durationMinutes: durationMinutes,
+                deepMinutes: deepMinutes,
+                lightMinutes: lightMinutes,
+                remMinutes: remMinutes,
+                awakeMinutes: awakeMinutes,
+                source: source,
+                qualityRating: qualityRating,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required DateTime startTime,
+                required DateTime endTime,
+                required int durationMinutes,
+                Value<int?> deepMinutes = const Value.absent(),
+                Value<int?> lightMinutes = const Value.absent(),
+                Value<int?> remMinutes = const Value.absent(),
+                Value<int?> awakeMinutes = const Value.absent(),
+                Value<String> source = const Value.absent(),
+                Value<int?> qualityRating = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SleepRecordsCompanion.insert(
+                id: id,
+                startTime: startTime,
+                endTime: endTime,
+                durationMinutes: durationMinutes,
+                deepMinutes: deepMinutes,
+                lightMinutes: lightMinutes,
+                remMinutes: remMinutes,
+                awakeMinutes: awakeMinutes,
+                source: source,
+                qualityRating: qualityRating,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SleepRecordsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SleepRecordsTable,
+      SleepRecord,
+      $$SleepRecordsTableFilterComposer,
+      $$SleepRecordsTableOrderingComposer,
+      $$SleepRecordsTableAnnotationComposer,
+      $$SleepRecordsTableCreateCompanionBuilder,
+      $$SleepRecordsTableUpdateCompanionBuilder,
+      (
+        SleepRecord,
+        BaseReferences<_$AppDatabase, $SleepRecordsTable, SleepRecord>,
+      ),
+      SleepRecord,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -11665,4 +12612,6 @@ class $AppDatabaseManager {
       );
   $$BlockedUsersTableTableManager get blockedUsers =>
       $$BlockedUsersTableTableManager(_db, _db.blockedUsers);
+  $$SleepRecordsTableTableManager get sleepRecords =>
+      $$SleepRecordsTableTableManager(_db, _db.sleepRecords);
 }

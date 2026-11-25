@@ -11,6 +11,7 @@ import 'features/nutrition/data/nutrition_repository.dart';
 import 'features/nutrition/presentation/log_meal_bottom_sheet.dart';
 import 'features/nutrition/presentation/nutrition_screen.dart';
 import 'features/run_tracking/presentation/run_tracker_screen.dart';
+import 'features/sleep/presentation/sleep_tracking_screen.dart';
 import 'features/workouts/presentation/workout_routines_screen.dart';
 import 'health_service.dart';
 
@@ -250,6 +251,18 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
+          IconButton(
+            tooltip: 'Sleep & Chronotype',
+            icon: const Icon(Icons.bedtime_outlined, color: Color(0xFF0F766E)),
+            onPressed: () {
+              final db = ref.read(databaseProvider);
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => SleepTrackingScreen(db: db),
+                ),
+              );
+            },
+          ),
           Container(
             margin: const EdgeInsets.only(right: 14),
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

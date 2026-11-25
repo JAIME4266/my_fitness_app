@@ -207,6 +207,22 @@ class UserMetabolicProfiles extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+class SleepRecords extends Table {
+  TextColumn get id => text()();
+  DateTimeColumn get startTime => dateTime()();
+  DateTimeColumn get endTime => dateTime()();
+  IntColumn get durationMinutes => integer()();
+  IntColumn get deepMinutes => integer().nullable()();
+  IntColumn get lightMinutes => integer().nullable()();
+  IntColumn get remMinutes => integer().nullable()();
+  IntColumn get awakeMinutes => integer().nullable()();
+  TextColumn get source => text().withDefault(const Constant('manual'))();
+  IntColumn get qualityRating => integer().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 @DriftDatabase(
   tables: [
     DailySummaries,
@@ -223,6 +239,7 @@ class UserMetabolicProfiles extends Table {
     CommunityChallenges,
     CommunityNotifications,
     BlockedUsers,
+    SleepRecords,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -230,7 +247,7 @@ class AppDatabase extends _$AppDatabase {
       : super(e ?? driftDatabase(name: 'fitness_app'));
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -238,6 +255,9 @@ class AppDatabase extends _$AppDatabase {
           await m.createAll();
         },
         onUpgrade: (Migrator m, int from, int to) async {
+          if (from < 5) {
+            await m.createTable(sleepRecords);
+          }
           if (from < 2) {
             await m.createTable(foodCatalog);
             await m.createTable(userMetabolicProfiles);
