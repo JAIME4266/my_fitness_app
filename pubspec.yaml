@@ -42,6 +42,7 @@ dependencies:
   google_fonts: ^6.2.1
   fl_chart: ^0.68.0
   shared_preferences: ^2.2.3
+  mobile_scanner: ^6.0.2
   
   # -- Database & Offline Storage --
   drift: ^2.20.0

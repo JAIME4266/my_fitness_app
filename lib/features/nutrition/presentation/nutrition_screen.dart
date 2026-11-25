@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../database/database.dart';
 import '../data/nutrition_repository.dart';
 import 'ai_food_scanner_screen.dart';
+import 'barcode_scanner_screen.dart';
 import 'log_meal_bottom_sheet.dart';
 import 'metabolic_calculator_sheet.dart';
 
@@ -56,6 +57,17 @@ class _NutritionScreenState extends ConsumerState<NutritionScreen> {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (_) => const AiFoodScannerScreen()),
+              );
+            },
+          ),
+          IconButton(
+            tooltip: 'Barcode Scanner',
+            icon: const Icon(Icons.qr_code_scanner, color: Color(0xFF0F766E)),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => BarcodeScannerScreen(repository: repo),
+                ),
               );
             },
           ),
