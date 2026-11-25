@@ -11,6 +11,7 @@ import 'features/nutrition/data/nutrition_repository.dart';
 import 'features/nutrition/presentation/log_meal_bottom_sheet.dart';
 import 'features/nutrition/presentation/nutrition_screen.dart';
 import 'features/run_tracking/presentation/run_tracker_screen.dart';
+import 'features/workouts/presentation/workout_routines_screen.dart';
 import 'health_service.dart';
 
 Future<void> main() async {
@@ -62,9 +63,13 @@ class _AppShellState extends State<AppShell> {
         index: _selectedIndex,
         children: [
           DashboardScreen(
-            onNavigateToNutrition: () => setState(() => _selectedIndex = 1),
+            onNavigateToNutrition: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const NutritionScreen()),
+              );
+            },
           ),
-          const NutritionScreen(),
+          const WorkoutRoutinesScreen(),
           const RunTrackerScreen(),
           const CommunityScreen(),
           const ChallengesScreen(),
@@ -82,10 +87,9 @@ class _AppShellState extends State<AppShell> {
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.restaurant_menu_outlined),
-            selectedIcon:
-                Icon(Icons.restaurant_menu, color: Color(0xFF0F766E)),
-            label: 'Nutrition',
+            icon: Icon(Icons.assignment_outlined),
+            selectedIcon: Icon(Icons.assignment, color: Color(0xFF0F766E)),
+            label: 'Training',
           ),
           NavigationDestination(
             icon: Icon(Icons.directions_run_outlined),

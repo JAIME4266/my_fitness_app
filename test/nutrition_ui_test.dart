@@ -60,8 +60,8 @@ void main() {
     // Default serving 160g cooked moong dal -> 50g raw -> 174 kcal
     expect(find.text('174'), findsOneWidget);
 
-    // Navigate to Nutrition tab and verify diary displays logged item
-    await tester.tap(find.text('Nutrition'));
+    // Navigate to Nutrition screen via Food Diary button and verify diary displays logged item
+    await tester.tap(find.text('Food Diary'));
     await tester.pumpAndSettle();
 
     expect(find.text('Nutrition & IFCT Lab'), findsOneWidget);
