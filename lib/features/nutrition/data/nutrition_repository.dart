@@ -497,10 +497,110 @@ class NutritionRepository {
     return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
   }
 
+  Future<Map<String, DailyMacroTotals>> getMealBreakdownForDate(
+      DateTime date) async {
+    final meals = await watchMealsForDate(date).first;
+    final breakdown = <String, DailyMacroTotals>{
+      'Breakfast': const DailyMacroTotals(),
+      'Lunch': const DailyMacroTotals(),
+      'Dinner': const DailyMacroTotals(),
+      'Snack': const DailyMacroTotals(),
+    };
+    for (final m in meals) {
+      final key = breakdown.containsKey(m.mealType) ? m.mealType : 'Snack';
+      final prev = breakdown[key]!;
+      breakdown[key] = DailyMacroTotals(
+        calories: prev.calories + m.calculatedKcal,
+        proteinG: prev.proteinG + m.proteinG,
+        carbsG: prev.carbsG + m.carbsG,
+        fatG: prev.fatG + m.fatG,
+        fibreG: prev.fibreG + m.fibreG,
+      );
+    }
+    return breakdown;
+  }
+
+  Future<List<MapEntry<DateTime, DailyMacroTotals>>> getDailyCalorieHistory(
+      int days) async {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final result = <MapEntry<DateTime, DailyMacroTotals>>[];
+    for (int i = days - 1; i >= 0; i--) {
+      final day = today.subtract(Duration(days: i));
+      final meals = await watchMealsForDate(day).first;
+      double cal = 0, p = 0, c = 0, f = 0, fib = 0;
+      for (final m in meals) {
+        cal += m.calculatedKcal;
+        p += m.proteinG;
+        c += m.carbsG;
+        f += m.fatG;
+        fib += m.fibreG;
+      }
+      result.add(MapEntry(
+        day,
+        DailyMacroTotals(
+          calories: _round1(cal),
+          proteinG: _round1(p),
+          carbsG: _round1(c),
+          fatG: _round1(f),
+          fibreG: _round1(fib),
+        ),
+      ));
+    }
+    return result;
+  }
+
+  Future<void> saveCustomNutritionGoals({
+    required int dailyCalorieGoal,
+    required double proteinTargetG,
+    required double carbsTargetG,
+    required double fatTargetG,
+    required double fibreTargetG,
+    required String goalType,
+  }) async {
+    await ensureSeeded();
+    final existing = await db.getMetabolicProfile();
+    await db.upsertMetabolicProfile(
+      UserMetabolicProfilesCompanion(
+        id: Value(existing?.id ?? 1),
+        name: Value(existing?.name ?? 'Athlete'),
+        age: Value(existing?.age ?? 24),
+        sex: Value(existing?.sex ?? 'male'),
+        heightCm: Value(existing?.heightCm ?? 175.0),
+        weightKg: Value(existing?.weightKg ?? 75.0),
+        bodyFatPct: Value(existing?.bodyFatPct ?? 18.0),
+        bmrFormula: Value(existing?.bmrFormula ?? 'mifflin'),
+        activityMultiplier: Value(existing?.activityMultiplier ?? 1.2),
+        goalDeltaKcal: Value(existing?.goalDeltaKcal ?? 0),
+        dailyCalorieGoal: Value(dailyCalorieGoal),
+        proteinTargetG: Value(_round1(proteinTargetG)),
+        carbsTargetG: Value(_round1(carbsTargetG)),
+        fatTargetG: Value(_round1(fatTargetG)),
+        fibreTargetG: Value(_round1(fibreTargetG)),
+      ),
+    );
+  }
+
   String _nextId(String prefix) {
     _idCounter += 1;
     return '${prefix}_${DateTime.now().microsecondsSinceEpoch}_$_idCounter';
   }
 
   static double _round1(double v) => (v * 10).roundToDouble() / 10.0;
+}
+
+class DailyMacroTotals {
+  final double calories;
+  final double proteinG;
+  final double carbsG;
+  final double fatG;
+  final double fibreG;
+
+  const DailyMacroTotals({
+    this.calories = 0.0,
+    this.proteinG = 0.0,
+    this.carbsG = 0.0,
+    this.fatG = 0.0,
+    this.fibreG = 0.0,
+  });
 }

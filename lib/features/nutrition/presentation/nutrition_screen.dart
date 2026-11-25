@@ -6,6 +6,7 @@ import '../data/nutrition_repository.dart';
 import 'ai_food_scanner_screen.dart';
 import 'barcode_scanner_screen.dart';
 import 'log_meal_bottom_sheet.dart';
+import 'nutrition_goals_screen.dart';
 import 'metabolic_calculator_sheet.dart';
 
 class NutritionScreen extends ConsumerStatefulWidget {
@@ -67,6 +68,17 @@ class _NutritionScreenState extends ConsumerState<NutritionScreen> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) => BarcodeScannerScreen(repository: repo),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            tooltip: 'Goals & Trends',
+            icon: const Icon(Icons.tune, color: Color(0xFF0F766E)),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => NutritionGoalsScreen(repository: repo),
                 ),
               );
             },
