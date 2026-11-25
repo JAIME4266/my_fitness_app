@@ -4334,6 +4334,3318 @@ class UserMetabolicProfilesCompanion
   }
 }
 
+class $CommunityProfilesTable extends CommunityProfiles
+    with TableInfo<$CommunityProfilesTable, CommunityProfile> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CommunityProfilesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _usernameMeta = const VerificationMeta(
+    'username',
+  );
+  @override
+  late final GeneratedColumn<String> username = GeneratedColumn<String>(
+    'username',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _displayNameMeta = const VerificationMeta(
+    'displayName',
+  );
+  @override
+  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
+    'display_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dailyGoalKmMeta = const VerificationMeta(
+    'dailyGoalKm',
+  );
+  @override
+  late final GeneratedColumn<double> dailyGoalKm = GeneratedColumn<double>(
+    'daily_goal_km',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(5.0),
+  );
+  static const VerificationMeta _todayDistanceKmMeta = const VerificationMeta(
+    'todayDistanceKm',
+  );
+  @override
+  late final GeneratedColumn<double> todayDistanceKm = GeneratedColumn<double>(
+    'today_distance_km',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0.0),
+  );
+  static const VerificationMeta _isPrivateMeta = const VerificationMeta(
+    'isPrivate',
+  );
+  @override
+  late final GeneratedColumn<bool> isPrivate = GeneratedColumn<bool>(
+    'is_private',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_private" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _isFollowingMeta = const VerificationMeta(
+    'isFollowing',
+  );
+  @override
+  late final GeneratedColumn<bool> isFollowing = GeneratedColumn<bool>(
+    'is_following',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_following" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    username,
+    displayName,
+    dailyGoalKm,
+    todayDistanceKm,
+    isPrivate,
+    isFollowing,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'community_profiles';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CommunityProfile> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('username')) {
+      context.handle(
+        _usernameMeta,
+        username.isAcceptableOrUnknown(data['username']!, _usernameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_usernameMeta);
+    }
+    if (data.containsKey('display_name')) {
+      context.handle(
+        _displayNameMeta,
+        displayName.isAcceptableOrUnknown(
+          data['display_name']!,
+          _displayNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_displayNameMeta);
+    }
+    if (data.containsKey('daily_goal_km')) {
+      context.handle(
+        _dailyGoalKmMeta,
+        dailyGoalKm.isAcceptableOrUnknown(
+          data['daily_goal_km']!,
+          _dailyGoalKmMeta,
+        ),
+      );
+    }
+    if (data.containsKey('today_distance_km')) {
+      context.handle(
+        _todayDistanceKmMeta,
+        todayDistanceKm.isAcceptableOrUnknown(
+          data['today_distance_km']!,
+          _todayDistanceKmMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_private')) {
+      context.handle(
+        _isPrivateMeta,
+        isPrivate.isAcceptableOrUnknown(data['is_private']!, _isPrivateMeta),
+      );
+    }
+    if (data.containsKey('is_following')) {
+      context.handle(
+        _isFollowingMeta,
+        isFollowing.isAcceptableOrUnknown(
+          data['is_following']!,
+          _isFollowingMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CommunityProfile map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CommunityProfile(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      username: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}username'],
+      )!,
+      displayName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}display_name'],
+      )!,
+      dailyGoalKm: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}daily_goal_km'],
+      )!,
+      todayDistanceKm: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}today_distance_km'],
+      )!,
+      isPrivate: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_private'],
+      )!,
+      isFollowing: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_following'],
+      )!,
+    );
+  }
+
+  @override
+  $CommunityProfilesTable createAlias(String alias) {
+    return $CommunityProfilesTable(attachedDatabase, alias);
+  }
+}
+
+class CommunityProfile extends DataClass
+    implements Insertable<CommunityProfile> {
+  final String id;
+  final String username;
+  final String displayName;
+  final double dailyGoalKm;
+  final double todayDistanceKm;
+  final bool isPrivate;
+  final bool isFollowing;
+  const CommunityProfile({
+    required this.id,
+    required this.username,
+    required this.displayName,
+    required this.dailyGoalKm,
+    required this.todayDistanceKm,
+    required this.isPrivate,
+    required this.isFollowing,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['username'] = Variable<String>(username);
+    map['display_name'] = Variable<String>(displayName);
+    map['daily_goal_km'] = Variable<double>(dailyGoalKm);
+    map['today_distance_km'] = Variable<double>(todayDistanceKm);
+    map['is_private'] = Variable<bool>(isPrivate);
+    map['is_following'] = Variable<bool>(isFollowing);
+    return map;
+  }
+
+  CommunityProfilesCompanion toCompanion(bool nullToAbsent) {
+    return CommunityProfilesCompanion(
+      id: Value(id),
+      username: Value(username),
+      displayName: Value(displayName),
+      dailyGoalKm: Value(dailyGoalKm),
+      todayDistanceKm: Value(todayDistanceKm),
+      isPrivate: Value(isPrivate),
+      isFollowing: Value(isFollowing),
+    );
+  }
+
+  factory CommunityProfile.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CommunityProfile(
+      id: serializer.fromJson<String>(json['id']),
+      username: serializer.fromJson<String>(json['username']),
+      displayName: serializer.fromJson<String>(json['displayName']),
+      dailyGoalKm: serializer.fromJson<double>(json['dailyGoalKm']),
+      todayDistanceKm: serializer.fromJson<double>(json['todayDistanceKm']),
+      isPrivate: serializer.fromJson<bool>(json['isPrivate']),
+      isFollowing: serializer.fromJson<bool>(json['isFollowing']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'username': serializer.toJson<String>(username),
+      'displayName': serializer.toJson<String>(displayName),
+      'dailyGoalKm': serializer.toJson<double>(dailyGoalKm),
+      'todayDistanceKm': serializer.toJson<double>(todayDistanceKm),
+      'isPrivate': serializer.toJson<bool>(isPrivate),
+      'isFollowing': serializer.toJson<bool>(isFollowing),
+    };
+  }
+
+  CommunityProfile copyWith({
+    String? id,
+    String? username,
+    String? displayName,
+    double? dailyGoalKm,
+    double? todayDistanceKm,
+    bool? isPrivate,
+    bool? isFollowing,
+  }) => CommunityProfile(
+    id: id ?? this.id,
+    username: username ?? this.username,
+    displayName: displayName ?? this.displayName,
+    dailyGoalKm: dailyGoalKm ?? this.dailyGoalKm,
+    todayDistanceKm: todayDistanceKm ?? this.todayDistanceKm,
+    isPrivate: isPrivate ?? this.isPrivate,
+    isFollowing: isFollowing ?? this.isFollowing,
+  );
+  CommunityProfile copyWithCompanion(CommunityProfilesCompanion data) {
+    return CommunityProfile(
+      id: data.id.present ? data.id.value : this.id,
+      username: data.username.present ? data.username.value : this.username,
+      displayName: data.displayName.present
+          ? data.displayName.value
+          : this.displayName,
+      dailyGoalKm: data.dailyGoalKm.present
+          ? data.dailyGoalKm.value
+          : this.dailyGoalKm,
+      todayDistanceKm: data.todayDistanceKm.present
+          ? data.todayDistanceKm.value
+          : this.todayDistanceKm,
+      isPrivate: data.isPrivate.present ? data.isPrivate.value : this.isPrivate,
+      isFollowing: data.isFollowing.present
+          ? data.isFollowing.value
+          : this.isFollowing,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommunityProfile(')
+          ..write('id: $id, ')
+          ..write('username: $username, ')
+          ..write('displayName: $displayName, ')
+          ..write('dailyGoalKm: $dailyGoalKm, ')
+          ..write('todayDistanceKm: $todayDistanceKm, ')
+          ..write('isPrivate: $isPrivate, ')
+          ..write('isFollowing: $isFollowing')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    username,
+    displayName,
+    dailyGoalKm,
+    todayDistanceKm,
+    isPrivate,
+    isFollowing,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CommunityProfile &&
+          other.id == this.id &&
+          other.username == this.username &&
+          other.displayName == this.displayName &&
+          other.dailyGoalKm == this.dailyGoalKm &&
+          other.todayDistanceKm == this.todayDistanceKm &&
+          other.isPrivate == this.isPrivate &&
+          other.isFollowing == this.isFollowing);
+}
+
+class CommunityProfilesCompanion extends UpdateCompanion<CommunityProfile> {
+  final Value<String> id;
+  final Value<String> username;
+  final Value<String> displayName;
+  final Value<double> dailyGoalKm;
+  final Value<double> todayDistanceKm;
+  final Value<bool> isPrivate;
+  final Value<bool> isFollowing;
+  final Value<int> rowid;
+  const CommunityProfilesCompanion({
+    this.id = const Value.absent(),
+    this.username = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.dailyGoalKm = const Value.absent(),
+    this.todayDistanceKm = const Value.absent(),
+    this.isPrivate = const Value.absent(),
+    this.isFollowing = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CommunityProfilesCompanion.insert({
+    required String id,
+    required String username,
+    required String displayName,
+    this.dailyGoalKm = const Value.absent(),
+    this.todayDistanceKm = const Value.absent(),
+    this.isPrivate = const Value.absent(),
+    this.isFollowing = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       username = Value(username),
+       displayName = Value(displayName);
+  static Insertable<CommunityProfile> custom({
+    Expression<String>? id,
+    Expression<String>? username,
+    Expression<String>? displayName,
+    Expression<double>? dailyGoalKm,
+    Expression<double>? todayDistanceKm,
+    Expression<bool>? isPrivate,
+    Expression<bool>? isFollowing,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (username != null) 'username': username,
+      if (displayName != null) 'display_name': displayName,
+      if (dailyGoalKm != null) 'daily_goal_km': dailyGoalKm,
+      if (todayDistanceKm != null) 'today_distance_km': todayDistanceKm,
+      if (isPrivate != null) 'is_private': isPrivate,
+      if (isFollowing != null) 'is_following': isFollowing,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CommunityProfilesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? username,
+    Value<String>? displayName,
+    Value<double>? dailyGoalKm,
+    Value<double>? todayDistanceKm,
+    Value<bool>? isPrivate,
+    Value<bool>? isFollowing,
+    Value<int>? rowid,
+  }) {
+    return CommunityProfilesCompanion(
+      id: id ?? this.id,
+      username: username ?? this.username,
+      displayName: displayName ?? this.displayName,
+      dailyGoalKm: dailyGoalKm ?? this.dailyGoalKm,
+      todayDistanceKm: todayDistanceKm ?? this.todayDistanceKm,
+      isPrivate: isPrivate ?? this.isPrivate,
+      isFollowing: isFollowing ?? this.isFollowing,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (username.present) {
+      map['username'] = Variable<String>(username.value);
+    }
+    if (displayName.present) {
+      map['display_name'] = Variable<String>(displayName.value);
+    }
+    if (dailyGoalKm.present) {
+      map['daily_goal_km'] = Variable<double>(dailyGoalKm.value);
+    }
+    if (todayDistanceKm.present) {
+      map['today_distance_km'] = Variable<double>(todayDistanceKm.value);
+    }
+    if (isPrivate.present) {
+      map['is_private'] = Variable<bool>(isPrivate.value);
+    }
+    if (isFollowing.present) {
+      map['is_following'] = Variable<bool>(isFollowing.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommunityProfilesCompanion(')
+          ..write('id: $id, ')
+          ..write('username: $username, ')
+          ..write('displayName: $displayName, ')
+          ..write('dailyGoalKm: $dailyGoalKm, ')
+          ..write('todayDistanceKm: $todayDistanceKm, ')
+          ..write('isPrivate: $isPrivate, ')
+          ..write('isFollowing: $isFollowing, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CommunityPostsTable extends CommunityPosts
+    with TableInfo<$CommunityPostsTable, CommunityPost> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CommunityPostsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _authorNameMeta = const VerificationMeta(
+    'authorName',
+  );
+  @override
+  late final GeneratedColumn<String> authorName = GeneratedColumn<String>(
+    'author_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _distanceKmMeta = const VerificationMeta(
+    'distanceKm',
+  );
+  @override
+  late final GeneratedColumn<double> distanceKm = GeneratedColumn<double>(
+    'distance_km',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _durationSecMeta = const VerificationMeta(
+    'durationSec',
+  );
+  @override
+  late final GeneratedColumn<int> durationSec = GeneratedColumn<int>(
+    'duration_sec',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _paceLabelMeta = const VerificationMeta(
+    'paceLabel',
+  );
+  @override
+  late final GeneratedColumn<String> paceLabel = GeneratedColumn<String>(
+    'pace_label',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _polylineJsonMeta = const VerificationMeta(
+    'polylineJson',
+  );
+  @override
+  late final GeneratedColumn<String> polylineJson = GeneratedColumn<String>(
+    'polyline_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _workoutBadgeMeta = const VerificationMeta(
+    'workoutBadge',
+  );
+  @override
+  late final GeneratedColumn<String> workoutBadge = GeneratedColumn<String>(
+    'workout_badge',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _visibilityMeta = const VerificationMeta(
+    'visibility',
+  );
+  @override
+  late final GeneratedColumn<String> visibility = GeneratedColumn<String>(
+    'visibility',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('public'),
+  );
+  static const VerificationMeta _createdAtMsMeta = const VerificationMeta(
+    'createdAtMs',
+  );
+  @override
+  late final GeneratedColumn<int> createdAtMs = GeneratedColumn<int>(
+    'created_at_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    userId,
+    authorName,
+    title,
+    distanceKm,
+    durationSec,
+    paceLabel,
+    polylineJson,
+    workoutBadge,
+    visibility,
+    createdAtMs,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'community_posts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CommunityPost> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('author_name')) {
+      context.handle(
+        _authorNameMeta,
+        authorName.isAcceptableOrUnknown(data['author_name']!, _authorNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_authorNameMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('distance_km')) {
+      context.handle(
+        _distanceKmMeta,
+        distanceKm.isAcceptableOrUnknown(data['distance_km']!, _distanceKmMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_distanceKmMeta);
+    }
+    if (data.containsKey('duration_sec')) {
+      context.handle(
+        _durationSecMeta,
+        durationSec.isAcceptableOrUnknown(
+          data['duration_sec']!,
+          _durationSecMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_durationSecMeta);
+    }
+    if (data.containsKey('pace_label')) {
+      context.handle(
+        _paceLabelMeta,
+        paceLabel.isAcceptableOrUnknown(data['pace_label']!, _paceLabelMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_paceLabelMeta);
+    }
+    if (data.containsKey('polyline_json')) {
+      context.handle(
+        _polylineJsonMeta,
+        polylineJson.isAcceptableOrUnknown(
+          data['polyline_json']!,
+          _polylineJsonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('workout_badge')) {
+      context.handle(
+        _workoutBadgeMeta,
+        workoutBadge.isAcceptableOrUnknown(
+          data['workout_badge']!,
+          _workoutBadgeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('visibility')) {
+      context.handle(
+        _visibilityMeta,
+        visibility.isAcceptableOrUnknown(data['visibility']!, _visibilityMeta),
+      );
+    }
+    if (data.containsKey('created_at_ms')) {
+      context.handle(
+        _createdAtMsMeta,
+        createdAtMs.isAcceptableOrUnknown(
+          data['created_at_ms']!,
+          _createdAtMsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMsMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CommunityPost map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CommunityPost(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      authorName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}author_name'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      distanceKm: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}distance_km'],
+      )!,
+      durationSec: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}duration_sec'],
+      )!,
+      paceLabel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}pace_label'],
+      )!,
+      polylineJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}polyline_json'],
+      ),
+      workoutBadge: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}workout_badge'],
+      ),
+      visibility: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}visibility'],
+      )!,
+      createdAtMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at_ms'],
+      )!,
+    );
+  }
+
+  @override
+  $CommunityPostsTable createAlias(String alias) {
+    return $CommunityPostsTable(attachedDatabase, alias);
+  }
+}
+
+class CommunityPost extends DataClass implements Insertable<CommunityPost> {
+  final String id;
+  final String userId;
+  final String authorName;
+  final String title;
+  final double distanceKm;
+  final int durationSec;
+  final String paceLabel;
+  final String? polylineJson;
+  final String? workoutBadge;
+  final String visibility;
+  final int createdAtMs;
+  const CommunityPost({
+    required this.id,
+    required this.userId,
+    required this.authorName,
+    required this.title,
+    required this.distanceKm,
+    required this.durationSec,
+    required this.paceLabel,
+    this.polylineJson,
+    this.workoutBadge,
+    required this.visibility,
+    required this.createdAtMs,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['user_id'] = Variable<String>(userId);
+    map['author_name'] = Variable<String>(authorName);
+    map['title'] = Variable<String>(title);
+    map['distance_km'] = Variable<double>(distanceKm);
+    map['duration_sec'] = Variable<int>(durationSec);
+    map['pace_label'] = Variable<String>(paceLabel);
+    if (!nullToAbsent || polylineJson != null) {
+      map['polyline_json'] = Variable<String>(polylineJson);
+    }
+    if (!nullToAbsent || workoutBadge != null) {
+      map['workout_badge'] = Variable<String>(workoutBadge);
+    }
+    map['visibility'] = Variable<String>(visibility);
+    map['created_at_ms'] = Variable<int>(createdAtMs);
+    return map;
+  }
+
+  CommunityPostsCompanion toCompanion(bool nullToAbsent) {
+    return CommunityPostsCompanion(
+      id: Value(id),
+      userId: Value(userId),
+      authorName: Value(authorName),
+      title: Value(title),
+      distanceKm: Value(distanceKm),
+      durationSec: Value(durationSec),
+      paceLabel: Value(paceLabel),
+      polylineJson: polylineJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(polylineJson),
+      workoutBadge: workoutBadge == null && nullToAbsent
+          ? const Value.absent()
+          : Value(workoutBadge),
+      visibility: Value(visibility),
+      createdAtMs: Value(createdAtMs),
+    );
+  }
+
+  factory CommunityPost.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CommunityPost(
+      id: serializer.fromJson<String>(json['id']),
+      userId: serializer.fromJson<String>(json['userId']),
+      authorName: serializer.fromJson<String>(json['authorName']),
+      title: serializer.fromJson<String>(json['title']),
+      distanceKm: serializer.fromJson<double>(json['distanceKm']),
+      durationSec: serializer.fromJson<int>(json['durationSec']),
+      paceLabel: serializer.fromJson<String>(json['paceLabel']),
+      polylineJson: serializer.fromJson<String?>(json['polylineJson']),
+      workoutBadge: serializer.fromJson<String?>(json['workoutBadge']),
+      visibility: serializer.fromJson<String>(json['visibility']),
+      createdAtMs: serializer.fromJson<int>(json['createdAtMs']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'userId': serializer.toJson<String>(userId),
+      'authorName': serializer.toJson<String>(authorName),
+      'title': serializer.toJson<String>(title),
+      'distanceKm': serializer.toJson<double>(distanceKm),
+      'durationSec': serializer.toJson<int>(durationSec),
+      'paceLabel': serializer.toJson<String>(paceLabel),
+      'polylineJson': serializer.toJson<String?>(polylineJson),
+      'workoutBadge': serializer.toJson<String?>(workoutBadge),
+      'visibility': serializer.toJson<String>(visibility),
+      'createdAtMs': serializer.toJson<int>(createdAtMs),
+    };
+  }
+
+  CommunityPost copyWith({
+    String? id,
+    String? userId,
+    String? authorName,
+    String? title,
+    double? distanceKm,
+    int? durationSec,
+    String? paceLabel,
+    Value<String?> polylineJson = const Value.absent(),
+    Value<String?> workoutBadge = const Value.absent(),
+    String? visibility,
+    int? createdAtMs,
+  }) => CommunityPost(
+    id: id ?? this.id,
+    userId: userId ?? this.userId,
+    authorName: authorName ?? this.authorName,
+    title: title ?? this.title,
+    distanceKm: distanceKm ?? this.distanceKm,
+    durationSec: durationSec ?? this.durationSec,
+    paceLabel: paceLabel ?? this.paceLabel,
+    polylineJson: polylineJson.present ? polylineJson.value : this.polylineJson,
+    workoutBadge: workoutBadge.present ? workoutBadge.value : this.workoutBadge,
+    visibility: visibility ?? this.visibility,
+    createdAtMs: createdAtMs ?? this.createdAtMs,
+  );
+  CommunityPost copyWithCompanion(CommunityPostsCompanion data) {
+    return CommunityPost(
+      id: data.id.present ? data.id.value : this.id,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      authorName: data.authorName.present
+          ? data.authorName.value
+          : this.authorName,
+      title: data.title.present ? data.title.value : this.title,
+      distanceKm: data.distanceKm.present
+          ? data.distanceKm.value
+          : this.distanceKm,
+      durationSec: data.durationSec.present
+          ? data.durationSec.value
+          : this.durationSec,
+      paceLabel: data.paceLabel.present ? data.paceLabel.value : this.paceLabel,
+      polylineJson: data.polylineJson.present
+          ? data.polylineJson.value
+          : this.polylineJson,
+      workoutBadge: data.workoutBadge.present
+          ? data.workoutBadge.value
+          : this.workoutBadge,
+      visibility: data.visibility.present
+          ? data.visibility.value
+          : this.visibility,
+      createdAtMs: data.createdAtMs.present
+          ? data.createdAtMs.value
+          : this.createdAtMs,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommunityPost(')
+          ..write('id: $id, ')
+          ..write('userId: $userId, ')
+          ..write('authorName: $authorName, ')
+          ..write('title: $title, ')
+          ..write('distanceKm: $distanceKm, ')
+          ..write('durationSec: $durationSec, ')
+          ..write('paceLabel: $paceLabel, ')
+          ..write('polylineJson: $polylineJson, ')
+          ..write('workoutBadge: $workoutBadge, ')
+          ..write('visibility: $visibility, ')
+          ..write('createdAtMs: $createdAtMs')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    userId,
+    authorName,
+    title,
+    distanceKm,
+    durationSec,
+    paceLabel,
+    polylineJson,
+    workoutBadge,
+    visibility,
+    createdAtMs,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CommunityPost &&
+          other.id == this.id &&
+          other.userId == this.userId &&
+          other.authorName == this.authorName &&
+          other.title == this.title &&
+          other.distanceKm == this.distanceKm &&
+          other.durationSec == this.durationSec &&
+          other.paceLabel == this.paceLabel &&
+          other.polylineJson == this.polylineJson &&
+          other.workoutBadge == this.workoutBadge &&
+          other.visibility == this.visibility &&
+          other.createdAtMs == this.createdAtMs);
+}
+
+class CommunityPostsCompanion extends UpdateCompanion<CommunityPost> {
+  final Value<String> id;
+  final Value<String> userId;
+  final Value<String> authorName;
+  final Value<String> title;
+  final Value<double> distanceKm;
+  final Value<int> durationSec;
+  final Value<String> paceLabel;
+  final Value<String?> polylineJson;
+  final Value<String?> workoutBadge;
+  final Value<String> visibility;
+  final Value<int> createdAtMs;
+  final Value<int> rowid;
+  const CommunityPostsCompanion({
+    this.id = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.authorName = const Value.absent(),
+    this.title = const Value.absent(),
+    this.distanceKm = const Value.absent(),
+    this.durationSec = const Value.absent(),
+    this.paceLabel = const Value.absent(),
+    this.polylineJson = const Value.absent(),
+    this.workoutBadge = const Value.absent(),
+    this.visibility = const Value.absent(),
+    this.createdAtMs = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CommunityPostsCompanion.insert({
+    required String id,
+    required String userId,
+    required String authorName,
+    required String title,
+    required double distanceKm,
+    required int durationSec,
+    required String paceLabel,
+    this.polylineJson = const Value.absent(),
+    this.workoutBadge = const Value.absent(),
+    this.visibility = const Value.absent(),
+    required int createdAtMs,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       userId = Value(userId),
+       authorName = Value(authorName),
+       title = Value(title),
+       distanceKm = Value(distanceKm),
+       durationSec = Value(durationSec),
+       paceLabel = Value(paceLabel),
+       createdAtMs = Value(createdAtMs);
+  static Insertable<CommunityPost> custom({
+    Expression<String>? id,
+    Expression<String>? userId,
+    Expression<String>? authorName,
+    Expression<String>? title,
+    Expression<double>? distanceKm,
+    Expression<int>? durationSec,
+    Expression<String>? paceLabel,
+    Expression<String>? polylineJson,
+    Expression<String>? workoutBadge,
+    Expression<String>? visibility,
+    Expression<int>? createdAtMs,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (userId != null) 'user_id': userId,
+      if (authorName != null) 'author_name': authorName,
+      if (title != null) 'title': title,
+      if (distanceKm != null) 'distance_km': distanceKm,
+      if (durationSec != null) 'duration_sec': durationSec,
+      if (paceLabel != null) 'pace_label': paceLabel,
+      if (polylineJson != null) 'polyline_json': polylineJson,
+      if (workoutBadge != null) 'workout_badge': workoutBadge,
+      if (visibility != null) 'visibility': visibility,
+      if (createdAtMs != null) 'created_at_ms': createdAtMs,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CommunityPostsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? userId,
+    Value<String>? authorName,
+    Value<String>? title,
+    Value<double>? distanceKm,
+    Value<int>? durationSec,
+    Value<String>? paceLabel,
+    Value<String?>? polylineJson,
+    Value<String?>? workoutBadge,
+    Value<String>? visibility,
+    Value<int>? createdAtMs,
+    Value<int>? rowid,
+  }) {
+    return CommunityPostsCompanion(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      authorName: authorName ?? this.authorName,
+      title: title ?? this.title,
+      distanceKm: distanceKm ?? this.distanceKm,
+      durationSec: durationSec ?? this.durationSec,
+      paceLabel: paceLabel ?? this.paceLabel,
+      polylineJson: polylineJson ?? this.polylineJson,
+      workoutBadge: workoutBadge ?? this.workoutBadge,
+      visibility: visibility ?? this.visibility,
+      createdAtMs: createdAtMs ?? this.createdAtMs,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (authorName.present) {
+      map['author_name'] = Variable<String>(authorName.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (distanceKm.present) {
+      map['distance_km'] = Variable<double>(distanceKm.value);
+    }
+    if (durationSec.present) {
+      map['duration_sec'] = Variable<int>(durationSec.value);
+    }
+    if (paceLabel.present) {
+      map['pace_label'] = Variable<String>(paceLabel.value);
+    }
+    if (polylineJson.present) {
+      map['polyline_json'] = Variable<String>(polylineJson.value);
+    }
+    if (workoutBadge.present) {
+      map['workout_badge'] = Variable<String>(workoutBadge.value);
+    }
+    if (visibility.present) {
+      map['visibility'] = Variable<String>(visibility.value);
+    }
+    if (createdAtMs.present) {
+      map['created_at_ms'] = Variable<int>(createdAtMs.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommunityPostsCompanion(')
+          ..write('id: $id, ')
+          ..write('userId: $userId, ')
+          ..write('authorName: $authorName, ')
+          ..write('title: $title, ')
+          ..write('distanceKm: $distanceKm, ')
+          ..write('durationSec: $durationSec, ')
+          ..write('paceLabel: $paceLabel, ')
+          ..write('polylineJson: $polylineJson, ')
+          ..write('workoutBadge: $workoutBadge, ')
+          ..write('visibility: $visibility, ')
+          ..write('createdAtMs: $createdAtMs, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CommunityPostLikesTable extends CommunityPostLikes
+    with TableInfo<$CommunityPostLikesTable, CommunityPostLike> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CommunityPostLikesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _postIdMeta = const VerificationMeta('postId');
+  @override
+  late final GeneratedColumn<String> postId = GeneratedColumn<String>(
+    'post_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [postId, userId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'community_post_likes';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CommunityPostLike> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('post_id')) {
+      context.handle(
+        _postIdMeta,
+        postId.isAcceptableOrUnknown(data['post_id']!, _postIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_postIdMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {postId, userId};
+  @override
+  CommunityPostLike map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CommunityPostLike(
+      postId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}post_id'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+    );
+  }
+
+  @override
+  $CommunityPostLikesTable createAlias(String alias) {
+    return $CommunityPostLikesTable(attachedDatabase, alias);
+  }
+}
+
+class CommunityPostLike extends DataClass
+    implements Insertable<CommunityPostLike> {
+  final String postId;
+  final String userId;
+  const CommunityPostLike({required this.postId, required this.userId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['post_id'] = Variable<String>(postId);
+    map['user_id'] = Variable<String>(userId);
+    return map;
+  }
+
+  CommunityPostLikesCompanion toCompanion(bool nullToAbsent) {
+    return CommunityPostLikesCompanion(
+      postId: Value(postId),
+      userId: Value(userId),
+    );
+  }
+
+  factory CommunityPostLike.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CommunityPostLike(
+      postId: serializer.fromJson<String>(json['postId']),
+      userId: serializer.fromJson<String>(json['userId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'postId': serializer.toJson<String>(postId),
+      'userId': serializer.toJson<String>(userId),
+    };
+  }
+
+  CommunityPostLike copyWith({String? postId, String? userId}) =>
+      CommunityPostLike(
+        postId: postId ?? this.postId,
+        userId: userId ?? this.userId,
+      );
+  CommunityPostLike copyWithCompanion(CommunityPostLikesCompanion data) {
+    return CommunityPostLike(
+      postId: data.postId.present ? data.postId.value : this.postId,
+      userId: data.userId.present ? data.userId.value : this.userId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommunityPostLike(')
+          ..write('postId: $postId, ')
+          ..write('userId: $userId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(postId, userId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CommunityPostLike &&
+          other.postId == this.postId &&
+          other.userId == this.userId);
+}
+
+class CommunityPostLikesCompanion extends UpdateCompanion<CommunityPostLike> {
+  final Value<String> postId;
+  final Value<String> userId;
+  final Value<int> rowid;
+  const CommunityPostLikesCompanion({
+    this.postId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CommunityPostLikesCompanion.insert({
+    required String postId,
+    required String userId,
+    this.rowid = const Value.absent(),
+  }) : postId = Value(postId),
+       userId = Value(userId);
+  static Insertable<CommunityPostLike> custom({
+    Expression<String>? postId,
+    Expression<String>? userId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (postId != null) 'post_id': postId,
+      if (userId != null) 'user_id': userId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CommunityPostLikesCompanion copyWith({
+    Value<String>? postId,
+    Value<String>? userId,
+    Value<int>? rowid,
+  }) {
+    return CommunityPostLikesCompanion(
+      postId: postId ?? this.postId,
+      userId: userId ?? this.userId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (postId.present) {
+      map['post_id'] = Variable<String>(postId.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommunityPostLikesCompanion(')
+          ..write('postId: $postId, ')
+          ..write('userId: $userId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CommunityCommentsTable extends CommunityComments
+    with TableInfo<$CommunityCommentsTable, CommunityComment> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CommunityCommentsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _postIdMeta = const VerificationMeta('postId');
+  @override
+  late final GeneratedColumn<String> postId = GeneratedColumn<String>(
+    'post_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _authorNameMeta = const VerificationMeta(
+    'authorName',
+  );
+  @override
+  late final GeneratedColumn<String> authorName = GeneratedColumn<String>(
+    'author_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _bodyMeta = const VerificationMeta('body');
+  @override
+  late final GeneratedColumn<String> body = GeneratedColumn<String>(
+    'body',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMsMeta = const VerificationMeta(
+    'createdAtMs',
+  );
+  @override
+  late final GeneratedColumn<int> createdAtMs = GeneratedColumn<int>(
+    'created_at_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    postId,
+    userId,
+    authorName,
+    body,
+    createdAtMs,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'community_comments';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CommunityComment> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('post_id')) {
+      context.handle(
+        _postIdMeta,
+        postId.isAcceptableOrUnknown(data['post_id']!, _postIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_postIdMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('author_name')) {
+      context.handle(
+        _authorNameMeta,
+        authorName.isAcceptableOrUnknown(data['author_name']!, _authorNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_authorNameMeta);
+    }
+    if (data.containsKey('body')) {
+      context.handle(
+        _bodyMeta,
+        body.isAcceptableOrUnknown(data['body']!, _bodyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bodyMeta);
+    }
+    if (data.containsKey('created_at_ms')) {
+      context.handle(
+        _createdAtMsMeta,
+        createdAtMs.isAcceptableOrUnknown(
+          data['created_at_ms']!,
+          _createdAtMsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMsMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CommunityComment map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CommunityComment(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      postId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}post_id'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      authorName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}author_name'],
+      )!,
+      body: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}body'],
+      )!,
+      createdAtMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at_ms'],
+      )!,
+    );
+  }
+
+  @override
+  $CommunityCommentsTable createAlias(String alias) {
+    return $CommunityCommentsTable(attachedDatabase, alias);
+  }
+}
+
+class CommunityComment extends DataClass
+    implements Insertable<CommunityComment> {
+  final String id;
+  final String postId;
+  final String userId;
+  final String authorName;
+  final String body;
+  final int createdAtMs;
+  const CommunityComment({
+    required this.id,
+    required this.postId,
+    required this.userId,
+    required this.authorName,
+    required this.body,
+    required this.createdAtMs,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['post_id'] = Variable<String>(postId);
+    map['user_id'] = Variable<String>(userId);
+    map['author_name'] = Variable<String>(authorName);
+    map['body'] = Variable<String>(body);
+    map['created_at_ms'] = Variable<int>(createdAtMs);
+    return map;
+  }
+
+  CommunityCommentsCompanion toCompanion(bool nullToAbsent) {
+    return CommunityCommentsCompanion(
+      id: Value(id),
+      postId: Value(postId),
+      userId: Value(userId),
+      authorName: Value(authorName),
+      body: Value(body),
+      createdAtMs: Value(createdAtMs),
+    );
+  }
+
+  factory CommunityComment.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CommunityComment(
+      id: serializer.fromJson<String>(json['id']),
+      postId: serializer.fromJson<String>(json['postId']),
+      userId: serializer.fromJson<String>(json['userId']),
+      authorName: serializer.fromJson<String>(json['authorName']),
+      body: serializer.fromJson<String>(json['body']),
+      createdAtMs: serializer.fromJson<int>(json['createdAtMs']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'postId': serializer.toJson<String>(postId),
+      'userId': serializer.toJson<String>(userId),
+      'authorName': serializer.toJson<String>(authorName),
+      'body': serializer.toJson<String>(body),
+      'createdAtMs': serializer.toJson<int>(createdAtMs),
+    };
+  }
+
+  CommunityComment copyWith({
+    String? id,
+    String? postId,
+    String? userId,
+    String? authorName,
+    String? body,
+    int? createdAtMs,
+  }) => CommunityComment(
+    id: id ?? this.id,
+    postId: postId ?? this.postId,
+    userId: userId ?? this.userId,
+    authorName: authorName ?? this.authorName,
+    body: body ?? this.body,
+    createdAtMs: createdAtMs ?? this.createdAtMs,
+  );
+  CommunityComment copyWithCompanion(CommunityCommentsCompanion data) {
+    return CommunityComment(
+      id: data.id.present ? data.id.value : this.id,
+      postId: data.postId.present ? data.postId.value : this.postId,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      authorName: data.authorName.present
+          ? data.authorName.value
+          : this.authorName,
+      body: data.body.present ? data.body.value : this.body,
+      createdAtMs: data.createdAtMs.present
+          ? data.createdAtMs.value
+          : this.createdAtMs,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommunityComment(')
+          ..write('id: $id, ')
+          ..write('postId: $postId, ')
+          ..write('userId: $userId, ')
+          ..write('authorName: $authorName, ')
+          ..write('body: $body, ')
+          ..write('createdAtMs: $createdAtMs')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, postId, userId, authorName, body, createdAtMs);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CommunityComment &&
+          other.id == this.id &&
+          other.postId == this.postId &&
+          other.userId == this.userId &&
+          other.authorName == this.authorName &&
+          other.body == this.body &&
+          other.createdAtMs == this.createdAtMs);
+}
+
+class CommunityCommentsCompanion extends UpdateCompanion<CommunityComment> {
+  final Value<String> id;
+  final Value<String> postId;
+  final Value<String> userId;
+  final Value<String> authorName;
+  final Value<String> body;
+  final Value<int> createdAtMs;
+  final Value<int> rowid;
+  const CommunityCommentsCompanion({
+    this.id = const Value.absent(),
+    this.postId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.authorName = const Value.absent(),
+    this.body = const Value.absent(),
+    this.createdAtMs = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CommunityCommentsCompanion.insert({
+    required String id,
+    required String postId,
+    required String userId,
+    required String authorName,
+    required String body,
+    required int createdAtMs,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       postId = Value(postId),
+       userId = Value(userId),
+       authorName = Value(authorName),
+       body = Value(body),
+       createdAtMs = Value(createdAtMs);
+  static Insertable<CommunityComment> custom({
+    Expression<String>? id,
+    Expression<String>? postId,
+    Expression<String>? userId,
+    Expression<String>? authorName,
+    Expression<String>? body,
+    Expression<int>? createdAtMs,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (postId != null) 'post_id': postId,
+      if (userId != null) 'user_id': userId,
+      if (authorName != null) 'author_name': authorName,
+      if (body != null) 'body': body,
+      if (createdAtMs != null) 'created_at_ms': createdAtMs,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CommunityCommentsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? postId,
+    Value<String>? userId,
+    Value<String>? authorName,
+    Value<String>? body,
+    Value<int>? createdAtMs,
+    Value<int>? rowid,
+  }) {
+    return CommunityCommentsCompanion(
+      id: id ?? this.id,
+      postId: postId ?? this.postId,
+      userId: userId ?? this.userId,
+      authorName: authorName ?? this.authorName,
+      body: body ?? this.body,
+      createdAtMs: createdAtMs ?? this.createdAtMs,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (postId.present) {
+      map['post_id'] = Variable<String>(postId.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (authorName.present) {
+      map['author_name'] = Variable<String>(authorName.value);
+    }
+    if (body.present) {
+      map['body'] = Variable<String>(body.value);
+    }
+    if (createdAtMs.present) {
+      map['created_at_ms'] = Variable<int>(createdAtMs.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommunityCommentsCompanion(')
+          ..write('id: $id, ')
+          ..write('postId: $postId, ')
+          ..write('userId: $userId, ')
+          ..write('authorName: $authorName, ')
+          ..write('body: $body, ')
+          ..write('createdAtMs: $createdAtMs, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CommunityGroupsTable extends CommunityGroups
+    with TableInfo<$CommunityGroupsTable, CommunityGroup> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CommunityGroupsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _isPrivateMeta = const VerificationMeta(
+    'isPrivate',
+  );
+  @override
+  late final GeneratedColumn<bool> isPrivate = GeneratedColumn<bool>(
+    'is_private',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_private" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _ownerIdMeta = const VerificationMeta(
+    'ownerId',
+  );
+  @override
+  late final GeneratedColumn<String> ownerId = GeneratedColumn<String>(
+    'owner_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _memberCountMeta = const VerificationMeta(
+    'memberCount',
+  );
+  @override
+  late final GeneratedColumn<int> memberCount = GeneratedColumn<int>(
+    'member_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  static const VerificationMeta _isJoinedMeta = const VerificationMeta(
+    'isJoined',
+  );
+  @override
+  late final GeneratedColumn<bool> isJoined = GeneratedColumn<bool>(
+    'is_joined',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_joined" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    description,
+    isPrivate,
+    ownerId,
+    memberCount,
+    isJoined,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'community_groups';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CommunityGroup> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_private')) {
+      context.handle(
+        _isPrivateMeta,
+        isPrivate.isAcceptableOrUnknown(data['is_private']!, _isPrivateMeta),
+      );
+    }
+    if (data.containsKey('owner_id')) {
+      context.handle(
+        _ownerIdMeta,
+        ownerId.isAcceptableOrUnknown(data['owner_id']!, _ownerIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_ownerIdMeta);
+    }
+    if (data.containsKey('member_count')) {
+      context.handle(
+        _memberCountMeta,
+        memberCount.isAcceptableOrUnknown(
+          data['member_count']!,
+          _memberCountMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_joined')) {
+      context.handle(
+        _isJoinedMeta,
+        isJoined.isAcceptableOrUnknown(data['is_joined']!, _isJoinedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CommunityGroup map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CommunityGroup(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      )!,
+      isPrivate: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_private'],
+      )!,
+      ownerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}owner_id'],
+      )!,
+      memberCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}member_count'],
+      )!,
+      isJoined: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_joined'],
+      )!,
+    );
+  }
+
+  @override
+  $CommunityGroupsTable createAlias(String alias) {
+    return $CommunityGroupsTable(attachedDatabase, alias);
+  }
+}
+
+class CommunityGroup extends DataClass implements Insertable<CommunityGroup> {
+  final String id;
+  final String name;
+  final String description;
+  final bool isPrivate;
+  final String ownerId;
+  final int memberCount;
+  final bool isJoined;
+  const CommunityGroup({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.isPrivate,
+    required this.ownerId,
+    required this.memberCount,
+    required this.isJoined,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    map['description'] = Variable<String>(description);
+    map['is_private'] = Variable<bool>(isPrivate);
+    map['owner_id'] = Variable<String>(ownerId);
+    map['member_count'] = Variable<int>(memberCount);
+    map['is_joined'] = Variable<bool>(isJoined);
+    return map;
+  }
+
+  CommunityGroupsCompanion toCompanion(bool nullToAbsent) {
+    return CommunityGroupsCompanion(
+      id: Value(id),
+      name: Value(name),
+      description: Value(description),
+      isPrivate: Value(isPrivate),
+      ownerId: Value(ownerId),
+      memberCount: Value(memberCount),
+      isJoined: Value(isJoined),
+    );
+  }
+
+  factory CommunityGroup.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CommunityGroup(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String>(json['description']),
+      isPrivate: serializer.fromJson<bool>(json['isPrivate']),
+      ownerId: serializer.fromJson<String>(json['ownerId']),
+      memberCount: serializer.fromJson<int>(json['memberCount']),
+      isJoined: serializer.fromJson<bool>(json['isJoined']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String>(description),
+      'isPrivate': serializer.toJson<bool>(isPrivate),
+      'ownerId': serializer.toJson<String>(ownerId),
+      'memberCount': serializer.toJson<int>(memberCount),
+      'isJoined': serializer.toJson<bool>(isJoined),
+    };
+  }
+
+  CommunityGroup copyWith({
+    String? id,
+    String? name,
+    String? description,
+    bool? isPrivate,
+    String? ownerId,
+    int? memberCount,
+    bool? isJoined,
+  }) => CommunityGroup(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    description: description ?? this.description,
+    isPrivate: isPrivate ?? this.isPrivate,
+    ownerId: ownerId ?? this.ownerId,
+    memberCount: memberCount ?? this.memberCount,
+    isJoined: isJoined ?? this.isJoined,
+  );
+  CommunityGroup copyWithCompanion(CommunityGroupsCompanion data) {
+    return CommunityGroup(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      isPrivate: data.isPrivate.present ? data.isPrivate.value : this.isPrivate,
+      ownerId: data.ownerId.present ? data.ownerId.value : this.ownerId,
+      memberCount: data.memberCount.present
+          ? data.memberCount.value
+          : this.memberCount,
+      isJoined: data.isJoined.present ? data.isJoined.value : this.isJoined,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommunityGroup(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('isPrivate: $isPrivate, ')
+          ..write('ownerId: $ownerId, ')
+          ..write('memberCount: $memberCount, ')
+          ..write('isJoined: $isJoined')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    name,
+    description,
+    isPrivate,
+    ownerId,
+    memberCount,
+    isJoined,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CommunityGroup &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.description == this.description &&
+          other.isPrivate == this.isPrivate &&
+          other.ownerId == this.ownerId &&
+          other.memberCount == this.memberCount &&
+          other.isJoined == this.isJoined);
+}
+
+class CommunityGroupsCompanion extends UpdateCompanion<CommunityGroup> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String> description;
+  final Value<bool> isPrivate;
+  final Value<String> ownerId;
+  final Value<int> memberCount;
+  final Value<bool> isJoined;
+  final Value<int> rowid;
+  const CommunityGroupsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.isPrivate = const Value.absent(),
+    this.ownerId = const Value.absent(),
+    this.memberCount = const Value.absent(),
+    this.isJoined = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CommunityGroupsCompanion.insert({
+    required String id,
+    required String name,
+    this.description = const Value.absent(),
+    this.isPrivate = const Value.absent(),
+    required String ownerId,
+    this.memberCount = const Value.absent(),
+    this.isJoined = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name),
+       ownerId = Value(ownerId);
+  static Insertable<CommunityGroup> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<bool>? isPrivate,
+    Expression<String>? ownerId,
+    Expression<int>? memberCount,
+    Expression<bool>? isJoined,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (isPrivate != null) 'is_private': isPrivate,
+      if (ownerId != null) 'owner_id': ownerId,
+      if (memberCount != null) 'member_count': memberCount,
+      if (isJoined != null) 'is_joined': isJoined,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CommunityGroupsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<String>? description,
+    Value<bool>? isPrivate,
+    Value<String>? ownerId,
+    Value<int>? memberCount,
+    Value<bool>? isJoined,
+    Value<int>? rowid,
+  }) {
+    return CommunityGroupsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      isPrivate: isPrivate ?? this.isPrivate,
+      ownerId: ownerId ?? this.ownerId,
+      memberCount: memberCount ?? this.memberCount,
+      isJoined: isJoined ?? this.isJoined,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (isPrivate.present) {
+      map['is_private'] = Variable<bool>(isPrivate.value);
+    }
+    if (ownerId.present) {
+      map['owner_id'] = Variable<String>(ownerId.value);
+    }
+    if (memberCount.present) {
+      map['member_count'] = Variable<int>(memberCount.value);
+    }
+    if (isJoined.present) {
+      map['is_joined'] = Variable<bool>(isJoined.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommunityGroupsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('isPrivate: $isPrivate, ')
+          ..write('ownerId: $ownerId, ')
+          ..write('memberCount: $memberCount, ')
+          ..write('isJoined: $isJoined, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CommunityChallengesTable extends CommunityChallenges
+    with TableInfo<$CommunityChallengesTable, CommunityChallenge> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CommunityChallengesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _targetKmMeta = const VerificationMeta(
+    'targetKm',
+  );
+  @override
+  late final GeneratedColumn<double> targetKm = GeneratedColumn<double>(
+    'target_km',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _durationDaysMeta = const VerificationMeta(
+    'durationDays',
+  );
+  @override
+  late final GeneratedColumn<int> durationDays = GeneratedColumn<int>(
+    'duration_days',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _challengeTypeMeta = const VerificationMeta(
+    'challengeType',
+  );
+  @override
+  late final GeneratedColumn<String> challengeType = GeneratedColumn<String>(
+    'challenge_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _participantCountMeta = const VerificationMeta(
+    'participantCount',
+  );
+  @override
+  late final GeneratedColumn<int> participantCount = GeneratedColumn<int>(
+    'participant_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  static const VerificationMeta _isJoinedMeta = const VerificationMeta(
+    'isJoined',
+  );
+  @override
+  late final GeneratedColumn<bool> isJoined = GeneratedColumn<bool>(
+    'is_joined',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_joined" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    title,
+    targetKm,
+    durationDays,
+    challengeType,
+    participantCount,
+    isJoined,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'community_challenges';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CommunityChallenge> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('target_km')) {
+      context.handle(
+        _targetKmMeta,
+        targetKm.isAcceptableOrUnknown(data['target_km']!, _targetKmMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_targetKmMeta);
+    }
+    if (data.containsKey('duration_days')) {
+      context.handle(
+        _durationDaysMeta,
+        durationDays.isAcceptableOrUnknown(
+          data['duration_days']!,
+          _durationDaysMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_durationDaysMeta);
+    }
+    if (data.containsKey('challenge_type')) {
+      context.handle(
+        _challengeTypeMeta,
+        challengeType.isAcceptableOrUnknown(
+          data['challenge_type']!,
+          _challengeTypeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_challengeTypeMeta);
+    }
+    if (data.containsKey('participant_count')) {
+      context.handle(
+        _participantCountMeta,
+        participantCount.isAcceptableOrUnknown(
+          data['participant_count']!,
+          _participantCountMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_joined')) {
+      context.handle(
+        _isJoinedMeta,
+        isJoined.isAcceptableOrUnknown(data['is_joined']!, _isJoinedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CommunityChallenge map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CommunityChallenge(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      targetKm: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}target_km'],
+      )!,
+      durationDays: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}duration_days'],
+      )!,
+      challengeType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}challenge_type'],
+      )!,
+      participantCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}participant_count'],
+      )!,
+      isJoined: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_joined'],
+      )!,
+    );
+  }
+
+  @override
+  $CommunityChallengesTable createAlias(String alias) {
+    return $CommunityChallengesTable(attachedDatabase, alias);
+  }
+}
+
+class CommunityChallenge extends DataClass
+    implements Insertable<CommunityChallenge> {
+  final String id;
+  final String title;
+  final double targetKm;
+  final int durationDays;
+  final String challengeType;
+  final int participantCount;
+  final bool isJoined;
+  const CommunityChallenge({
+    required this.id,
+    required this.title,
+    required this.targetKm,
+    required this.durationDays,
+    required this.challengeType,
+    required this.participantCount,
+    required this.isJoined,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['title'] = Variable<String>(title);
+    map['target_km'] = Variable<double>(targetKm);
+    map['duration_days'] = Variable<int>(durationDays);
+    map['challenge_type'] = Variable<String>(challengeType);
+    map['participant_count'] = Variable<int>(participantCount);
+    map['is_joined'] = Variable<bool>(isJoined);
+    return map;
+  }
+
+  CommunityChallengesCompanion toCompanion(bool nullToAbsent) {
+    return CommunityChallengesCompanion(
+      id: Value(id),
+      title: Value(title),
+      targetKm: Value(targetKm),
+      durationDays: Value(durationDays),
+      challengeType: Value(challengeType),
+      participantCount: Value(participantCount),
+      isJoined: Value(isJoined),
+    );
+  }
+
+  factory CommunityChallenge.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CommunityChallenge(
+      id: serializer.fromJson<String>(json['id']),
+      title: serializer.fromJson<String>(json['title']),
+      targetKm: serializer.fromJson<double>(json['targetKm']),
+      durationDays: serializer.fromJson<int>(json['durationDays']),
+      challengeType: serializer.fromJson<String>(json['challengeType']),
+      participantCount: serializer.fromJson<int>(json['participantCount']),
+      isJoined: serializer.fromJson<bool>(json['isJoined']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'title': serializer.toJson<String>(title),
+      'targetKm': serializer.toJson<double>(targetKm),
+      'durationDays': serializer.toJson<int>(durationDays),
+      'challengeType': serializer.toJson<String>(challengeType),
+      'participantCount': serializer.toJson<int>(participantCount),
+      'isJoined': serializer.toJson<bool>(isJoined),
+    };
+  }
+
+  CommunityChallenge copyWith({
+    String? id,
+    String? title,
+    double? targetKm,
+    int? durationDays,
+    String? challengeType,
+    int? participantCount,
+    bool? isJoined,
+  }) => CommunityChallenge(
+    id: id ?? this.id,
+    title: title ?? this.title,
+    targetKm: targetKm ?? this.targetKm,
+    durationDays: durationDays ?? this.durationDays,
+    challengeType: challengeType ?? this.challengeType,
+    participantCount: participantCount ?? this.participantCount,
+    isJoined: isJoined ?? this.isJoined,
+  );
+  CommunityChallenge copyWithCompanion(CommunityChallengesCompanion data) {
+    return CommunityChallenge(
+      id: data.id.present ? data.id.value : this.id,
+      title: data.title.present ? data.title.value : this.title,
+      targetKm: data.targetKm.present ? data.targetKm.value : this.targetKm,
+      durationDays: data.durationDays.present
+          ? data.durationDays.value
+          : this.durationDays,
+      challengeType: data.challengeType.present
+          ? data.challengeType.value
+          : this.challengeType,
+      participantCount: data.participantCount.present
+          ? data.participantCount.value
+          : this.participantCount,
+      isJoined: data.isJoined.present ? data.isJoined.value : this.isJoined,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommunityChallenge(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('targetKm: $targetKm, ')
+          ..write('durationDays: $durationDays, ')
+          ..write('challengeType: $challengeType, ')
+          ..write('participantCount: $participantCount, ')
+          ..write('isJoined: $isJoined')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    title,
+    targetKm,
+    durationDays,
+    challengeType,
+    participantCount,
+    isJoined,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CommunityChallenge &&
+          other.id == this.id &&
+          other.title == this.title &&
+          other.targetKm == this.targetKm &&
+          other.durationDays == this.durationDays &&
+          other.challengeType == this.challengeType &&
+          other.participantCount == this.participantCount &&
+          other.isJoined == this.isJoined);
+}
+
+class CommunityChallengesCompanion extends UpdateCompanion<CommunityChallenge> {
+  final Value<String> id;
+  final Value<String> title;
+  final Value<double> targetKm;
+  final Value<int> durationDays;
+  final Value<String> challengeType;
+  final Value<int> participantCount;
+  final Value<bool> isJoined;
+  final Value<int> rowid;
+  const CommunityChallengesCompanion({
+    this.id = const Value.absent(),
+    this.title = const Value.absent(),
+    this.targetKm = const Value.absent(),
+    this.durationDays = const Value.absent(),
+    this.challengeType = const Value.absent(),
+    this.participantCount = const Value.absent(),
+    this.isJoined = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CommunityChallengesCompanion.insert({
+    required String id,
+    required String title,
+    required double targetKm,
+    required int durationDays,
+    required String challengeType,
+    this.participantCount = const Value.absent(),
+    this.isJoined = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       title = Value(title),
+       targetKm = Value(targetKm),
+       durationDays = Value(durationDays),
+       challengeType = Value(challengeType);
+  static Insertable<CommunityChallenge> custom({
+    Expression<String>? id,
+    Expression<String>? title,
+    Expression<double>? targetKm,
+    Expression<int>? durationDays,
+    Expression<String>? challengeType,
+    Expression<int>? participantCount,
+    Expression<bool>? isJoined,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (targetKm != null) 'target_km': targetKm,
+      if (durationDays != null) 'duration_days': durationDays,
+      if (challengeType != null) 'challenge_type': challengeType,
+      if (participantCount != null) 'participant_count': participantCount,
+      if (isJoined != null) 'is_joined': isJoined,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CommunityChallengesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? title,
+    Value<double>? targetKm,
+    Value<int>? durationDays,
+    Value<String>? challengeType,
+    Value<int>? participantCount,
+    Value<bool>? isJoined,
+    Value<int>? rowid,
+  }) {
+    return CommunityChallengesCompanion(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      targetKm: targetKm ?? this.targetKm,
+      durationDays: durationDays ?? this.durationDays,
+      challengeType: challengeType ?? this.challengeType,
+      participantCount: participantCount ?? this.participantCount,
+      isJoined: isJoined ?? this.isJoined,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (targetKm.present) {
+      map['target_km'] = Variable<double>(targetKm.value);
+    }
+    if (durationDays.present) {
+      map['duration_days'] = Variable<int>(durationDays.value);
+    }
+    if (challengeType.present) {
+      map['challenge_type'] = Variable<String>(challengeType.value);
+    }
+    if (participantCount.present) {
+      map['participant_count'] = Variable<int>(participantCount.value);
+    }
+    if (isJoined.present) {
+      map['is_joined'] = Variable<bool>(isJoined.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommunityChallengesCompanion(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('targetKm: $targetKm, ')
+          ..write('durationDays: $durationDays, ')
+          ..write('challengeType: $challengeType, ')
+          ..write('participantCount: $participantCount, ')
+          ..write('isJoined: $isJoined, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CommunityNotificationsTable extends CommunityNotifications
+    with TableInfo<$CommunityNotificationsTable, CommunityNotification> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CommunityNotificationsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _bodyMeta = const VerificationMeta('body');
+  @override
+  late final GeneratedColumn<String> body = GeneratedColumn<String>(
+    'body',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isReadMeta = const VerificationMeta('isRead');
+  @override
+  late final GeneratedColumn<bool> isRead = GeneratedColumn<bool>(
+    'is_read',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_read" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMsMeta = const VerificationMeta(
+    'createdAtMs',
+  );
+  @override
+  late final GeneratedColumn<int> createdAtMs = GeneratedColumn<int>(
+    'created_at_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, title, body, isRead, createdAtMs];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'community_notifications';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CommunityNotification> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('body')) {
+      context.handle(
+        _bodyMeta,
+        body.isAcceptableOrUnknown(data['body']!, _bodyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bodyMeta);
+    }
+    if (data.containsKey('is_read')) {
+      context.handle(
+        _isReadMeta,
+        isRead.isAcceptableOrUnknown(data['is_read']!, _isReadMeta),
+      );
+    }
+    if (data.containsKey('created_at_ms')) {
+      context.handle(
+        _createdAtMsMeta,
+        createdAtMs.isAcceptableOrUnknown(
+          data['created_at_ms']!,
+          _createdAtMsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMsMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CommunityNotification map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CommunityNotification(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      body: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}body'],
+      )!,
+      isRead: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_read'],
+      )!,
+      createdAtMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at_ms'],
+      )!,
+    );
+  }
+
+  @override
+  $CommunityNotificationsTable createAlias(String alias) {
+    return $CommunityNotificationsTable(attachedDatabase, alias);
+  }
+}
+
+class CommunityNotification extends DataClass
+    implements Insertable<CommunityNotification> {
+  final String id;
+  final String title;
+  final String body;
+  final bool isRead;
+  final int createdAtMs;
+  const CommunityNotification({
+    required this.id,
+    required this.title,
+    required this.body,
+    required this.isRead,
+    required this.createdAtMs,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['title'] = Variable<String>(title);
+    map['body'] = Variable<String>(body);
+    map['is_read'] = Variable<bool>(isRead);
+    map['created_at_ms'] = Variable<int>(createdAtMs);
+    return map;
+  }
+
+  CommunityNotificationsCompanion toCompanion(bool nullToAbsent) {
+    return CommunityNotificationsCompanion(
+      id: Value(id),
+      title: Value(title),
+      body: Value(body),
+      isRead: Value(isRead),
+      createdAtMs: Value(createdAtMs),
+    );
+  }
+
+  factory CommunityNotification.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CommunityNotification(
+      id: serializer.fromJson<String>(json['id']),
+      title: serializer.fromJson<String>(json['title']),
+      body: serializer.fromJson<String>(json['body']),
+      isRead: serializer.fromJson<bool>(json['isRead']),
+      createdAtMs: serializer.fromJson<int>(json['createdAtMs']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'title': serializer.toJson<String>(title),
+      'body': serializer.toJson<String>(body),
+      'isRead': serializer.toJson<bool>(isRead),
+      'createdAtMs': serializer.toJson<int>(createdAtMs),
+    };
+  }
+
+  CommunityNotification copyWith({
+    String? id,
+    String? title,
+    String? body,
+    bool? isRead,
+    int? createdAtMs,
+  }) => CommunityNotification(
+    id: id ?? this.id,
+    title: title ?? this.title,
+    body: body ?? this.body,
+    isRead: isRead ?? this.isRead,
+    createdAtMs: createdAtMs ?? this.createdAtMs,
+  );
+  CommunityNotification copyWithCompanion(
+    CommunityNotificationsCompanion data,
+  ) {
+    return CommunityNotification(
+      id: data.id.present ? data.id.value : this.id,
+      title: data.title.present ? data.title.value : this.title,
+      body: data.body.present ? data.body.value : this.body,
+      isRead: data.isRead.present ? data.isRead.value : this.isRead,
+      createdAtMs: data.createdAtMs.present
+          ? data.createdAtMs.value
+          : this.createdAtMs,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommunityNotification(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('body: $body, ')
+          ..write('isRead: $isRead, ')
+          ..write('createdAtMs: $createdAtMs')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, title, body, isRead, createdAtMs);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CommunityNotification &&
+          other.id == this.id &&
+          other.title == this.title &&
+          other.body == this.body &&
+          other.isRead == this.isRead &&
+          other.createdAtMs == this.createdAtMs);
+}
+
+class CommunityNotificationsCompanion
+    extends UpdateCompanion<CommunityNotification> {
+  final Value<String> id;
+  final Value<String> title;
+  final Value<String> body;
+  final Value<bool> isRead;
+  final Value<int> createdAtMs;
+  final Value<int> rowid;
+  const CommunityNotificationsCompanion({
+    this.id = const Value.absent(),
+    this.title = const Value.absent(),
+    this.body = const Value.absent(),
+    this.isRead = const Value.absent(),
+    this.createdAtMs = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CommunityNotificationsCompanion.insert({
+    required String id,
+    required String title,
+    required String body,
+    this.isRead = const Value.absent(),
+    required int createdAtMs,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       title = Value(title),
+       body = Value(body),
+       createdAtMs = Value(createdAtMs);
+  static Insertable<CommunityNotification> custom({
+    Expression<String>? id,
+    Expression<String>? title,
+    Expression<String>? body,
+    Expression<bool>? isRead,
+    Expression<int>? createdAtMs,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (body != null) 'body': body,
+      if (isRead != null) 'is_read': isRead,
+      if (createdAtMs != null) 'created_at_ms': createdAtMs,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CommunityNotificationsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? title,
+    Value<String>? body,
+    Value<bool>? isRead,
+    Value<int>? createdAtMs,
+    Value<int>? rowid,
+  }) {
+    return CommunityNotificationsCompanion(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      body: body ?? this.body,
+      isRead: isRead ?? this.isRead,
+      createdAtMs: createdAtMs ?? this.createdAtMs,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (body.present) {
+      map['body'] = Variable<String>(body.value);
+    }
+    if (isRead.present) {
+      map['is_read'] = Variable<bool>(isRead.value);
+    }
+    if (createdAtMs.present) {
+      map['created_at_ms'] = Variable<int>(createdAtMs.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommunityNotificationsCompanion(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('body: $body, ')
+          ..write('isRead: $isRead, ')
+          ..write('createdAtMs: $createdAtMs, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $BlockedUsersTable extends BlockedUsers
+    with TableInfo<$BlockedUsersTable, BlockedUser> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BlockedUsersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _blockerIdMeta = const VerificationMeta(
+    'blockerId',
+  );
+  @override
+  late final GeneratedColumn<String> blockerId = GeneratedColumn<String>(
+    'blocker_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _blockedIdMeta = const VerificationMeta(
+    'blockedId',
+  );
+  @override
+  late final GeneratedColumn<String> blockedId = GeneratedColumn<String>(
+    'blocked_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [blockerId, blockedId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'blocked_users';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<BlockedUser> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('blocker_id')) {
+      context.handle(
+        _blockerIdMeta,
+        blockerId.isAcceptableOrUnknown(data['blocker_id']!, _blockerIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_blockerIdMeta);
+    }
+    if (data.containsKey('blocked_id')) {
+      context.handle(
+        _blockedIdMeta,
+        blockedId.isAcceptableOrUnknown(data['blocked_id']!, _blockedIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_blockedIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {blockerId, blockedId};
+  @override
+  BlockedUser map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BlockedUser(
+      blockerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}blocker_id'],
+      )!,
+      blockedId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}blocked_id'],
+      )!,
+    );
+  }
+
+  @override
+  $BlockedUsersTable createAlias(String alias) {
+    return $BlockedUsersTable(attachedDatabase, alias);
+  }
+}
+
+class BlockedUser extends DataClass implements Insertable<BlockedUser> {
+  final String blockerId;
+  final String blockedId;
+  const BlockedUser({required this.blockerId, required this.blockedId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['blocker_id'] = Variable<String>(blockerId);
+    map['blocked_id'] = Variable<String>(blockedId);
+    return map;
+  }
+
+  BlockedUsersCompanion toCompanion(bool nullToAbsent) {
+    return BlockedUsersCompanion(
+      blockerId: Value(blockerId),
+      blockedId: Value(blockedId),
+    );
+  }
+
+  factory BlockedUser.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return BlockedUser(
+      blockerId: serializer.fromJson<String>(json['blockerId']),
+      blockedId: serializer.fromJson<String>(json['blockedId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'blockerId': serializer.toJson<String>(blockerId),
+      'blockedId': serializer.toJson<String>(blockedId),
+    };
+  }
+
+  BlockedUser copyWith({String? blockerId, String? blockedId}) => BlockedUser(
+    blockerId: blockerId ?? this.blockerId,
+    blockedId: blockedId ?? this.blockedId,
+  );
+  BlockedUser copyWithCompanion(BlockedUsersCompanion data) {
+    return BlockedUser(
+      blockerId: data.blockerId.present ? data.blockerId.value : this.blockerId,
+      blockedId: data.blockedId.present ? data.blockedId.value : this.blockedId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BlockedUser(')
+          ..write('blockerId: $blockerId, ')
+          ..write('blockedId: $blockedId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(blockerId, blockedId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BlockedUser &&
+          other.blockerId == this.blockerId &&
+          other.blockedId == this.blockedId);
+}
+
+class BlockedUsersCompanion extends UpdateCompanion<BlockedUser> {
+  final Value<String> blockerId;
+  final Value<String> blockedId;
+  final Value<int> rowid;
+  const BlockedUsersCompanion({
+    this.blockerId = const Value.absent(),
+    this.blockedId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BlockedUsersCompanion.insert({
+    required String blockerId,
+    required String blockedId,
+    this.rowid = const Value.absent(),
+  }) : blockerId = Value(blockerId),
+       blockedId = Value(blockedId);
+  static Insertable<BlockedUser> custom({
+    Expression<String>? blockerId,
+    Expression<String>? blockedId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (blockerId != null) 'blocker_id': blockerId,
+      if (blockedId != null) 'blocked_id': blockedId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  BlockedUsersCompanion copyWith({
+    Value<String>? blockerId,
+    Value<String>? blockedId,
+    Value<int>? rowid,
+  }) {
+    return BlockedUsersCompanion(
+      blockerId: blockerId ?? this.blockerId,
+      blockedId: blockedId ?? this.blockedId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (blockerId.present) {
+      map['blocker_id'] = Variable<String>(blockerId.value);
+    }
+    if (blockedId.present) {
+      map['blocked_id'] = Variable<String>(blockedId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BlockedUsersCompanion(')
+          ..write('blockerId: $blockerId, ')
+          ..write('blockedId: $blockedId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -4344,6 +7656,21 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $MealLogsTable mealLogs = $MealLogsTable(this);
   late final $UserMetabolicProfilesTable userMetabolicProfiles =
       $UserMetabolicProfilesTable(this);
+  late final $CommunityProfilesTable communityProfiles =
+      $CommunityProfilesTable(this);
+  late final $CommunityPostsTable communityPosts = $CommunityPostsTable(this);
+  late final $CommunityPostLikesTable communityPostLikes =
+      $CommunityPostLikesTable(this);
+  late final $CommunityCommentsTable communityComments =
+      $CommunityCommentsTable(this);
+  late final $CommunityGroupsTable communityGroups = $CommunityGroupsTable(
+    this,
+  );
+  late final $CommunityChallengesTable communityChallenges =
+      $CommunityChallengesTable(this);
+  late final $CommunityNotificationsTable communityNotifications =
+      $CommunityNotificationsTable(this);
+  late final $BlockedUsersTable blockedUsers = $BlockedUsersTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -4355,6 +7682,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     foodCatalog,
     mealLogs,
     userMetabolicProfiles,
+    communityProfiles,
+    communityPosts,
+    communityPostLikes,
+    communityComments,
+    communityGroups,
+    communityChallenges,
+    communityNotifications,
+    blockedUsers,
   ];
 }
 
@@ -6442,6 +9777,1859 @@ typedef $$UserMetabolicProfilesTableProcessedTableManager =
       UserMetabolicProfile,
       PrefetchHooks Function()
     >;
+typedef $$CommunityProfilesTableCreateCompanionBuilder =
+    CommunityProfilesCompanion Function({
+      required String id,
+      required String username,
+      required String displayName,
+      Value<double> dailyGoalKm,
+      Value<double> todayDistanceKm,
+      Value<bool> isPrivate,
+      Value<bool> isFollowing,
+      Value<int> rowid,
+    });
+typedef $$CommunityProfilesTableUpdateCompanionBuilder =
+    CommunityProfilesCompanion Function({
+      Value<String> id,
+      Value<String> username,
+      Value<String> displayName,
+      Value<double> dailyGoalKm,
+      Value<double> todayDistanceKm,
+      Value<bool> isPrivate,
+      Value<bool> isFollowing,
+      Value<int> rowid,
+    });
+
+class $$CommunityProfilesTableFilterComposer
+    extends Composer<_$AppDatabase, $CommunityProfilesTable> {
+  $$CommunityProfilesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get username => $composableBuilder(
+    column: $table.username,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get dailyGoalKm => $composableBuilder(
+    column: $table.dailyGoalKm,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get todayDistanceKm => $composableBuilder(
+    column: $table.todayDistanceKm,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isPrivate => $composableBuilder(
+    column: $table.isPrivate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isFollowing => $composableBuilder(
+    column: $table.isFollowing,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CommunityProfilesTableOrderingComposer
+    extends Composer<_$AppDatabase, $CommunityProfilesTable> {
+  $$CommunityProfilesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get username => $composableBuilder(
+    column: $table.username,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get dailyGoalKm => $composableBuilder(
+    column: $table.dailyGoalKm,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get todayDistanceKm => $composableBuilder(
+    column: $table.todayDistanceKm,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isPrivate => $composableBuilder(
+    column: $table.isPrivate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isFollowing => $composableBuilder(
+    column: $table.isFollowing,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CommunityProfilesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CommunityProfilesTable> {
+  $$CommunityProfilesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get username =>
+      $composableBuilder(column: $table.username, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get dailyGoalKm => $composableBuilder(
+    column: $table.dailyGoalKm,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get todayDistanceKm => $composableBuilder(
+    column: $table.todayDistanceKm,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isPrivate =>
+      $composableBuilder(column: $table.isPrivate, builder: (column) => column);
+
+  GeneratedColumn<bool> get isFollowing => $composableBuilder(
+    column: $table.isFollowing,
+    builder: (column) => column,
+  );
+}
+
+class $$CommunityProfilesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CommunityProfilesTable,
+          CommunityProfile,
+          $$CommunityProfilesTableFilterComposer,
+          $$CommunityProfilesTableOrderingComposer,
+          $$CommunityProfilesTableAnnotationComposer,
+          $$CommunityProfilesTableCreateCompanionBuilder,
+          $$CommunityProfilesTableUpdateCompanionBuilder,
+          (
+            CommunityProfile,
+            BaseReferences<
+              _$AppDatabase,
+              $CommunityProfilesTable,
+              CommunityProfile
+            >,
+          ),
+          CommunityProfile,
+          PrefetchHooks Function()
+        > {
+  $$CommunityProfilesTableTableManager(
+    _$AppDatabase db,
+    $CommunityProfilesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CommunityProfilesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CommunityProfilesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CommunityProfilesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> username = const Value.absent(),
+                Value<String> displayName = const Value.absent(),
+                Value<double> dailyGoalKm = const Value.absent(),
+                Value<double> todayDistanceKm = const Value.absent(),
+                Value<bool> isPrivate = const Value.absent(),
+                Value<bool> isFollowing = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CommunityProfilesCompanion(
+                id: id,
+                username: username,
+                displayName: displayName,
+                dailyGoalKm: dailyGoalKm,
+                todayDistanceKm: todayDistanceKm,
+                isPrivate: isPrivate,
+                isFollowing: isFollowing,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String username,
+                required String displayName,
+                Value<double> dailyGoalKm = const Value.absent(),
+                Value<double> todayDistanceKm = const Value.absent(),
+                Value<bool> isPrivate = const Value.absent(),
+                Value<bool> isFollowing = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CommunityProfilesCompanion.insert(
+                id: id,
+                username: username,
+                displayName: displayName,
+                dailyGoalKm: dailyGoalKm,
+                todayDistanceKm: todayDistanceKm,
+                isPrivate: isPrivate,
+                isFollowing: isFollowing,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CommunityProfilesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CommunityProfilesTable,
+      CommunityProfile,
+      $$CommunityProfilesTableFilterComposer,
+      $$CommunityProfilesTableOrderingComposer,
+      $$CommunityProfilesTableAnnotationComposer,
+      $$CommunityProfilesTableCreateCompanionBuilder,
+      $$CommunityProfilesTableUpdateCompanionBuilder,
+      (
+        CommunityProfile,
+        BaseReferences<
+          _$AppDatabase,
+          $CommunityProfilesTable,
+          CommunityProfile
+        >,
+      ),
+      CommunityProfile,
+      PrefetchHooks Function()
+    >;
+typedef $$CommunityPostsTableCreateCompanionBuilder =
+    CommunityPostsCompanion Function({
+      required String id,
+      required String userId,
+      required String authorName,
+      required String title,
+      required double distanceKm,
+      required int durationSec,
+      required String paceLabel,
+      Value<String?> polylineJson,
+      Value<String?> workoutBadge,
+      Value<String> visibility,
+      required int createdAtMs,
+      Value<int> rowid,
+    });
+typedef $$CommunityPostsTableUpdateCompanionBuilder =
+    CommunityPostsCompanion Function({
+      Value<String> id,
+      Value<String> userId,
+      Value<String> authorName,
+      Value<String> title,
+      Value<double> distanceKm,
+      Value<int> durationSec,
+      Value<String> paceLabel,
+      Value<String?> polylineJson,
+      Value<String?> workoutBadge,
+      Value<String> visibility,
+      Value<int> createdAtMs,
+      Value<int> rowid,
+    });
+
+class $$CommunityPostsTableFilterComposer
+    extends Composer<_$AppDatabase, $CommunityPostsTable> {
+  $$CommunityPostsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get authorName => $composableBuilder(
+    column: $table.authorName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get distanceKm => $composableBuilder(
+    column: $table.distanceKm,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get durationSec => $composableBuilder(
+    column: $table.durationSec,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get paceLabel => $composableBuilder(
+    column: $table.paceLabel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get polylineJson => $composableBuilder(
+    column: $table.polylineJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get workoutBadge => $composableBuilder(
+    column: $table.workoutBadge,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get visibility => $composableBuilder(
+    column: $table.visibility,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAtMs => $composableBuilder(
+    column: $table.createdAtMs,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CommunityPostsTableOrderingComposer
+    extends Composer<_$AppDatabase, $CommunityPostsTable> {
+  $$CommunityPostsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get authorName => $composableBuilder(
+    column: $table.authorName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get distanceKm => $composableBuilder(
+    column: $table.distanceKm,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get durationSec => $composableBuilder(
+    column: $table.durationSec,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get paceLabel => $composableBuilder(
+    column: $table.paceLabel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get polylineJson => $composableBuilder(
+    column: $table.polylineJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get workoutBadge => $composableBuilder(
+    column: $table.workoutBadge,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get visibility => $composableBuilder(
+    column: $table.visibility,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAtMs => $composableBuilder(
+    column: $table.createdAtMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CommunityPostsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CommunityPostsTable> {
+  $$CommunityPostsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<String> get authorName => $composableBuilder(
+    column: $table.authorName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<double> get distanceKm => $composableBuilder(
+    column: $table.distanceKm,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get durationSec => $composableBuilder(
+    column: $table.durationSec,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get paceLabel =>
+      $composableBuilder(column: $table.paceLabel, builder: (column) => column);
+
+  GeneratedColumn<String> get polylineJson => $composableBuilder(
+    column: $table.polylineJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get workoutBadge => $composableBuilder(
+    column: $table.workoutBadge,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get visibility => $composableBuilder(
+    column: $table.visibility,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get createdAtMs => $composableBuilder(
+    column: $table.createdAtMs,
+    builder: (column) => column,
+  );
+}
+
+class $$CommunityPostsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CommunityPostsTable,
+          CommunityPost,
+          $$CommunityPostsTableFilterComposer,
+          $$CommunityPostsTableOrderingComposer,
+          $$CommunityPostsTableAnnotationComposer,
+          $$CommunityPostsTableCreateCompanionBuilder,
+          $$CommunityPostsTableUpdateCompanionBuilder,
+          (
+            CommunityPost,
+            BaseReferences<_$AppDatabase, $CommunityPostsTable, CommunityPost>,
+          ),
+          CommunityPost,
+          PrefetchHooks Function()
+        > {
+  $$CommunityPostsTableTableManager(
+    _$AppDatabase db,
+    $CommunityPostsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CommunityPostsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CommunityPostsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CommunityPostsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> userId = const Value.absent(),
+                Value<String> authorName = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<double> distanceKm = const Value.absent(),
+                Value<int> durationSec = const Value.absent(),
+                Value<String> paceLabel = const Value.absent(),
+                Value<String?> polylineJson = const Value.absent(),
+                Value<String?> workoutBadge = const Value.absent(),
+                Value<String> visibility = const Value.absent(),
+                Value<int> createdAtMs = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CommunityPostsCompanion(
+                id: id,
+                userId: userId,
+                authorName: authorName,
+                title: title,
+                distanceKm: distanceKm,
+                durationSec: durationSec,
+                paceLabel: paceLabel,
+                polylineJson: polylineJson,
+                workoutBadge: workoutBadge,
+                visibility: visibility,
+                createdAtMs: createdAtMs,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String userId,
+                required String authorName,
+                required String title,
+                required double distanceKm,
+                required int durationSec,
+                required String paceLabel,
+                Value<String?> polylineJson = const Value.absent(),
+                Value<String?> workoutBadge = const Value.absent(),
+                Value<String> visibility = const Value.absent(),
+                required int createdAtMs,
+                Value<int> rowid = const Value.absent(),
+              }) => CommunityPostsCompanion.insert(
+                id: id,
+                userId: userId,
+                authorName: authorName,
+                title: title,
+                distanceKm: distanceKm,
+                durationSec: durationSec,
+                paceLabel: paceLabel,
+                polylineJson: polylineJson,
+                workoutBadge: workoutBadge,
+                visibility: visibility,
+                createdAtMs: createdAtMs,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CommunityPostsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CommunityPostsTable,
+      CommunityPost,
+      $$CommunityPostsTableFilterComposer,
+      $$CommunityPostsTableOrderingComposer,
+      $$CommunityPostsTableAnnotationComposer,
+      $$CommunityPostsTableCreateCompanionBuilder,
+      $$CommunityPostsTableUpdateCompanionBuilder,
+      (
+        CommunityPost,
+        BaseReferences<_$AppDatabase, $CommunityPostsTable, CommunityPost>,
+      ),
+      CommunityPost,
+      PrefetchHooks Function()
+    >;
+typedef $$CommunityPostLikesTableCreateCompanionBuilder =
+    CommunityPostLikesCompanion Function({
+      required String postId,
+      required String userId,
+      Value<int> rowid,
+    });
+typedef $$CommunityPostLikesTableUpdateCompanionBuilder =
+    CommunityPostLikesCompanion Function({
+      Value<String> postId,
+      Value<String> userId,
+      Value<int> rowid,
+    });
+
+class $$CommunityPostLikesTableFilterComposer
+    extends Composer<_$AppDatabase, $CommunityPostLikesTable> {
+  $$CommunityPostLikesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get postId => $composableBuilder(
+    column: $table.postId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CommunityPostLikesTableOrderingComposer
+    extends Composer<_$AppDatabase, $CommunityPostLikesTable> {
+  $$CommunityPostLikesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get postId => $composableBuilder(
+    column: $table.postId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CommunityPostLikesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CommunityPostLikesTable> {
+  $$CommunityPostLikesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get postId =>
+      $composableBuilder(column: $table.postId, builder: (column) => column);
+
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+}
+
+class $$CommunityPostLikesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CommunityPostLikesTable,
+          CommunityPostLike,
+          $$CommunityPostLikesTableFilterComposer,
+          $$CommunityPostLikesTableOrderingComposer,
+          $$CommunityPostLikesTableAnnotationComposer,
+          $$CommunityPostLikesTableCreateCompanionBuilder,
+          $$CommunityPostLikesTableUpdateCompanionBuilder,
+          (
+            CommunityPostLike,
+            BaseReferences<
+              _$AppDatabase,
+              $CommunityPostLikesTable,
+              CommunityPostLike
+            >,
+          ),
+          CommunityPostLike,
+          PrefetchHooks Function()
+        > {
+  $$CommunityPostLikesTableTableManager(
+    _$AppDatabase db,
+    $CommunityPostLikesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CommunityPostLikesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CommunityPostLikesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CommunityPostLikesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> postId = const Value.absent(),
+                Value<String> userId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CommunityPostLikesCompanion(
+                postId: postId,
+                userId: userId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String postId,
+                required String userId,
+                Value<int> rowid = const Value.absent(),
+              }) => CommunityPostLikesCompanion.insert(
+                postId: postId,
+                userId: userId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CommunityPostLikesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CommunityPostLikesTable,
+      CommunityPostLike,
+      $$CommunityPostLikesTableFilterComposer,
+      $$CommunityPostLikesTableOrderingComposer,
+      $$CommunityPostLikesTableAnnotationComposer,
+      $$CommunityPostLikesTableCreateCompanionBuilder,
+      $$CommunityPostLikesTableUpdateCompanionBuilder,
+      (
+        CommunityPostLike,
+        BaseReferences<
+          _$AppDatabase,
+          $CommunityPostLikesTable,
+          CommunityPostLike
+        >,
+      ),
+      CommunityPostLike,
+      PrefetchHooks Function()
+    >;
+typedef $$CommunityCommentsTableCreateCompanionBuilder =
+    CommunityCommentsCompanion Function({
+      required String id,
+      required String postId,
+      required String userId,
+      required String authorName,
+      required String body,
+      required int createdAtMs,
+      Value<int> rowid,
+    });
+typedef $$CommunityCommentsTableUpdateCompanionBuilder =
+    CommunityCommentsCompanion Function({
+      Value<String> id,
+      Value<String> postId,
+      Value<String> userId,
+      Value<String> authorName,
+      Value<String> body,
+      Value<int> createdAtMs,
+      Value<int> rowid,
+    });
+
+class $$CommunityCommentsTableFilterComposer
+    extends Composer<_$AppDatabase, $CommunityCommentsTable> {
+  $$CommunityCommentsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get postId => $composableBuilder(
+    column: $table.postId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get authorName => $composableBuilder(
+    column: $table.authorName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get body => $composableBuilder(
+    column: $table.body,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAtMs => $composableBuilder(
+    column: $table.createdAtMs,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CommunityCommentsTableOrderingComposer
+    extends Composer<_$AppDatabase, $CommunityCommentsTable> {
+  $$CommunityCommentsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get postId => $composableBuilder(
+    column: $table.postId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get authorName => $composableBuilder(
+    column: $table.authorName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get body => $composableBuilder(
+    column: $table.body,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAtMs => $composableBuilder(
+    column: $table.createdAtMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CommunityCommentsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CommunityCommentsTable> {
+  $$CommunityCommentsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get postId =>
+      $composableBuilder(column: $table.postId, builder: (column) => column);
+
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<String> get authorName => $composableBuilder(
+    column: $table.authorName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get body =>
+      $composableBuilder(column: $table.body, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAtMs => $composableBuilder(
+    column: $table.createdAtMs,
+    builder: (column) => column,
+  );
+}
+
+class $$CommunityCommentsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CommunityCommentsTable,
+          CommunityComment,
+          $$CommunityCommentsTableFilterComposer,
+          $$CommunityCommentsTableOrderingComposer,
+          $$CommunityCommentsTableAnnotationComposer,
+          $$CommunityCommentsTableCreateCompanionBuilder,
+          $$CommunityCommentsTableUpdateCompanionBuilder,
+          (
+            CommunityComment,
+            BaseReferences<
+              _$AppDatabase,
+              $CommunityCommentsTable,
+              CommunityComment
+            >,
+          ),
+          CommunityComment,
+          PrefetchHooks Function()
+        > {
+  $$CommunityCommentsTableTableManager(
+    _$AppDatabase db,
+    $CommunityCommentsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CommunityCommentsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CommunityCommentsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CommunityCommentsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> postId = const Value.absent(),
+                Value<String> userId = const Value.absent(),
+                Value<String> authorName = const Value.absent(),
+                Value<String> body = const Value.absent(),
+                Value<int> createdAtMs = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CommunityCommentsCompanion(
+                id: id,
+                postId: postId,
+                userId: userId,
+                authorName: authorName,
+                body: body,
+                createdAtMs: createdAtMs,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String postId,
+                required String userId,
+                required String authorName,
+                required String body,
+                required int createdAtMs,
+                Value<int> rowid = const Value.absent(),
+              }) => CommunityCommentsCompanion.insert(
+                id: id,
+                postId: postId,
+                userId: userId,
+                authorName: authorName,
+                body: body,
+                createdAtMs: createdAtMs,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CommunityCommentsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CommunityCommentsTable,
+      CommunityComment,
+      $$CommunityCommentsTableFilterComposer,
+      $$CommunityCommentsTableOrderingComposer,
+      $$CommunityCommentsTableAnnotationComposer,
+      $$CommunityCommentsTableCreateCompanionBuilder,
+      $$CommunityCommentsTableUpdateCompanionBuilder,
+      (
+        CommunityComment,
+        BaseReferences<
+          _$AppDatabase,
+          $CommunityCommentsTable,
+          CommunityComment
+        >,
+      ),
+      CommunityComment,
+      PrefetchHooks Function()
+    >;
+typedef $$CommunityGroupsTableCreateCompanionBuilder =
+    CommunityGroupsCompanion Function({
+      required String id,
+      required String name,
+      Value<String> description,
+      Value<bool> isPrivate,
+      required String ownerId,
+      Value<int> memberCount,
+      Value<bool> isJoined,
+      Value<int> rowid,
+    });
+typedef $$CommunityGroupsTableUpdateCompanionBuilder =
+    CommunityGroupsCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<String> description,
+      Value<bool> isPrivate,
+      Value<String> ownerId,
+      Value<int> memberCount,
+      Value<bool> isJoined,
+      Value<int> rowid,
+    });
+
+class $$CommunityGroupsTableFilterComposer
+    extends Composer<_$AppDatabase, $CommunityGroupsTable> {
+  $$CommunityGroupsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isPrivate => $composableBuilder(
+    column: $table.isPrivate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ownerId => $composableBuilder(
+    column: $table.ownerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get memberCount => $composableBuilder(
+    column: $table.memberCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isJoined => $composableBuilder(
+    column: $table.isJoined,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CommunityGroupsTableOrderingComposer
+    extends Composer<_$AppDatabase, $CommunityGroupsTable> {
+  $$CommunityGroupsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isPrivate => $composableBuilder(
+    column: $table.isPrivate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ownerId => $composableBuilder(
+    column: $table.ownerId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get memberCount => $composableBuilder(
+    column: $table.memberCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isJoined => $composableBuilder(
+    column: $table.isJoined,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CommunityGroupsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CommunityGroupsTable> {
+  $$CommunityGroupsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isPrivate =>
+      $composableBuilder(column: $table.isPrivate, builder: (column) => column);
+
+  GeneratedColumn<String> get ownerId =>
+      $composableBuilder(column: $table.ownerId, builder: (column) => column);
+
+  GeneratedColumn<int> get memberCount => $composableBuilder(
+    column: $table.memberCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isJoined =>
+      $composableBuilder(column: $table.isJoined, builder: (column) => column);
+}
+
+class $$CommunityGroupsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CommunityGroupsTable,
+          CommunityGroup,
+          $$CommunityGroupsTableFilterComposer,
+          $$CommunityGroupsTableOrderingComposer,
+          $$CommunityGroupsTableAnnotationComposer,
+          $$CommunityGroupsTableCreateCompanionBuilder,
+          $$CommunityGroupsTableUpdateCompanionBuilder,
+          (
+            CommunityGroup,
+            BaseReferences<
+              _$AppDatabase,
+              $CommunityGroupsTable,
+              CommunityGroup
+            >,
+          ),
+          CommunityGroup,
+          PrefetchHooks Function()
+        > {
+  $$CommunityGroupsTableTableManager(
+    _$AppDatabase db,
+    $CommunityGroupsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CommunityGroupsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CommunityGroupsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CommunityGroupsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> description = const Value.absent(),
+                Value<bool> isPrivate = const Value.absent(),
+                Value<String> ownerId = const Value.absent(),
+                Value<int> memberCount = const Value.absent(),
+                Value<bool> isJoined = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CommunityGroupsCompanion(
+                id: id,
+                name: name,
+                description: description,
+                isPrivate: isPrivate,
+                ownerId: ownerId,
+                memberCount: memberCount,
+                isJoined: isJoined,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                Value<String> description = const Value.absent(),
+                Value<bool> isPrivate = const Value.absent(),
+                required String ownerId,
+                Value<int> memberCount = const Value.absent(),
+                Value<bool> isJoined = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CommunityGroupsCompanion.insert(
+                id: id,
+                name: name,
+                description: description,
+                isPrivate: isPrivate,
+                ownerId: ownerId,
+                memberCount: memberCount,
+                isJoined: isJoined,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CommunityGroupsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CommunityGroupsTable,
+      CommunityGroup,
+      $$CommunityGroupsTableFilterComposer,
+      $$CommunityGroupsTableOrderingComposer,
+      $$CommunityGroupsTableAnnotationComposer,
+      $$CommunityGroupsTableCreateCompanionBuilder,
+      $$CommunityGroupsTableUpdateCompanionBuilder,
+      (
+        CommunityGroup,
+        BaseReferences<_$AppDatabase, $CommunityGroupsTable, CommunityGroup>,
+      ),
+      CommunityGroup,
+      PrefetchHooks Function()
+    >;
+typedef $$CommunityChallengesTableCreateCompanionBuilder =
+    CommunityChallengesCompanion Function({
+      required String id,
+      required String title,
+      required double targetKm,
+      required int durationDays,
+      required String challengeType,
+      Value<int> participantCount,
+      Value<bool> isJoined,
+      Value<int> rowid,
+    });
+typedef $$CommunityChallengesTableUpdateCompanionBuilder =
+    CommunityChallengesCompanion Function({
+      Value<String> id,
+      Value<String> title,
+      Value<double> targetKm,
+      Value<int> durationDays,
+      Value<String> challengeType,
+      Value<int> participantCount,
+      Value<bool> isJoined,
+      Value<int> rowid,
+    });
+
+class $$CommunityChallengesTableFilterComposer
+    extends Composer<_$AppDatabase, $CommunityChallengesTable> {
+  $$CommunityChallengesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get targetKm => $composableBuilder(
+    column: $table.targetKm,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get durationDays => $composableBuilder(
+    column: $table.durationDays,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get challengeType => $composableBuilder(
+    column: $table.challengeType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get participantCount => $composableBuilder(
+    column: $table.participantCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isJoined => $composableBuilder(
+    column: $table.isJoined,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CommunityChallengesTableOrderingComposer
+    extends Composer<_$AppDatabase, $CommunityChallengesTable> {
+  $$CommunityChallengesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get targetKm => $composableBuilder(
+    column: $table.targetKm,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get durationDays => $composableBuilder(
+    column: $table.durationDays,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get challengeType => $composableBuilder(
+    column: $table.challengeType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get participantCount => $composableBuilder(
+    column: $table.participantCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isJoined => $composableBuilder(
+    column: $table.isJoined,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CommunityChallengesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CommunityChallengesTable> {
+  $$CommunityChallengesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<double> get targetKm =>
+      $composableBuilder(column: $table.targetKm, builder: (column) => column);
+
+  GeneratedColumn<int> get durationDays => $composableBuilder(
+    column: $table.durationDays,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get challengeType => $composableBuilder(
+    column: $table.challengeType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get participantCount => $composableBuilder(
+    column: $table.participantCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isJoined =>
+      $composableBuilder(column: $table.isJoined, builder: (column) => column);
+}
+
+class $$CommunityChallengesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CommunityChallengesTable,
+          CommunityChallenge,
+          $$CommunityChallengesTableFilterComposer,
+          $$CommunityChallengesTableOrderingComposer,
+          $$CommunityChallengesTableAnnotationComposer,
+          $$CommunityChallengesTableCreateCompanionBuilder,
+          $$CommunityChallengesTableUpdateCompanionBuilder,
+          (
+            CommunityChallenge,
+            BaseReferences<
+              _$AppDatabase,
+              $CommunityChallengesTable,
+              CommunityChallenge
+            >,
+          ),
+          CommunityChallenge,
+          PrefetchHooks Function()
+        > {
+  $$CommunityChallengesTableTableManager(
+    _$AppDatabase db,
+    $CommunityChallengesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CommunityChallengesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CommunityChallengesTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$CommunityChallengesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<double> targetKm = const Value.absent(),
+                Value<int> durationDays = const Value.absent(),
+                Value<String> challengeType = const Value.absent(),
+                Value<int> participantCount = const Value.absent(),
+                Value<bool> isJoined = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CommunityChallengesCompanion(
+                id: id,
+                title: title,
+                targetKm: targetKm,
+                durationDays: durationDays,
+                challengeType: challengeType,
+                participantCount: participantCount,
+                isJoined: isJoined,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String title,
+                required double targetKm,
+                required int durationDays,
+                required String challengeType,
+                Value<int> participantCount = const Value.absent(),
+                Value<bool> isJoined = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CommunityChallengesCompanion.insert(
+                id: id,
+                title: title,
+                targetKm: targetKm,
+                durationDays: durationDays,
+                challengeType: challengeType,
+                participantCount: participantCount,
+                isJoined: isJoined,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CommunityChallengesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CommunityChallengesTable,
+      CommunityChallenge,
+      $$CommunityChallengesTableFilterComposer,
+      $$CommunityChallengesTableOrderingComposer,
+      $$CommunityChallengesTableAnnotationComposer,
+      $$CommunityChallengesTableCreateCompanionBuilder,
+      $$CommunityChallengesTableUpdateCompanionBuilder,
+      (
+        CommunityChallenge,
+        BaseReferences<
+          _$AppDatabase,
+          $CommunityChallengesTable,
+          CommunityChallenge
+        >,
+      ),
+      CommunityChallenge,
+      PrefetchHooks Function()
+    >;
+typedef $$CommunityNotificationsTableCreateCompanionBuilder =
+    CommunityNotificationsCompanion Function({
+      required String id,
+      required String title,
+      required String body,
+      Value<bool> isRead,
+      required int createdAtMs,
+      Value<int> rowid,
+    });
+typedef $$CommunityNotificationsTableUpdateCompanionBuilder =
+    CommunityNotificationsCompanion Function({
+      Value<String> id,
+      Value<String> title,
+      Value<String> body,
+      Value<bool> isRead,
+      Value<int> createdAtMs,
+      Value<int> rowid,
+    });
+
+class $$CommunityNotificationsTableFilterComposer
+    extends Composer<_$AppDatabase, $CommunityNotificationsTable> {
+  $$CommunityNotificationsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get body => $composableBuilder(
+    column: $table.body,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isRead => $composableBuilder(
+    column: $table.isRead,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAtMs => $composableBuilder(
+    column: $table.createdAtMs,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CommunityNotificationsTableOrderingComposer
+    extends Composer<_$AppDatabase, $CommunityNotificationsTable> {
+  $$CommunityNotificationsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get body => $composableBuilder(
+    column: $table.body,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isRead => $composableBuilder(
+    column: $table.isRead,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAtMs => $composableBuilder(
+    column: $table.createdAtMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CommunityNotificationsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CommunityNotificationsTable> {
+  $$CommunityNotificationsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get body =>
+      $composableBuilder(column: $table.body, builder: (column) => column);
+
+  GeneratedColumn<bool> get isRead =>
+      $composableBuilder(column: $table.isRead, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAtMs => $composableBuilder(
+    column: $table.createdAtMs,
+    builder: (column) => column,
+  );
+}
+
+class $$CommunityNotificationsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CommunityNotificationsTable,
+          CommunityNotification,
+          $$CommunityNotificationsTableFilterComposer,
+          $$CommunityNotificationsTableOrderingComposer,
+          $$CommunityNotificationsTableAnnotationComposer,
+          $$CommunityNotificationsTableCreateCompanionBuilder,
+          $$CommunityNotificationsTableUpdateCompanionBuilder,
+          (
+            CommunityNotification,
+            BaseReferences<
+              _$AppDatabase,
+              $CommunityNotificationsTable,
+              CommunityNotification
+            >,
+          ),
+          CommunityNotification,
+          PrefetchHooks Function()
+        > {
+  $$CommunityNotificationsTableTableManager(
+    _$AppDatabase db,
+    $CommunityNotificationsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CommunityNotificationsTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$CommunityNotificationsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$CommunityNotificationsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String> body = const Value.absent(),
+                Value<bool> isRead = const Value.absent(),
+                Value<int> createdAtMs = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CommunityNotificationsCompanion(
+                id: id,
+                title: title,
+                body: body,
+                isRead: isRead,
+                createdAtMs: createdAtMs,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String title,
+                required String body,
+                Value<bool> isRead = const Value.absent(),
+                required int createdAtMs,
+                Value<int> rowid = const Value.absent(),
+              }) => CommunityNotificationsCompanion.insert(
+                id: id,
+                title: title,
+                body: body,
+                isRead: isRead,
+                createdAtMs: createdAtMs,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CommunityNotificationsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CommunityNotificationsTable,
+      CommunityNotification,
+      $$CommunityNotificationsTableFilterComposer,
+      $$CommunityNotificationsTableOrderingComposer,
+      $$CommunityNotificationsTableAnnotationComposer,
+      $$CommunityNotificationsTableCreateCompanionBuilder,
+      $$CommunityNotificationsTableUpdateCompanionBuilder,
+      (
+        CommunityNotification,
+        BaseReferences<
+          _$AppDatabase,
+          $CommunityNotificationsTable,
+          CommunityNotification
+        >,
+      ),
+      CommunityNotification,
+      PrefetchHooks Function()
+    >;
+typedef $$BlockedUsersTableCreateCompanionBuilder =
+    BlockedUsersCompanion Function({
+      required String blockerId,
+      required String blockedId,
+      Value<int> rowid,
+    });
+typedef $$BlockedUsersTableUpdateCompanionBuilder =
+    BlockedUsersCompanion Function({
+      Value<String> blockerId,
+      Value<String> blockedId,
+      Value<int> rowid,
+    });
+
+class $$BlockedUsersTableFilterComposer
+    extends Composer<_$AppDatabase, $BlockedUsersTable> {
+  $$BlockedUsersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get blockerId => $composableBuilder(
+    column: $table.blockerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get blockedId => $composableBuilder(
+    column: $table.blockedId,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$BlockedUsersTableOrderingComposer
+    extends Composer<_$AppDatabase, $BlockedUsersTable> {
+  $$BlockedUsersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get blockerId => $composableBuilder(
+    column: $table.blockerId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get blockedId => $composableBuilder(
+    column: $table.blockedId,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$BlockedUsersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $BlockedUsersTable> {
+  $$BlockedUsersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get blockerId =>
+      $composableBuilder(column: $table.blockerId, builder: (column) => column);
+
+  GeneratedColumn<String> get blockedId =>
+      $composableBuilder(column: $table.blockedId, builder: (column) => column);
+}
+
+class $$BlockedUsersTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $BlockedUsersTable,
+          BlockedUser,
+          $$BlockedUsersTableFilterComposer,
+          $$BlockedUsersTableOrderingComposer,
+          $$BlockedUsersTableAnnotationComposer,
+          $$BlockedUsersTableCreateCompanionBuilder,
+          $$BlockedUsersTableUpdateCompanionBuilder,
+          (
+            BlockedUser,
+            BaseReferences<_$AppDatabase, $BlockedUsersTable, BlockedUser>,
+          ),
+          BlockedUser,
+          PrefetchHooks Function()
+        > {
+  $$BlockedUsersTableTableManager(_$AppDatabase db, $BlockedUsersTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$BlockedUsersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$BlockedUsersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$BlockedUsersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> blockerId = const Value.absent(),
+                Value<String> blockedId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BlockedUsersCompanion(
+                blockerId: blockerId,
+                blockedId: blockedId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String blockerId,
+                required String blockedId,
+                Value<int> rowid = const Value.absent(),
+              }) => BlockedUsersCompanion.insert(
+                blockerId: blockerId,
+                blockedId: blockedId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$BlockedUsersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $BlockedUsersTable,
+      BlockedUser,
+      $$BlockedUsersTableFilterComposer,
+      $$BlockedUsersTableOrderingComposer,
+      $$BlockedUsersTableAnnotationComposer,
+      $$BlockedUsersTableCreateCompanionBuilder,
+      $$BlockedUsersTableUpdateCompanionBuilder,
+      (
+        BlockedUser,
+        BaseReferences<_$AppDatabase, $BlockedUsersTable, BlockedUser>,
+      ),
+      BlockedUser,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -6458,4 +11646,23 @@ class $AppDatabaseManager {
       $$MealLogsTableTableManager(_db, _db.mealLogs);
   $$UserMetabolicProfilesTableTableManager get userMetabolicProfiles =>
       $$UserMetabolicProfilesTableTableManager(_db, _db.userMetabolicProfiles);
+  $$CommunityProfilesTableTableManager get communityProfiles =>
+      $$CommunityProfilesTableTableManager(_db, _db.communityProfiles);
+  $$CommunityPostsTableTableManager get communityPosts =>
+      $$CommunityPostsTableTableManager(_db, _db.communityPosts);
+  $$CommunityPostLikesTableTableManager get communityPostLikes =>
+      $$CommunityPostLikesTableTableManager(_db, _db.communityPostLikes);
+  $$CommunityCommentsTableTableManager get communityComments =>
+      $$CommunityCommentsTableTableManager(_db, _db.communityComments);
+  $$CommunityGroupsTableTableManager get communityGroups =>
+      $$CommunityGroupsTableTableManager(_db, _db.communityGroups);
+  $$CommunityChallengesTableTableManager get communityChallenges =>
+      $$CommunityChallengesTableTableManager(_db, _db.communityChallenges);
+  $$CommunityNotificationsTableTableManager get communityNotifications =>
+      $$CommunityNotificationsTableTableManager(
+        _db,
+        _db.communityNotifications,
+      );
+  $$BlockedUsersTableTableManager get blockedUsers =>
+      $$BlockedUsersTableTableManager(_db, _db.blockedUsers);
 }

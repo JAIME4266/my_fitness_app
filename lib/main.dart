@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'core/config/supabase_config.dart';
 import 'database/database.dart';
 import 'database/fitness_repository.dart';
+import 'features/community/presentation/challenges_screen.dart';
+import 'features/community/presentation/community_screen.dart';
 import 'features/nutrition/data/nutrition_repository.dart';
 import 'features/nutrition/presentation/log_meal_bottom_sheet.dart';
 import 'features/nutrition/presentation/nutrition_screen.dart';
 import 'features/run_tracking/presentation/run_tracker_screen.dart';
 import 'health_service.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (SupabaseConfig.isConfigured) {
+    await Supabase.initialize(
+      url: SupabaseConfig.url,
+      publishableKey: SupabaseConfig.anonKey,
+    );
+  }
   runApp(const ProviderScope(child: MyFitnessApp()));
 }
 
@@ -55,6 +66,8 @@ class _AppShellState extends State<AppShell> {
           ),
           const NutritionScreen(),
           const RunTrackerScreen(),
+          const CommunityScreen(),
+          const ChallengesScreen(),
         ],
       ),
       bottomNavigationBar: NavigationBar(
@@ -78,7 +91,17 @@ class _AppShellState extends State<AppShell> {
             icon: Icon(Icons.directions_run_outlined),
             selectedIcon:
                 Icon(Icons.directions_run, color: Color(0xFF0F766E)),
-            label: 'Run',
+            label: 'Start Run',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.groups_outlined),
+            selectedIcon: Icon(Icons.groups, color: Color(0xFF0F766E)),
+            label: 'Community',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.emoji_events_outlined),
+            selectedIcon: Icon(Icons.emoji_events, color: Color(0xFF0F766E)),
+            label: 'Challenges',
           ),
         ],
       ),

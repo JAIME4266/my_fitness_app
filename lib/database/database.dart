@@ -40,6 +40,102 @@ class RoutePoints extends Table {
   IntColumn get timestampEpochMs => integer()();
 }
 
+// --- Phase 5: Community & Social Fitness Cache Tables ---
+class CommunityProfiles extends Table {
+  TextColumn get id => text()();
+  TextColumn get username => text()();
+  TextColumn get displayName => text()();
+  RealColumn get dailyGoalKm => real().withDefault(const Constant(5.0))();
+  RealColumn get todayDistanceKm => real().withDefault(const Constant(0.0))();
+  BoolColumn get isPrivate => boolean().withDefault(const Constant(false))();
+  BoolColumn get isFollowing => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class CommunityPosts extends Table {
+  TextColumn get id => text()();
+  TextColumn get userId => text()();
+  TextColumn get authorName => text()();
+  TextColumn get title => text()();
+  RealColumn get distanceKm => real()();
+  IntColumn get durationSec => integer()();
+  TextColumn get paceLabel => text()();
+  TextColumn get polylineJson => text().nullable()();
+  TextColumn get workoutBadge => text().nullable()();
+  TextColumn get visibility => text().withDefault(const Constant('public'))();
+  IntColumn get createdAtMs => integer()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class CommunityPostLikes extends Table {
+  TextColumn get postId => text()();
+  TextColumn get userId => text()();
+
+  @override
+  Set<Column> get primaryKey => {postId, userId};
+}
+
+class CommunityComments extends Table {
+  TextColumn get id => text()();
+  TextColumn get postId => text()();
+  TextColumn get userId => text()();
+  TextColumn get authorName => text()();
+  TextColumn get body => text()();
+  IntColumn get createdAtMs => integer()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class CommunityGroups extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+  TextColumn get description => text().withDefault(const Constant(''))();
+  BoolColumn get isPrivate => boolean().withDefault(const Constant(false))();
+  TextColumn get ownerId => text()();
+  IntColumn get memberCount => integer().withDefault(const Constant(1))();
+  BoolColumn get isJoined => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class CommunityChallenges extends Table {
+  TextColumn get id => text()();
+  TextColumn get title => text()();
+  RealColumn get targetKm => real()();
+  IntColumn get durationDays => integer()();
+  TextColumn get challengeType => text()();
+  IntColumn get participantCount => integer().withDefault(const Constant(1))();
+  BoolColumn get isJoined => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class CommunityNotifications extends Table {
+  TextColumn get id => text()();
+  TextColumn get title => text()();
+  TextColumn get body => text()();
+  BoolColumn get isRead => boolean().withDefault(const Constant(false))();
+  IntColumn get createdAtMs => integer()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class BlockedUsers extends Table {
+  TextColumn get blockerId => text()();
+  TextColumn get blockedId => text()();
+
+  @override
+  Set<Column> get primaryKey => {blockerId, blockedId};
+}
+
 class FoodCatalog extends Table {
   TextColumn get id => text()();
   TextColumn get name => text()();
@@ -119,6 +215,14 @@ class UserMetabolicProfiles extends Table {
     FoodCatalog,
     MealLogs,
     UserMetabolicProfiles,
+    CommunityProfiles,
+    CommunityPosts,
+    CommunityPostLikes,
+    CommunityComments,
+    CommunityGroups,
+    CommunityChallenges,
+    CommunityNotifications,
+    BlockedUsers,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -126,7 +230,7 @@ class AppDatabase extends _$AppDatabase {
       : super(e ?? driftDatabase(name: 'fitness_app'));
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -149,6 +253,16 @@ class AppDatabase extends _$AppDatabase {
           }
           if (from < 3) {
             await m.createTable(routePoints);
+          }
+          if (from < 4) {
+            await m.createTable(communityProfiles);
+            await m.createTable(communityPosts);
+            await m.createTable(communityPostLikes);
+            await m.createTable(communityComments);
+            await m.createTable(communityGroups);
+            await m.createTable(communityChallenges);
+            await m.createTable(communityNotifications);
+            await m.createTable(blockedUsers);
           }
         },
       );
