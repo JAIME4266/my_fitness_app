@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import '../data/ai_food_service.dart';
 import '../data/nutrition_repository.dart';
+import 'barcode_scanner_screen.dart';
 import 'log_meal_bottom_sheet.dart';
 
 final foodRecognitionProvider = Provider<FoodRecognitionProvider>((ref) {
@@ -218,10 +219,14 @@ class _AiFoodScannerScreenState extends ConsumerState<AiFoodScannerScreen> {
                 Icons.qr_code_scanner,
                 'Scan Barcode',
                 widget.onOpenBarcodeScanner ??
-                    () => ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Barcode scanner ready in Phase 8.')),
+                    () {
+                      final repo = ref.read(nutritionRepositoryProvider);
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => BarcodeScannerScreen(repository: repo),
                         ),
+                      );
+                    },
               ),
             ],
           ),
