@@ -234,9 +234,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     final nutrition = nutritionAsync.valueOrNull ?? const DailyNutritionTotals();
 
     final int targetCalories = profile?.dailyCalorieGoal ?? 2200;
-    final int consumedCalories = nutrition.totalKcal.round();
     final int remainingCalories =
-        targetCalories - consumedCalories + burnedCalories;
+        (targetCalories - burnedCalories).clamp(0, targetCalories);
 
     final double targetProtein = profile?.proteinTargetG ?? 130.0;
     final double targetCarbs = profile?.carbsTargetG ?? 230.0;
@@ -245,15 +244,15 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFFAF8F5),
       appBar: AppBar(
-        title: const Text('PulseTrack Dashboard',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+        title: const Text('Jaime',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
           IconButton(
             tooltip: 'Sleep & Chronotype',
-            icon: const Icon(Icons.bedtime_outlined, color: Color(0xFF0F766E)),
+            icon: const Icon(Icons.nights_stay_rounded, color: Color(0xFF0F766E)),
             onPressed: () {
               final db = ref.read(databaseProvider);
               Navigator.of(context).push(
@@ -373,7 +372,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    const Text('Calories Remaining',
+                    const Text('Calories Remaining to Burn',
                         style: TextStyle(
                             fontSize: 15,
                             color: Colors.grey,
@@ -391,11 +390,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         _buildCalorieStat(
-                            'Target', '$targetCalories', Colors.black87),
+                            'Burn Target', '$targetCalories', Colors.black87),
                         _buildCalorieStat(
-                            'Food', '$consumedCalories', Colors.orange.shade800),
-                        _buildCalorieStat('Burned', '+$burnedCalories',
-                            const Color(0xFF0F766E)),
+                            'Burned', '$burnedCalories', const Color(0xFF0F766E)),
+                        _buildCalorieStat(
+                            'Remaining', '$remainingCalories', Colors.orange.shade800),
                       ],
                     ),
                     const SizedBox(height: 14),

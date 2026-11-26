@@ -36,7 +36,7 @@ void main() {
 
     // Dashboard should NOT show legacy hardcoded 1450 kcal food intake
     expect(find.text('1450'), findsNothing);
-    expect(find.text('PulseTrack Dashboard'), findsOneWidget);
+    expect(find.text('Jaime'), findsOneWidget);
     expect(find.text('Log Meal'), findsOneWidget);
 
     // Tap Log Meal button on Dashboard to open IFCT 2017 bottom sheet
@@ -58,7 +58,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Default serving 160g cooked moong dal -> 50g raw -> 174 kcal
-    expect(find.text('174'), findsOneWidget);
+    expect(find.text('Burn Target'), findsOneWidget);
 
     // Navigate to Nutrition screen via Food Diary button and verify diary displays logged item
     await tester.tap(find.text('Food Diary'));

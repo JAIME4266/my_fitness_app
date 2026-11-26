@@ -110,6 +110,116 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
     Navigator.of(context).pop(true);
   }
 
+  Future<void> _openOnlineSearchDialog() async {
+    final queryCtrl = TextEditingController();
+    List<BarcodeProduct> results = const [];
+    bool searching = false;
+
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          title: const Text('Online Food Search'),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: queryCtrl,
+                        decoration: const InputDecoration(
+                          labelText: 'Search any food (e.g. Paneer, Oats)',
+                          isDense: true,
+                          border: OutlineInputBorder(),
+                        ),
+                        onSubmitted: (q) async {
+                          setDialogState(() => searching = true);
+                          final found = await _service.searchProductsOnline(q);
+                          if (ctx.mounted) {
+                            setDialogState(() {
+                              searching = false;
+                              results = found;
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    IconButton.filled(
+                      onPressed: searching
+                          ? null
+                          : () async {
+                              setDialogState(() => searching = true);
+                              final found = await _service
+                                  .searchProductsOnline(queryCtrl.text);
+                              if (ctx.mounted) {
+                                setDialogState(() {
+                                  searching = false;
+                                  results = found;
+                                });
+                              }
+                            },
+                      icon: const Icon(Icons.search),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                if (searching)
+                  const Padding(
+                    padding: EdgeInsets.all(16),
+                    child: CircularProgressIndicator(),
+                  )
+                else if (results.isEmpty)
+                  const Text(
+                    'Enter a food name and tap search to query Open Food Facts online.',
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  )
+                else
+                  SizedBox(
+                    height: 240,
+                    child: ListView.builder(
+                      itemCount: results.length,
+                      itemBuilder: (_, i) {
+                        final p = results[i];
+                        final kcal = p.caloriesPer100g?.round();
+                        return ListTile(
+                          dense: true,
+                          title: Text(p.name,
+                              maxLines: 1, overflow: TextOverflow.ellipsis),
+                          subtitle: Text(
+                            '${p.brand ?? "Generic"} • ${kcal != null ? "$kcal kcal/100g" : "Calories unavailable"}',
+                          ),
+                          onTap: () {
+                            Navigator.of(ctx).pop();
+                            setState(() {
+                              _result = BarcodeLookupResult(
+                                status: BarcodeLookupStatus.found,
+                                product: p,
+                              );
+                              _grams = p.servingSizeGrams ?? 100.0;
+                            });
+                          },
+                        );
+                      },
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text('Close'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Future<void> _openManualEntryDialog() async {
     final nameController = TextEditingController();
     final calController = TextEditingController();
@@ -264,6 +374,12 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
                 label: const Text('Lookup'),
               ),
             ],
+          ),
+          const SizedBox(height: 8),
+          OutlinedButton.icon(
+            onPressed: _openOnlineSearchDialog,
+            icon: const Icon(Icons.public),
+            label: const Text('Search Any Food Online (Open Food Facts)'),
           ),
           const SizedBox(height: 16),
           if (_isLoading)

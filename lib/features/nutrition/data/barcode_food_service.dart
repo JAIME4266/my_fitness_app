@@ -156,6 +156,71 @@ class OpenFoodFactsService {
     }
   }
 
+  Future<List<BarcodeProduct>> searchProductsOnline(String query) async {
+    final trimmed = query.trim();
+    if (trimmed.isEmpty) return const [];
+
+    final uri = Uri.https(
+      'world.openfoodfacts.org',
+      '/cgi/search.pl',
+      {
+        'search_terms': trimmed,
+        'search_simple': '1',
+        'action': 'process',
+        'json': '1',
+        'page_size': '15',
+        'fields': 'code,product_name,brands,serving_size,serving_quantity,nutriments',
+      },
+    );
+
+    try {
+      final response = await _client.get(
+        uri,
+        headers: const {
+          'User-Agent': userAgent,
+          'Accept': 'application/json',
+        },
+      ).timeout(const Duration(seconds: 12));
+
+      if (response.statusCode != 200) return const [];
+      final jsonMap = jsonDecode(response.body) as Map<String, dynamic>;
+      final products = (jsonMap['products'] as List?) ?? const [];
+
+      final results = <BarcodeProduct>[];
+      for (final raw in products) {
+        if (raw is! Map<String, dynamic>) continue;
+        final name = (raw['product_name'] as String?)?.trim();
+        if (name == null || name.isEmpty) continue;
+        final code = (raw['code'] as String?)?.trim() ?? 'online_${results.length}';
+        final brand = (raw['brands'] as String?)?.trim();
+        final servingLabel = (raw['serving_size'] as String?)?.trim();
+        final servingQty = _toDouble(raw['serving_quantity']);
+        final nutriments =
+            (raw['nutriments'] as Map<String, dynamic>?) ?? const {};
+        final sodiumGrams = _toDouble(nutriments['sodium_100g']);
+
+        results.add(BarcodeProduct(
+          barcode: code,
+          name: name,
+          brand: (brand == null || brand.isEmpty) ? null : brand,
+          servingSizeGrams:
+              servingQty != null && servingQty > 0 ? servingQty : null,
+          servingSizeLabel:
+              (servingLabel == null || servingLabel.isEmpty) ? null : servingLabel,
+          caloriesPer100g: _toDouble(nutriments['energy-kcal_100g']),
+          proteinPer100g: _toDouble(nutriments['proteins_100g']),
+          carbsPer100g: _toDouble(nutriments['carbohydrates_100g']),
+          fatPer100g: _toDouble(nutriments['fat_100g']),
+          fiberPer100g: _toDouble(nutriments['fiber_100g']),
+          sodiumMgPer100g: sodiumGrams != null ? sodiumGrams * 1000.0 : null,
+        ));
+      }
+      return results;
+    } catch (_) {
+      return const [];
+    }
+  }
+
   static double? _toDouble(dynamic value) {
     if (value == null) return null;
     if (value is num) return value.toDouble();

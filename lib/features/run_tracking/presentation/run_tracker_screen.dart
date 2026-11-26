@@ -175,11 +175,13 @@ class _RunTrackerScreenState extends ConsumerState<RunTrackerScreen> {
     final met = _sportType == 'Cycle'
         ? 7.5
         : (_sportType == 'Walk' ? 3.8 : 9.8);
-    final kcal = NutritionCalculator.calculateNetMetBurn(
-      met: met,
-      weightKg: weightKg,
-      durationMinutes: _elapsedSec / 60.0,
-    );
+    final kcal = _distanceM < 20.0
+        ? 0.0
+        : NutritionCalculator.calculateNetMetBurn(
+            met: met,
+            weightKg: weightKg,
+            durationMinutes: _elapsedSec / 60.0,
+          );
 
     if (_elapsedSec > 0 || _points.isNotEmpty) {
       await ref.read(runRepositoryProvider).saveCompletedRun(
