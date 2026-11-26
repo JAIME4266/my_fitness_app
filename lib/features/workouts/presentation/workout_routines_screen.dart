@@ -164,11 +164,17 @@ class _WorkoutRoutinesScreenState extends ConsumerState<WorkoutRoutinesScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 height: 92,
                 width: double.infinity,
-                color: r.accentColor.withValues(alpha: 0.14),
-                child: Icon(r.icon, size: 42, color: r.accentColor),
+                child: Image.asset(
+                  _imageForCategory(r.category),
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, _, _) => Container(
+                    color: r.accentColor.withValues(alpha: 0.14),
+                    child: Icon(r.icon, size: 42, color: r.accentColor),
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
@@ -337,5 +343,16 @@ class _WorkoutRoutinesScreenState extends ConsumerState<WorkoutRoutinesScreen>
         ],
       ),
     );
+  }
+
+  static String _imageForCategory(String category) {
+    final lower = category.toLowerCase();
+    if (lower.contains('warmup')) {
+      return 'assets/images/workouts/warmup.jpg';
+    }
+    if (lower.contains('recovery')) {
+      return 'assets/images/workouts/recovery.jpg';
+    }
+    return 'assets/images/workouts/strength.jpg';
   }
 }

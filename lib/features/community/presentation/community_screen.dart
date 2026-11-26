@@ -338,17 +338,48 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen>
   Widget _buildGroupsTab(CommunityRepository repo) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+        Container(
+          margin: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFF0F766E), Color(0xFF0284C7)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(18),
+          ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Running Groups',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              TextButton.icon(
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Running Clubs & Groups',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'Train together, share routes, and stay motivated.',
+                      style: TextStyle(color: Colors.white70, fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              FilledButton.icon(
+                style: FilledButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: const Color(0xFF0F766E),
+                ),
                 onPressed: () => _showCreateGroupDialog(context, repo),
-                icon: const Icon(Icons.group_add),
-                label: const Text('Create Group'),
+                icon: const Icon(Icons.group_add, size: 18),
+                label: const Text('Create'),
               ),
             ],
           ),
@@ -364,24 +395,56 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen>
                       style: TextStyle(color: Colors.grey)),
                 );
               }
+              const palette = [
+                Color(0xFF0F766E),
+                Color(0xFF0284C7),
+                Color(0xFFD97706),
+                Color(0xFF7C3AED),
+              ];
               return ListView.separated(
                 padding: const EdgeInsets.all(16),
                 itemCount: groups.length,
-                separatorBuilder: (_, _) => const SizedBox(height: 10),
+                separatorBuilder: (_, _) => const SizedBox(height: 12),
                 itemBuilder: (context, i) {
                   final g = groups[i];
-                  return Material(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                      side: const BorderSide(color: Color(0xFFE7E5E4)),
+                  final accent = palette[i % palette.length];
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: accent.withValues(alpha: 0.25),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: accent.withValues(alpha: 0.06),
+                          blurRadius: 8,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
                     ),
                     child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 8),
+                      leading: CircleAvatar(
+                        backgroundColor: accent.withValues(alpha: 0.14),
+                        child: Icon(
+                          g.isPrivate ? Icons.lock_outline : Icons.groups,
+                          color: accent,
+                        ),
+                      ),
                       title: Text(g.name,
                           style: const TextStyle(fontWeight: FontWeight.bold)),
                       subtitle: Text(
                           '${g.isPrivate ? "Private" : "Public"} • ${g.memberCount} members\n${g.description}'),
-                      trailing: OutlinedButton(
+                      trailing: FilledButton.tonal(
+                        style: FilledButton.styleFrom(
+                          backgroundColor: g.isJoined
+                              ? accent.withValues(alpha: 0.15)
+                              : accent,
+                          foregroundColor:
+                              g.isJoined ? accent : Colors.white,
+                        ),
                         onPressed: () => repo.toggleJoinGroup(g),
                         child: Text(g.isJoined ? 'Joined' : 'Join'),
                       ),

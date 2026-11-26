@@ -421,6 +421,22 @@ class _RunTrackerScreenState extends ConsumerState<RunTrackerScreen> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
+                              IconButton(
+                                icon: const Icon(Icons.delete_outline,
+                                    size: 20, color: Colors.redAccent),
+                                tooltip: 'Delete Activity',
+                                padding: EdgeInsets.zero,
+                                constraints: const BoxConstraints(),
+                                onPressed: () async {
+                                  final db = ref.read(runRepositoryProvider).db;
+                                  await (db.delete(db.routePoints)
+                                        ..where((t) => t.workoutId.equals(w.id)))
+                                      .go();
+                                  await (db.delete(db.workouts)
+                                        ..where((t) => t.id.equals(w.id)))
+                                      .go();
+                                },
+                              ),
                             ],
                           ),
                           if (pts.length >= 2) ...[
