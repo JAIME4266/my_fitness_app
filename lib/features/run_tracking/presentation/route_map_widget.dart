@@ -59,7 +59,7 @@ class RouteMapWidget extends StatelessWidget {
               children: [
                 TileLayer(
                   urlTemplate:
-                      'https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png',
+                      'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                   userAgentPackageName: 'com.example.my_fitness_app',
                   tileProvider: tileProvider,
                 ),

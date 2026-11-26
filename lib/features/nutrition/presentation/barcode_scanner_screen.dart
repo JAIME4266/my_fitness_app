@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../data/barcode_food_service.dart';
 import '../data/nutrition_repository.dart';
 
@@ -26,6 +27,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
 
   bool _isLoading = false;
   bool _isSaving = false;
+  bool _hasCameraPermission = false;
   BarcodeLookupResult? _result;
   double _grams = 100.0;
   String _mealType = 'Snack';
@@ -36,9 +38,20 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
     super.initState();
     _service = widget.service ?? OpenFoodFactsService();
     if (widget.enableCamera) {
-      _scannerController = MobileScannerController(
-        detectionSpeed: DetectionSpeed.noDuplicates,
-      );
+      _initCamera();
+    }
+  }
+
+  Future<void> _initCamera() async {
+    final status = await Permission.camera.request();
+    if (!mounted) return;
+    if (status.isGranted) {
+      setState(() {
+        _hasCameraPermission = true;
+        _scannerController ??= MobileScannerController(
+          detectionSpeed: DetectionSpeed.noDuplicates,
+        );
+      });
     }
   }
 
@@ -189,25 +202,43 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          if (widget.enableCamera && _scannerController != null) ...[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: SizedBox(
-                height: 220,
-                child: MobileScanner(
-                  controller: _scannerController!,
-                  onDetect: (capture) {
-                    final barcodes = capture.barcodes;
-                    if (barcodes.isEmpty) return;
-                    final code = barcodes.first.rawValue;
-                    if (code != null && code != _lastScannedCode) {
-                      _barcodeController.text = code;
-                      _lookup(code);
-                    }
-                  },
+          if (widget.enableCamera) ...[
+            if (_hasCameraPermission && _scannerController != null)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: SizedBox(
+                  height: 220,
+                  child: MobileScanner(
+                    controller: _scannerController!,
+                    onDetect: (capture) {
+                      final barcodes = capture.barcodes;
+                      if (barcodes.isEmpty) return;
+                      final code = barcodes.first.rawValue;
+                      if (code != null && code != _lastScannedCode) {
+                        _barcodeController.text = code;
+                        _lookup(code);
+                      }
+                    },
+                  ),
+                ),
+              )
+            else
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      const Text('Camera permission is needed to scan barcodes.'),
+                      const SizedBox(height: 8),
+                      FilledButton.icon(
+                        onPressed: _initCamera,
+                        icon: const Icon(Icons.camera_alt),
+                        label: const Text('Grant Camera Permission'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
             const SizedBox(height: 16),
           ],
           Row(
