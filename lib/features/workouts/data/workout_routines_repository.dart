@@ -1,16 +1,36 @@
 import 'dart:convert';
+import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../database/database.dart';
 import '../../../database/fitness_repository.dart';
 import '../../run_tracking/data/run_repository.dart';
+import '../domain/training_analytics_engine.dart';
 import '../domain/workout_models.dart';
 
 final workoutRoutinesRepositoryProvider =
     Provider<WorkoutRoutinesRepository>((ref) {
   final db = ref.watch(databaseProvider);
   return WorkoutRoutinesRepository(db);
+});
+
+final allTrainingWorkoutsProvider = StreamProvider<List<Workout>>((ref) {
+  return ref.watch(databaseProvider).watchAllWorkouts();
+});
+
+final programmeEnrolmentsProvider =
+    StreamProvider<List<ProgrammeEnrolment>>((ref) {
+  return ref.watch(databaseProvider).watchProgrammeEnrolments();
+});
+
+final allProgrammeCompletionsProvider =
+    StreamProvider<List<ProgrammeSessionCompletion>>((ref) {
+  return ref.watch(databaseProvider).watchAllProgrammeCompletions();
+});
+
+final scheduledWorkoutsProvider = StreamProvider<List<ScheduledWorkout>>((ref) {
+  return ref.watch(databaseProvider).watchScheduledWorkouts();
 });
 
 class WorkoutRoutinesRepository {
@@ -97,5 +117,70 @@ class WorkoutRoutinesRepository {
       caloriesKcal: (elapsedSeconds / 60.0) * 5.0,
       points: const [],
     );
+  }
+
+  Future<void> enrolInProgramme(String programmeId) async {
+    await db.upsertProgrammeEnrolment(
+      ProgrammeEnrolmentsCompanion(
+        programmeId: Value(programmeId),
+        enrolledAtMs: Value(DateTime.now().millisecondsSinceEpoch),
+        currentWeek: const Value(1),
+        isActive: const Value(true),
+      ),
+    );
+  }
+
+  Future<void> completeProgrammeSession({
+    required String programmeId,
+    required ProgrammeSession session,
+    required WorkoutRoutine routine,
+    required int elapsedSeconds,
+  }) async {
+    await completeRoutineSession(
+      routine: routine,
+      elapsedSeconds: elapsedSeconds,
+    );
+    await db.markProgrammeSessionCompleted(
+      ProgrammeSessionCompletionsCompanion(
+        id: Value('${programmeId}_${session.id}'),
+        programmeId: Value(programmeId),
+        sessionId: Value(session.id),
+        routineId: Value(routine.id),
+        completedAtMs: Value(DateTime.now().millisecondsSinceEpoch),
+        durationSec: Value(elapsedSeconds),
+      ),
+    );
+  }
+
+  Future<void> scheduleRoutineForDate({
+    required WorkoutRoutine routine,
+    required DateTime date,
+    String? programmeId,
+  }) async {
+    final key = TrainingAnalyticsEngine.dateKeyFor(date);
+    final id = 'sched_${key}_${routine.id}_${DateTime.now().microsecondsSinceEpoch}';
+    await db.upsertScheduledWorkout(
+      ScheduledWorkoutsCompanion(
+        id: Value(id),
+        routineId: Value(routine.id),
+        routineTitle: Value(routine.title),
+        category: Value(routine.category),
+        scheduledDateKey: Value(key),
+        programmeId: Value(programmeId),
+        isCompleted: const Value(false),
+      ),
+    );
+  }
+
+  Future<void> deleteScheduledWorkout(String id) async {
+    await db.deleteScheduledWorkoutById(id);
+  }
+
+  static WorkoutRoutine? findRoutineById(
+      String id, List<WorkoutRoutine> allRoutines) {
+    for (final r in allRoutines) {
+      if (r.id == id) return r;
+    }
+    return null;
   }
 }

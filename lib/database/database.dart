@@ -223,6 +223,42 @@ class SleepRecords extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+// --- Training Redesign (Schema v6) ---
+class ProgrammeEnrolments extends Table {
+  TextColumn get programmeId => text()();
+  IntColumn get enrolledAtMs => integer()();
+  IntColumn get currentWeek => integer().withDefault(const Constant(1))();
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
+
+  @override
+  Set<Column> get primaryKey => {programmeId};
+}
+
+class ProgrammeSessionCompletions extends Table {
+  TextColumn get id => text()(); // '${programmeId}_${sessionId}'
+  TextColumn get programmeId => text()();
+  TextColumn get sessionId => text()();
+  TextColumn get routineId => text()();
+  IntColumn get completedAtMs => integer()();
+  IntColumn get durationSec => integer().withDefault(const Constant(0))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class ScheduledWorkouts extends Table {
+  TextColumn get id => text()();
+  TextColumn get routineId => text()();
+  TextColumn get routineTitle => text()();
+  TextColumn get category => text()();
+  TextColumn get scheduledDateKey => text()(); // 'YYYY-MM-DD'
+  TextColumn get programmeId => text().nullable()();
+  BoolColumn get isCompleted => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 @DriftDatabase(
   tables: [
     DailySummaries,
@@ -240,6 +276,9 @@ class SleepRecords extends Table {
     CommunityNotifications,
     BlockedUsers,
     SleepRecords,
+    ProgrammeEnrolments,
+    ProgrammeSessionCompletions,
+    ScheduledWorkouts,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -247,7 +286,7 @@ class AppDatabase extends _$AppDatabase {
       : super(e ?? driftDatabase(name: 'fitness_app'));
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -257,6 +296,11 @@ class AppDatabase extends _$AppDatabase {
         onUpgrade: (Migrator m, int from, int to) async {
           if (from < 5) {
             await m.createTable(sleepRecords);
+          }
+          if (from < 6) {
+            await m.createTable(programmeEnrolments);
+            await m.createTable(programmeSessionCompletions);
+            await m.createTable(scheduledWorkouts);
           }
           if (from < 2) {
             await m.createTable(foodCatalog);
@@ -426,5 +470,50 @@ class AppDatabase extends _$AppDatabase {
 
   Future<int> upsertMetabolicProfile(UserMetabolicProfilesCompanion profile) {
     return into(userMetabolicProfiles).insertOnConflictUpdate(profile);
+  }
+
+  // --- Training Redesign Queries (Schema v6) ---
+  Stream<List<Workout>> watchAllWorkouts() {
+    return (select(workouts)
+          ..orderBy([(t) => OrderingTerm.desc(t.startEpochMs)]))
+        .watch();
+  }
+
+  Stream<List<ProgrammeEnrolment>> watchProgrammeEnrolments() {
+    return select(programmeEnrolments).watch();
+  }
+
+  Future<void> upsertProgrammeEnrolment(ProgrammeEnrolmentsCompanion entry) {
+    return into(programmeEnrolments).insertOnConflictUpdate(entry);
+  }
+
+  Stream<List<ProgrammeSessionCompletion>> watchProgrammeCompletions(
+      String programmeId) {
+    return (select(programmeSessionCompletions)
+          ..where((t) => t.programmeId.equals(programmeId)))
+        .watch();
+  }
+
+  Stream<List<ProgrammeSessionCompletion>> watchAllProgrammeCompletions() {
+    return select(programmeSessionCompletions).watch();
+  }
+
+  Future<void> markProgrammeSessionCompleted(
+      ProgrammeSessionCompletionsCompanion completion) {
+    return into(programmeSessionCompletions).insertOnConflictUpdate(completion);
+  }
+
+  Stream<List<ScheduledWorkout>> watchScheduledWorkouts() {
+    return (select(scheduledWorkouts)
+          ..orderBy([(t) => OrderingTerm.asc(t.scheduledDateKey)]))
+        .watch();
+  }
+
+  Future<void> upsertScheduledWorkout(ScheduledWorkoutsCompanion entry) {
+    return into(scheduledWorkouts).insertOnConflictUpdate(entry);
+  }
+
+  Future<int> deleteScheduledWorkoutById(String id) {
+    return (delete(scheduledWorkouts)..where((t) => t.id.equals(id))).go();
   }
 }

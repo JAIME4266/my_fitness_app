@@ -6,6 +6,8 @@ class RoutineExercise {
   final int durationSeconds;
   final int restSeconds;
   final String? repsLabel;
+  final String equipment;
+  final String? safetyCue;
 
   const RoutineExercise({
     required this.name,
@@ -13,6 +15,8 @@ class RoutineExercise {
     required this.durationSeconds,
     this.restSeconds = 15,
     this.repsLabel,
+    this.equipment = 'Bodyweight',
+    this.safetyCue,
   });
 }
 
@@ -27,6 +31,10 @@ class WorkoutRoutine {
   final IconData icon;
   final List<RoutineExercise> exercises;
   final bool isCustom;
+  final String? imageAsset;
+  final String equipment;
+  final String intensityLabel;
+  final String? remoteVideoPath;
 
   const WorkoutRoutine({
     required this.id,
@@ -39,7 +47,108 @@ class WorkoutRoutine {
     required this.icon,
     required this.exercises,
     this.isCustom = false,
+    this.imageAsset,
+    this.equipment = 'Bodyweight',
+    this.intensityLabel = 'Moderate Intensity',
+    this.remoteVideoPath,
   });
+}
+
+class TrainingExerciseItem {
+  final String id;
+  final String name;
+  final String category;
+  final String movementPattern;
+  final String difficulty;
+  final String equipment;
+  final String description;
+  final List<String> instructions;
+  final String safetyCue;
+  final String? posterAsset;
+  final String? remoteDemoClipPath;
+  final List<String> relatedRoutineIds;
+
+  const TrainingExerciseItem({
+    required this.id,
+    required this.name,
+    required this.category,
+    required this.movementPattern,
+    required this.difficulty,
+    required this.equipment,
+    required this.description,
+    required this.instructions,
+    required this.safetyCue,
+    this.posterAsset,
+    this.remoteDemoClipPath,
+    this.relatedRoutineIds = const [],
+  });
+}
+
+class ProgrammeSession {
+  final String id;
+  final int weekNumber;
+  final int dayOfWeek; // 1 = Mon .. 7 = Sun
+  final String title;
+  final String routineId;
+  final int estimatedMinutes;
+  final String focusNote;
+
+  const ProgrammeSession({
+    required this.id,
+    required this.weekNumber,
+    required this.dayOfWeek,
+    required this.title,
+    required this.routineId,
+    required this.estimatedMinutes,
+    required this.focusNote,
+  });
+}
+
+class ProgrammePhase {
+  final String id;
+  final int phaseNumber;
+  final String title;
+  final String summary;
+  final int startWeek;
+  final int endWeek;
+  final List<ProgrammeSession> sessions;
+
+  const ProgrammePhase({
+    required this.id,
+    required this.phaseNumber,
+    required this.title,
+    required this.summary,
+    required this.startWeek,
+    required this.endWeek,
+    required this.sessions,
+  });
+}
+
+class TrainingProgramme {
+  final String id;
+  final String title;
+  final String subtitle;
+  final String objective;
+  final String difficulty;
+  final int durationWeeks;
+  final String coverAsset;
+  final Color accentColor;
+  final List<ProgrammePhase> phases;
+
+  const TrainingProgramme({
+    required this.id,
+    required this.title,
+    required this.subtitle,
+    required this.objective,
+    required this.difficulty,
+    required this.durationWeeks,
+    required this.coverAsset,
+    required this.accentColor,
+    required this.phases,
+  });
+
+  List<ProgrammeSession> get allSessions =>
+      phases.expand((p) => p.sessions).toList();
 }
 
 const List<String> workoutCategories = [
@@ -273,6 +382,302 @@ const List<WorkoutRoutine> curatedRunnerRoutines = [
         instructions: 'Drive knee gently over toes while keeping heel planted on the ground.',
         durationSeconds: 50,
         repsLabel: '12 reps / side',
+      ),
+    ],
+  ),
+];
+
+const List<TrainingExerciseItem> curatedExerciseLibrary = [
+  TrainingExerciseItem(
+    id: 'ex_leg_swings',
+    name: 'Leg Swings (Front & Back)',
+    category: 'PRE-RUN WARMUP',
+    movementPattern: 'Dynamic Hip Flexion / Extension',
+    difficulty: 'Beginner',
+    equipment: 'Wall or Rail Support',
+    description: 'Dynamic sagittal-plane hip opener that primes stride length before running.',
+    instructions: [
+      'Stand tall beside a wall or fence with light hand support.',
+      'Keep your standing leg slightly soft and torso upright.',
+      'Swing the working leg smoothly forward and back without arching your lower back.',
+      'Build range gradually over 12 controlled swings per side.',
+    ],
+    safetyCue: 'Avoid kicking aggressively or twisting the lumbar spine at end range.',
+    posterAsset: 'assets/images/workouts/warmup.jpg',
+    relatedRoutineIds: ['warmup_stride'],
+  ),
+  TrainingExerciseItem(
+    id: 'ex_worlds_greatest',
+    name: 'World’s Greatest Stretch',
+    category: 'PRE-RUN WARMUP',
+    movementPattern: 'Multi-Planar Lunge & Thoracic Rotation',
+    difficulty: 'Intermediate',
+    equipment: 'Bodyweight / Mat',
+    description: 'All-in-one hip flexor, hamstring, groin, and upper-back activation drill.',
+    instructions: [
+      'Step your right foot outside your right hand into a deep runner lunge.',
+      'Keep the back knee lifted and glute lightly engaged.',
+      'Rotate your right arm up toward the sky, following your hand with your gaze.',
+      'Return hand to floor and briefly rock hips back to lengthen the front hamstring.',
+    ],
+    safetyCue: 'Move within a comfortable hip depth; place back knee down if tight.',
+    posterAsset: 'assets/images/workouts/mobility.jpg',
+    relatedRoutineIds: ['warmup_dynamic'],
+  ),
+  TrainingExerciseItem(
+    id: 'ex_goblet_squat',
+    name: 'Goblet / Bodyweight Squats',
+    category: 'RUNNER STRENGTH TRAINING',
+    movementPattern: 'Knee-Dominant Lower Push',
+    difficulty: 'Intermediate',
+    equipment: 'Bodyweight or Dumbbell / Kettlebell',
+    description: 'Builds quad, glute, and trunk strength for hill climbing and late-run resilience.',
+    instructions: [
+      'Set feet shoulder-width apart with toes turned out 10–15 degrees.',
+      'Brace your core and sit hips down and back between your knees.',
+      'Keep heels planted and chest tall throughout descent.',
+      'Drive through mid-foot to stand tall without locking knees sharply.',
+    ],
+    safetyCue: 'Keep knees tracking in line with your second and third toes; avoid inward collapse.',
+    posterAsset: 'assets/images/workouts/strength.jpg',
+    relatedRoutineIds: ['strength_power'],
+  ),
+  TrainingExerciseItem(
+    id: 'ex_single_leg_rdl',
+    name: 'Single-Leg RDL',
+    category: 'RUNNER STRENGTH TRAINING',
+    movementPattern: 'Unilateral Hip Hinge',
+    difficulty: 'Advanced',
+    equipment: 'Bodyweight or Light Kettlebell',
+    description: 'Strengthens hamstrings, glute medius, and ankle stability on one leg.',
+    instructions: [
+      'Shift weight onto one softly bent leg with hips level.',
+      'Hinge at the hip while extending the free leg straight behind you.',
+      'Maintain a neutral spine and square pelvis toward the floor.',
+      'Squeeze standing glute to return upright with control.',
+    ],
+    safetyCue: 'Keep hips square—do not let the lifted hip open upward; reduce range if back rounds.',
+    posterAsset: 'assets/images/workouts/strength.jpg',
+    relatedRoutineIds: ['strength_single_leg'],
+  ),
+  TrainingExerciseItem(
+    id: 'ex_tempo_intervals',
+    name: 'Tempo March / Jog Intervals',
+    category: 'ENDURANCE TRAINING',
+    movementPattern: 'Aerobic Conditioning',
+    difficulty: 'Intermediate',
+    equipment: 'Bodyweight / Open Space',
+    description: 'Alternating controlled effort bursts and easy active recovery to raise aerobic capacity.',
+    instructions: [
+      'Begin with a rhythmic fast march or easy jog for 60 seconds.',
+      'Focus on upright posture and relaxed shoulders.',
+      'Transition smoothly to 30 seconds of easy walking recovery.',
+    ],
+    safetyCue: 'Keep effort conversational-to-moderate; prioritize cadence over speed.',
+    posterAsset: 'assets/images/workouts/endurance.jpg',
+    relatedRoutineIds: ['endurance_aerobic'],
+  ),
+  TrainingExerciseItem(
+    id: 'ex_hip_flexor_stretch',
+    name: 'Kneeling Hip Flexor Stretch',
+    category: 'POST-RUN RECOVERY',
+    movementPattern: 'Anterior Hip Decompression',
+    difficulty: 'Beginner',
+    equipment: 'Exercise Mat',
+    description: 'Releases tight hip flexors after running or long hours of sitting.',
+    instructions: [
+      'Kneel in a half-kneeling stance on a mat with back toes tucked.',
+      'Gently tuck your tailbone under (posterior pelvic tilt) and squeeze the back glute.',
+      'Shift forward just 1–2 inches until you feel a mild stretch in the front hip.',
+      'Hold while taking slow, steady nasal breaths.',
+    ],
+    safetyCue: 'Do not hyperextend the lower back to force a deeper lean.',
+    posterAsset: 'assets/images/workouts/recovery.jpg',
+    relatedRoutineIds: ['recovery_recharge'],
+  ),
+  TrainingExerciseItem(
+    id: 'ex_90_90_hip',
+    name: '90/90 Hip Switches',
+    category: 'FLEXIBILITY & MOBILITY',
+    movementPattern: 'Internal & External Hip Rotation',
+    difficulty: 'Beginner',
+    equipment: 'Exercise Mat',
+    description: 'Improves hip capsule mobility and rotational control for smoother running stride.',
+    instructions: [
+      'Sit tall on a mat with both knees bent at 90 degrees—one in front, one out to the side.',
+      'Keep heels planted and smoothly rotate knees up and across to the opposite side.',
+      'Use hands lightly behind you for balance if needed.',
+    ],
+    safetyCue: 'Move slowly without forcing knees down if you feel groin or knee pinching.',
+    posterAsset: 'assets/images/workouts/mobility.jpg',
+    relatedRoutineIds: ['mobility_hip_ankle'],
+  ),
+];
+
+const List<TrainingProgramme> curatedTrainingProgrammes = [
+  TrainingProgramme(
+    id: 'prog_runner_strength',
+    title: 'Runner Strength Foundation',
+    subtitle: 'Phase 1: Power, Force & Single-Leg Resilience',
+    objective: 'Build lower-body strength and tendon resilience to run stronger with lower fatigue.',
+    difficulty: 'Intermediate',
+    durationWeeks: 6,
+    coverAsset: 'assets/images/workouts/strength.jpg',
+    accentColor: Color(0xFF818CF8),
+    phases: [
+      ProgrammePhase(
+        id: 'phase_rs_1',
+        phaseNumber: 1,
+        title: 'Phase 1: Neuromuscular Base',
+        summary: 'Weeks 1–2 focus on activation, hip stability, and clean squat/hinge mechanics.',
+        startWeek: 1,
+        endWeek: 2,
+        sessions: [
+          ProgrammeSession(
+            id: 'rs_w1_d1',
+            weekNumber: 1,
+            dayOfWeek: 1,
+            title: 'Dynamic Stride Prep',
+            routineId: 'warmup_stride',
+            estimatedMinutes: 10,
+            focusNote: 'Prime hips and ankles before base miles.',
+          ),
+          ProgrammeSession(
+            id: 'rs_w1_d3',
+            weekNumber: 1,
+            dayOfWeek: 3,
+            title: 'Power & Endurance Base',
+            routineId: 'strength_power',
+            estimatedMinutes: 25,
+            focusNote: 'Foundational squat, glute bridge, and trunk bracing.',
+          ),
+          ProgrammeSession(
+            id: 'rs_w1_d5',
+            weekNumber: 1,
+            dayOfWeek: 5,
+            title: 'Post-Run Recharge',
+            routineId: 'recovery_recharge',
+            estimatedMinutes: 15,
+            focusNote: 'Restore hip flexors and calves after mid-week volume.',
+          ),
+        ],
+      ),
+      ProgrammePhase(
+        id: 'phase_rs_2',
+        phaseNumber: 2,
+        title: 'Phase 2: Unilateral Force',
+        summary: 'Weeks 3–6 introduce single-leg control and aerobic power integration.',
+        startWeek: 3,
+        endWeek: 6,
+        sessions: [
+          ProgrammeSession(
+            id: 'rs_w3_d2',
+            weekNumber: 3,
+            dayOfWeek: 2,
+            title: 'Single-Leg Stability',
+            routineId: 'strength_single_leg',
+            estimatedMinutes: 20,
+            focusNote: 'Split squats & single-leg RDL for pelvic control.',
+          ),
+          ProgrammeSession(
+            id: 'rs_w3_d4',
+            weekNumber: 3,
+            dayOfWeek: 4,
+            title: 'Hip & Ankle Unlock',
+            routineId: 'mobility_hip_ankle',
+            estimatedMinutes: 15,
+            focusNote: 'Maintain ankle dorsiflexion under higher load.',
+          ),
+        ],
+      ),
+    ],
+  ),
+  TrainingProgramme(
+    id: 'prog_endurance_base',
+    title: 'Endurance Base Builder',
+    subtitle: 'Aerobic Engine & Cadence Consistency',
+    objective: 'Develop steady-state stamina while pairing recovery drills on easy days.',
+    difficulty: 'Intermediate',
+    durationWeeks: 4,
+    coverAsset: 'assets/images/workouts/endurance.jpg',
+    accentColor: Color(0xFF38BDF8),
+    phases: [
+      ProgrammePhase(
+        id: 'phase_eb_1',
+        phaseNumber: 1,
+        title: 'Phase 1: Aerobic Rhythm',
+        summary: 'Controlled interval circuits paired with dynamic leg prep.',
+        startWeek: 1,
+        endWeek: 4,
+        sessions: [
+          ProgrammeSession(
+            id: 'eb_w1_d1',
+            weekNumber: 1,
+            dayOfWeek: 1,
+            title: 'Dynamic Leg Warmup',
+            routineId: 'warmup_dynamic',
+            estimatedMinutes: 12,
+            focusNote: 'Activate glutes before aerobic circuits.',
+          ),
+          ProgrammeSession(
+            id: 'eb_w1_d3',
+            weekNumber: 1,
+            dayOfWeek: 3,
+            title: 'Running Stamina Circuit',
+            routineId: 'endurance_aerobic',
+            estimatedMinutes: 20,
+            focusNote: 'Steady tempo intervals and step-ups.',
+          ),
+          ProgrammeSession(
+            id: 'eb_w1_d6',
+            weekNumber: 1,
+            dayOfWeek: 6,
+            title: 'Full Body Decompression',
+            routineId: 'recovery_full_body',
+            estimatedMinutes: 12,
+            focusNote: 'Cool down hamstrings and lower back.',
+          ),
+        ],
+      ),
+    ],
+  ),
+  TrainingProgramme(
+    id: 'prog_mobility_resilience',
+    title: 'Mobility & Joint Resilience',
+    subtitle: 'Daily Stride Longevity Plan',
+    objective: 'Keep hips, calves, and thoracic spine supple across training blocks.',
+    difficulty: 'Beginner',
+    durationWeeks: 3,
+    coverAsset: 'assets/images/workouts/mobility.jpg',
+    accentColor: Color(0xFF34D399),
+    phases: [
+      ProgrammePhase(
+        id: 'phase_mr_1',
+        phaseNumber: 1,
+        title: 'Phase 1: Joint Space & Recovery',
+        summary: 'Low-impact mobility and parasympathetic recovery routines.',
+        startWeek: 1,
+        endWeek: 3,
+        sessions: [
+          ProgrammeSession(
+            id: 'mr_w1_d1',
+            weekNumber: 1,
+            dayOfWeek: 1,
+            title: 'Hip & Ankle Mobility',
+            routineId: 'mobility_hip_ankle',
+            estimatedMinutes: 15,
+            focusNote: '90/90 switches & ankle dorsiflexion work.',
+          ),
+          ProgrammeSession(
+            id: 'mr_w1_d4',
+            weekNumber: 1,
+            dayOfWeek: 4,
+            title: 'Recharge & Recover',
+            routineId: 'recovery_recharge',
+            estimatedMinutes: 15,
+            focusNote: 'Gentle hip flexor, calf, and glute release.',
+          ),
+        ],
       ),
     ],
   ),
